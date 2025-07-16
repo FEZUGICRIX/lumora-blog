@@ -9,7 +9,7 @@ export const GithubIcon = ({ className, ...props }: GithubIconProps) => (
 	<svg
 		{...props}
 		className={cn(
-			'h-[20px] w-[20px] text-black transition hover:text-pink-500 dark:text-zinc-300',
+			'h-[20px] w-[20px] text-black transition dark:text-zinc-300',
 			className,
 		)}
 		fill='currentColor'

@@ -1,6 +1,6 @@
 @utility glass {
 	border: 1px solid rgb(255 255 255 / 0.4);
-	background-color: rgb(255 255 255 / 0.35);
+	background-color: rgb(255 255 255 / 0.45) !important;
 	box-shadow:
 		0 10px 15px -3px rgb(0 0 0 / 0.1),
 		0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -14,7 +14,7 @@
 
 @utility glass-dark {
 	border: 1px solid rgb(255 255 255 / 0.1);
-	background-color: rgb(255 255 255 / 0.1);
+	background-color: rgb(255 255 255 / 0.1) !important;
 	box-shadow:
 		0 10px 15px -3px rgb(24 24 27 / 0.5),
 		0 4px 6px -4px rgb(24 24 27 / 0.3);

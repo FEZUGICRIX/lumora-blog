@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import { BackgroundImage } from '@/shared/assets/images'
+import { ArticleList } from '@/widgets/article-list'
 
 const HomePage = () => {
 	return (
@@ -9,10 +12,11 @@ const HomePage = () => {
 					src={BackgroundImage}
 					alt='Banner'
 					fill
-					className='-z-10 object-cover object-center'
+					className='object-cover object-center'
 					priority
 				/>
-				<div className='bg-dark/10 absolute inset-0 flex items-center justify-center text-center dark:bg-black/70'>
+
+				<div className='absolute inset-0 flex items-center justify-center bg-black/10 text-center dark:bg-black/40'>
 					<div className='mt-[50px] px-4'>
 						<h1 className='text-4xl font-extrabold text-white'>
 							Мой блог о фронтенде
@@ -23,6 +27,8 @@ const HomePage = () => {
 					</div>
 				</div>
 			</section>
+
+			<ArticleList />
 		</div>
 	)
 }

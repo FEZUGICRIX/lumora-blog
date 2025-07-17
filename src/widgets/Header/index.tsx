@@ -9,31 +9,34 @@ import { Logo } from '@/shared/ui/Logo'
 const Header = () => {
 	return (
 		<header>
-			<div className='fixed top-4 left-1/2 z-50 w-full -translate-x-1/2 px-4'>
-				<div className='glass dark:glass-dark mx-auto max-w-7xl rounded-3xl px-6 py-3'>
+			<div className='fixed top-4 left-1/2 z-50 box-border w-full -translate-x-1/2 px-4'>
+				<div className='glass dark:glass-dark container mx-auto rounded-3xl px-4 py-3 shadow-md'>
 					<div className='flex items-center justify-between'>
 						<Logo />
 
-						<NavLinks />
+						<div className='hidden w-full justify-between lg:flex'>
+							<div className='m-auto'>
+								<NavLinks />
+							</div>
 
-						{/* Icons */}
-						<div className='ml-6 hidden items-center gap-4 text-zinc-700 md:flex dark:text-zinc-300'>
-							<SocialLinks />
+							<div className='hidden items-center gap-4 text-zinc-700 md:flex dark:text-zinc-300'>
+								<SocialLinks />
 
-							<div className='mx-1 h-6 w-px bg-zinc-300/40 dark:bg-zinc-600/40' />
+								<div className='mx-1 h-6 w-px bg-zinc-300/40 dark:bg-zinc-600/40' />
 
-							<div className='flex items-center gap-2'>
-								<div className='glass-icon'>
-									<TooltipWithText text='Search Posts'>
-										<SearchIcon />
-									</TooltipWithText>
+								<div className='flex items-center gap-2'>
+									<div className='glass-icon'>
+										<TooltipWithText text='Search Posts'>
+											<SearchIcon />
+										</TooltipWithText>
+									</div>
+									<ThemeToggle />
 								</div>
-								<ThemeToggle />
 							</div>
 						</div>
 
 						{/* Mobile Menu Button */}
-						<div className='md:hidden'>
+						<div className='block lg:hidden'>
 							<Button className='bg-transparent p-0 hover:bg-transparent'>
 								<BurgerMenuIcon />
 							</Button>

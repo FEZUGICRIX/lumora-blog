@@ -1,4 +1,4 @@
 export const socialLinks = {
-	github: 'https://github.com/your-username',
-	linkedin: 'https://linkedin.com/in/your-profile',
+	github: 'https://github.com/FEZUGICRIX',
+	linkedin: 'https://linkedin.com/in/FEZUGICRIX',
 } as const

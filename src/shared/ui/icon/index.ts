@@ -1,4 +1,7 @@
 export { GithubIcon } from './github-icon'
 export { SearchIcon } from './search-icon'
 export { LinkedinIcon } from './linkedin-icon'
-export { BurgerMenuIcon } from './burger-menu'
+export { BurgerMenuIcon } from './burger-menu-icon'
+export { HeartIcon } from './heart-icon'
+export { ViewIcon } from './view-icon'
+export { CommentIcon } from './comment-icon'

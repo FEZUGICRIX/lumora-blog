@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { GithubIcon, LinkedinIcon } from '@/shared/ui/icon'
+import { TooltipWithText } from './TooltipWithText'
 import { socialLinks } from '@/shared/constants'
 
 export const SocialLinks = () => {
@@ -10,17 +11,19 @@ export const SocialLinks = () => {
 					href={socialLinks.linkedin}
 					target='_blank'
 					className='glass-icon'
-					title='LinkedIn'
 				>
-					<LinkedinIcon />
+					<TooltipWithText text='LinkedIn'>
+						<LinkedinIcon />
+					</TooltipWithText>
 				</Link>
 				<Link
 					href={socialLinks.github}
 					target='_blank'
 					className='glass-icon'
-					title='GitHub'
 				>
-					<GithubIcon />
+					<TooltipWithText text='GitHub'>
+						<GithubIcon />
+					</TooltipWithText>
 				</Link>
 			</div>
 		</div>

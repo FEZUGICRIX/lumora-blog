@@ -15,7 +15,7 @@ export type UseBooleanReturn = {
  * Useful for handling toggles, modal visibility, feature flags, dropdowns, switches, etc.
  */
 export function useBoolean(initial = false): UseBooleanReturn {
-	const [value, setValue] = useState(initial)
+	const [value, setValue] = useState<boolean>(initial)
 
 	const setTrue = useCallback(() => setValue(true), [])
 	const setFalse = useCallback(() => setValue(false), [])

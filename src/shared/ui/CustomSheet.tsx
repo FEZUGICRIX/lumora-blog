@@ -6,9 +6,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-	SheetClose,
 } from '@/shared/ui/ui-kit/sheet'
-import { Button } from '@/shared/ui/ui-kit/button'
 import type { ReactNode } from 'react'
 import { cn } from '../lib/shadcn/utils'
 import { Divider } from './Divider'

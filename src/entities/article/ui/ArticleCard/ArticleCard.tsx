@@ -19,13 +19,13 @@ export const ArticleCard = ({
 	isLiked,
 }: ArticleCardProps) => {
 	return (
-		<article className='flex flex-col rounded-xl border border-zinc-200 bg-white text-zinc-800 shadow-md transition duration-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-white'>
-			<div className='relative'>
+		<article className='group flex flex-col rounded-xl border border-zinc-200 bg-white text-zinc-800 shadow-md transition duration-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-white'>
+			<div className='relative min-h-48 w-full overflow-hidden rounded-t-xl'>
 				<ImageOverlay>
 					<img
 						src={image}
 						alt={title}
-						className='h-48 w-full rounded-t-xl object-cover transition-transform duration-300'
+						className='h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
 					/>
 				</ImageOverlay>
 
@@ -34,6 +34,7 @@ export const ArticleCard = ({
 						Новое
 					</span>
 				)}
+
 				<button
 					onClick={onLike}
 					className='absolute top-3 right-3 rounded-full bg-white p-1.5 text-zinc-600 shadow transition hover:bg-pink-500 hover:text-white dark:bg-zinc-800 dark:text-zinc-300'

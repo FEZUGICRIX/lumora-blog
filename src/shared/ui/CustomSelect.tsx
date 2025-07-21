@@ -9,29 +9,29 @@ import {
 } from '@/shared/ui/ui-kit/select'
 import { cn } from '@/shared/lib/shadcn/utils'
 
-type Option = {
+type Option<T extends string> = {
 	label: string
-	value: string
+	value: T
 }
 
-interface CustomSelectProps {
-	value: string
-	onChange: (value: string) => void
-	options: readonly Option[]
+interface CustomSelectProps<T extends string> {
+	value: T
+	onChange: (value: T) => void
+	options: readonly Option<T>[]
 	className?: string
 }
 
-export const CustomSelect = ({
+export const CustomSelect = <T extends string>({
 	value,
 	onChange,
 	options,
 	className,
-}: CustomSelectProps) => {
+}: CustomSelectProps<T>) => {
 	return (
 		<Select value={value} onValueChange={onChange}>
 			<SelectTrigger
 				className={cn(
-					'glass-icon dark:glass-icon-dark w-[120px] transition all ',
+					'glass-icon dark:glass-icon-dark all w-[120px] transition',
 					className,
 				)}
 			>

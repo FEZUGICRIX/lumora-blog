@@ -1,3 +1,3 @@
-export * from './ui'
-export * from './model/locales'
-export * from './lib'
+export * from './ui/LocaleSwitcher'
+export * from './model/types'
+export * from './lib/is-locale'

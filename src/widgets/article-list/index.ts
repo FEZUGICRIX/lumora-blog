@@ -1,2 +1,2 @@
 export * from './ui/ArticleList'
-export * from './model/mock'
+export * from '../../shared/mock/mock-articles'

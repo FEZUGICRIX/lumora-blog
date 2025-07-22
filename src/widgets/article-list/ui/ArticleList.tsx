@@ -3,7 +3,7 @@
 // import { useGetArticlesQuery, ArticleCard } from '@/entities/article'
 import { ArticleCard } from '@/entities/article'
 import { GridLayout } from '@/shared/ui/GridLayout' // если ты его вынес
-import { mockArticles } from '../model/mock'
+import { mockArticles } from '../../../shared/mock/mock-articles'
 // import { SkeletonCard } from '@/shared/ui/SkeletonCard' // если есть
 
 export const ArticleList = () => {

@@ -7,8 +7,8 @@ import {
 	DialogFooter,
 	DialogClose,
 } from '@/shared/ui/ui-kit/dialog'
-import { Button } from '@/shared/ui/ui-kit/button'
 import type { ReactNode } from 'react'
+import { Button } from '@/shared/ui/ui-kit/button'
 
 interface ModalProps {
 	open: boolean
@@ -27,14 +27,16 @@ export const Modal = ({
 	description,
 	children,
 	footer,
-	showCloseButton = true,
+	showCloseButton,
 }: ModalProps) => {
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className='glass dark:glass-dark'>
 				{(title || description) && (
 					<DialogHeader>
-						{title && <DialogTitle>{title}</DialogTitle>}
+						{title && (
+							<DialogTitle className='text-center'>{title}</DialogTitle>
+						)}
 						{description && (
 							<DialogDescription>
 								<span className='text-gray-800 dark:text-gray-400'>

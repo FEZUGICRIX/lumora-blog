@@ -31,7 +31,7 @@ const HomePage = () => {
 				</div>
 			</section>
 
-			<ArticleList />
+			<ArticleList withFilters />
 		</div>
 	)
 }

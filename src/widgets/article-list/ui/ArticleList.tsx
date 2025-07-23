@@ -1,23 +1,41 @@
-// widgets/article-list/ui/ArticleList.tsx
+'use client'
 
-// import { useGetArticlesQuery, ArticleCard } from '@/entities/article'
 import { ArticleCard } from '@/entities/article'
-import { GridLayout } from '@/shared/ui/GridLayout' // если ты его вынес
-import { mockArticles } from '../model/mock'
-// import { SkeletonCard } from '@/shared/ui/SkeletonCard' // если есть
+import { ArticleFilters } from './ArticleFilters'
+import { getSortedArticles } from '@/features/filters'
+import { GridLayout } from '@/shared/ui/GridLayout'
+import { mockArticles } from '@/shared/mock/mock-articles'
+import { useSearchParams } from 'next/navigation'
+import type { Category, SortOption } from '@/features/filters'
 
-export const ArticleList = () => {
-	// const { data, isLoading, isError } = useGetArticlesQuery()
+interface ArticleListProps {
+	withFilters?: boolean
+}
 
-	// if (isLoading)
-	// 	return <GridLayout>{Array(4).fill(<SkeletonCard />)}</GridLayout>
-	// if (isError || !data) return <div>Ошибка загрузки статей</div>
+export const ArticleList = ({ withFilters = false }: ArticleListProps) => {
+	const searchParams = useSearchParams()
+	const articles = mockArticles
+
+	const category = searchParams.get('category') as Category | null
+	const sort = (searchParams.get('sort') as SortOption) ?? 'date'
+
+	const filtered = category
+		? articles.filter((a) => a.category.toLocaleLowerCase() === category)
+		: articles
+
+	const sorted = getSortedArticles(filtered, sort)
+
+	console.log(withFilters ? 'mockArticles' : 'sorted')
 
 	return (
-		<GridLayout>
-			{mockArticles.map((article) => (
-				<ArticleCard key={article.id} {...article} />
-			))}
-		</GridLayout>
+		<div className='container m-auto px-4'>
+			{withFilters && <ArticleFilters />}
+
+			<GridLayout>
+				{(withFilters ? sorted : mockArticles).map((article) => (
+					<ArticleCard key={article.id} {...article} />
+				))}
+			</GridLayout>
+		</div>
 	)
 }

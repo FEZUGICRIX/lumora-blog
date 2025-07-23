@@ -1,2 +1,3 @@
 export * from './ui/ArticleList'
-export * from './model/mock'
+export * from './ui/ArticleFilters'
+export * from '../../shared/mock/mock-articles'

@@ -7,5 +7,7 @@ export * from './model/types'
 // Компоненты UI
 export * from './ui/ArticleCard'
 
+export * from './lib/get-article-by-slug'
+
 // Дополнительно, если используешь slice
 // export { articleReducer, toggleLike } from './model/slice'

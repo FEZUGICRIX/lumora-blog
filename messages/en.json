@@ -1,4 +1,10 @@
 {
+  "Meta": {
+    "HomePage": {
+      "title": "Blog",
+      "description": "🌐 Lumora — a sleek technical blog about web development, programming, and architecture. Built with Next.js, TypeScript, Tailwind CSS, and FSD."
+    }
+  },
   "HomePage": {
     "title": "My blog about frontend",
     "subtitle": "I write about React, TypeScript, architecture, and pet projects",

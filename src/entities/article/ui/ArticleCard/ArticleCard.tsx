@@ -1,9 +1,12 @@
-import type { ArticleCardProps } from './ArticleCard.types'
+import Link from 'next/link'
+import { routes } from '@/shared/config/routes'
 import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 import { ImageOverlay } from '@/shared/ui/ImageOverlay'
+import type { ArticleCardProps } from './ArticleCard.types'
 
 export const ArticleCard = ({
 	title,
+	slug,
 	excerpt,
 	image,
 	isNew,
@@ -21,13 +24,15 @@ export const ArticleCard = ({
 	return (
 		<article className='group flex flex-col rounded-xl border border-zinc-200 bg-white text-zinc-800 shadow-md transition duration-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-white'>
 			<div className='relative min-h-48 w-full overflow-hidden rounded-t-xl'>
-				<ImageOverlay>
-					<img
-						src={image}
-						alt={title}
-						className='h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
-					/>
-				</ImageOverlay>
+				<Link href={routes.blog.post(slug)}>
+					<ImageOverlay>
+						<img
+							src={image}
+							alt={title}
+							className='h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
+						/>
+					</ImageOverlay>
+				</Link>
 
 				{isNew && (
 					<span className='absolute top-3 left-3 rounded-full bg-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow'>
@@ -46,7 +51,10 @@ export const ArticleCard = ({
 			</div>
 
 			<div className='flex h-full flex-col justify-between p-6'>
-				<div className='flex flex-grow flex-col gap-4'>
+				<Link
+					href={routes.blog.post(slug)}
+					className='flex flex-grow flex-col gap-4'
+				>
 					<div className='text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400'>
 						<span className='font-semibold text-pink-600 dark:text-pink-400'>
 							{category}
@@ -69,7 +77,7 @@ export const ArticleCard = ({
 							</span>
 						))}
 					</div>
-				</div>
+				</Link>
 
 				<div className='mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 pt-4 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400'>
 					<div className='flex items-center gap-4'>

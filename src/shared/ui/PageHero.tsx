@@ -11,7 +11,7 @@ interface PageHeroProps {
 	image: StaticImageData | string
 	isCenter?: boolean
 	author?: Article['author']
-	createdAt: number
+	createdAt?: number
 }
 
 export const PageHero = ({
@@ -50,7 +50,7 @@ export const PageHero = ({
 									</p>
 								</div>
 
-								{author && (
+								{author && typeof createdAt === 'number' && (
 									<AuthorCard author={author} createdAt={createdAt} />
 								)}
 							</div>

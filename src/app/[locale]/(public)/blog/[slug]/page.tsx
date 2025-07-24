@@ -3,18 +3,25 @@ import { getArticleBySlug } from '@/entities/article'
 import { generateArticleMetadata } from '@/shared/lib/seo/generate-article-metadata'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import type { ArticlePageParams } from '@/shared/types/page-params'
+import type { Locale } from '@/features/locale-switcher'
+
+type Params = Promise<{
+	slug: string
+	locale: Locale
+}>
 
 export async function generateMetadata({
 	params,
-}: ArticlePageParams): Promise<Metadata> {
-	const { slug } = params
+}: {
+	params: Params
+}): Promise<Metadata> {
+	const { slug } = await params
 	const article = await getArticleBySlug(slug)
 	return generateArticleMetadata(article)
 }
 
-export default async function Article({ params }: ArticlePageParams) {
-	const { slug } = params
+export default async function Article({ params }: { params: Params }) {
+	const { slug } = await params
 	const article = await getArticleBySlug(slug)
 
 	if (!article) {

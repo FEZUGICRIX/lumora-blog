@@ -1,4 +1,5 @@
 import type { ArticleCardProps } from '@/entities/article'
+import { BackgroundImage } from '@/shared/assets/images'
 
 export const mockArticles: ArticleCardProps[] = [
 	{
@@ -7,8 +8,7 @@ export const mockArticles: ArticleCardProps[] = [
 		slug: 'pochemu-stoit-izuchat-fsd',
 		excerpt:
 			'Feature-Sliced Design помогает масштабировать фронтенд-проекты. Разбираемся, почему это важно.',
-		image:
-			'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d02a77c8-2407-4dc3-9e0f-5f7ca8307262/dh5jjxw-399318eb-a9f4-4b4e-8aeb-60059d68daf4.png',
+		image: BackgroundImage,
 		isNew: true,
 		readingTime: '5',
 		category: 'Frontend',
@@ -21,7 +21,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Патрик Бейтман',
 			avatar: 'https://i.pravatar.cc/40?img=3',
 		},
-		createdAt: '10 июля 2025',
+		createdAt: 1752091200000, // 10 июля 2025, timestamp with time zone
 	},
 	{
 		id: '2',
@@ -43,7 +43,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Людвиг Кодер',
 			avatar: 'https://i.pravatar.cc/40?img=5',
 		},
-		createdAt: '9 июля 2025',
+		createdAt: 1752004800000, // 9 июля 2025, timestamp with time zone
 	},
 	{
 		id: '3',
@@ -65,7 +65,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Джейн Фронтендер',
 			avatar: 'https://i.pravatar.cc/40?img=10',
 		},
-		createdAt: '5 июля 2025',
+		createdAt: 1751587200000, // 5 июля 2025, timestamp with time zone
 	},
 	{
 		id: '4',
@@ -86,7 +86,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Николай Стили',
 			avatar: 'https://i.pravatar.cc/40?img=7',
 		},
-		createdAt: '2 июля 2025',
+		createdAt: 1751587200000, // 2 июля 2025, timestamp with time zone
 	},
 	{
 		id: '5',
@@ -107,7 +107,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Иван Тулов',
 			avatar: 'https://i.pravatar.cc/40?img=12',
 		},
-		createdAt: '1 июля 2025',
+		createdAt: 1751500800000, // 1 июля 2025, timestamp with time zone
 	},
 	{
 		id: '6',
@@ -128,7 +128,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Алина Интерфейсова',
 			avatar: 'https://i.pravatar.cc/40?img=15',
 		},
-		createdAt: '30 июня 2025',
+		createdAt: 1751414400000, // 30 июня 2025, timestamp with time zone
 	},
 	{
 		id: '7',
@@ -149,7 +149,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Сергей Стор',
 			avatar: 'https://i.pravatar.cc/40?img=20',
 		},
-		createdAt: '29 июня 2025',
+		createdAt: 1751328000000, // 29 июня 2025, timestamp with time zone
 	},
 	{
 		id: '8',
@@ -170,7 +170,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Кирилл Архитекторов',
 			avatar: 'https://i.pravatar.cc/40?img=9',
 		},
-		createdAt: '27 июня 2025',
+		createdAt: 1751155200000, // 27 июня 2025, timestamp with time zone
 	},
 	{
 		id: '9',
@@ -191,7 +191,7 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Оптимус Гик',
 			avatar: 'https://i.pravatar.cc/40?img=18',
 		},
-		createdAt: '25 июня 2025',
+		createdAt: 1750982400000, // 25 июня 2025, timestamp with time zone
 	},
 	{
 		id: '10',
@@ -212,6 +212,6 @@ export const mockArticles: ArticleCardProps[] = [
 			name: 'Гриша Контрольный',
 			avatar: 'https://i.pravatar.cc/40?img=14',
 		},
-		createdAt: '20 июня 2025',
+		createdAt: 1750540800000, // 20 июня 2025, timestamp with time zone
 	},
 ]

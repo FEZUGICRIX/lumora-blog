@@ -1,13 +1,12 @@
-import Link from 'next/link'
+import { SOCIAL_LINKS } from '@/shared/constants'
 import { GithubIcon, LinkedinIcon } from '@/shared/ui/icon'
 import { TooltipWithText } from './TooltipWithText'
-import { SOCIAL_LINKS } from '@/shared/constants'
 
 export const SocialLinks = () => {
 	return (
 		<div className='ml-6 flex items-center gap-4 text-zinc-700 dark:text-zinc-300'>
 			<div className='flex items-center gap-2'>
-				<Link
+				<a
 					href={SOCIAL_LINKS.linkedin}
 					target='_blank'
 					className='glass-icon'
@@ -15,8 +14,8 @@ export const SocialLinks = () => {
 					<TooltipWithText text='LinkedIn'>
 						<LinkedinIcon />
 					</TooltipWithText>
-				</Link>
-				<Link
+				</a>
+				<a
 					href={SOCIAL_LINKS.github}
 					target='_blank'
 					className='glass-icon'
@@ -24,7 +23,7 @@ export const SocialLinks = () => {
 					<TooltipWithText text='GitHub'>
 						<GithubIcon />
 					</TooltipWithText>
-				</Link>
+				</a>
 			</div>
 		</div>
 	)

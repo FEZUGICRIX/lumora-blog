@@ -1,7 +1,7 @@
 import { LogoImage } from '@/shared/assets/images'
 import { routes } from '@/shared/config/routes'
+import { Link } from '@/shared/config/i18n'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export const Logo = () => {
 	return (

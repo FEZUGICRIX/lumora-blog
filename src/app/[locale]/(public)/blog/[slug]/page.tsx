@@ -8,15 +8,13 @@ import type { ArticlePageParams } from '@/shared/types/page-params'
 export async function generateMetadata({
 	params,
 }: ArticlePageParams): Promise<Metadata> {
-	// @ts-ignore TS80007 — params is async proxy in Next.js
-	const { slug } = await params
+	const { slug } = params
 	const article = await getArticleBySlug(slug)
 	return generateArticleMetadata(article)
 }
 
 export default async function Article({ params }: ArticlePageParams) {
-	// @ts-ignore TS80007 — params is async proxy in Next.js
-	const { slug } = await params
+	const { slug } = params
 	const article = await getArticleBySlug(slug)
 
 	if (!article) {

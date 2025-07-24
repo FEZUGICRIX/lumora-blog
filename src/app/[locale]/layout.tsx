@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/shared/providers/theme-provider'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/shared/config/i18n/routing'
-import { Header } from '@/widgets/header/ui'
+import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
 import '../globals.css'
 

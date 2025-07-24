@@ -6,7 +6,7 @@ import { useDebounce } from '@/shared/hooks/useDebounce'
 import { SearchItem } from './SearchItem'
 import { AnimatedHeight } from '@/shared/ui/AnimatedHeight'
 import { Input } from '@/shared/ui/ui-kit/input'
-import { mockArticles } from '@/shared/mock/mock-articles'
+import { mockArticles } from '@/shared/constants/mock/mock-articles'
 import { SearchIcon } from '@/shared/ui/icon'
 import { AnimatePresence } from 'framer-motion'
 

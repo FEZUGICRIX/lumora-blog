@@ -4,7 +4,7 @@ import { ArticleCard } from '@/entities/article'
 import { ArticleFilters } from './ArticleFilters'
 import { getSortedArticles } from '@/features/filters'
 import { GridLayout } from '@/shared/ui/GridLayout'
-import { mockArticles } from '@/shared/mock/mock-articles'
+import { mockArticles } from '@/shared/constants/mock/mock-articles'
 import { useSearchParams } from 'next/navigation'
 import type { Category, SortOption } from '@/features/filters'
 

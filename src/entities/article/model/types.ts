@@ -1,10 +1,12 @@
+import type { StaticImageData } from 'next/image'
+
 export interface Article {
 	id: string
 	title: string
 	slug: string
 	excerpt: string
-	image: string
-	createdAt: string
+	image: string | StaticImageData
+	createdAt: number
 	tags: string[]
 	category: string
 	readingTime: string

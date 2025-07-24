@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Article } from '@/entities/article'
 import { highlightMatch } from '@/shared/lib/utils/highlightMatch'
 
@@ -21,10 +22,12 @@ export const SearchItem = ({
 			className='glass dark:glass-dark hover:bg-card flex items-center gap-4 rounded-2xl p-3 shadow-sm backdrop-blur-lg transition'
 		>
 			{/* Изображение статьи */}
-			<img
+			<Image
 				src={image}
 				alt={title}
-				className='h-20 w-32 flex-shrink-0 rounded-xl object-cover'
+				width={128}
+				height={80}
+				className='flex-shrink-0 rounded-xl object-cover'
 			/>
 
 			{/* Контент */}

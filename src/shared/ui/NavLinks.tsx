@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/shared/config/i18n'
 import { usePathname } from 'next/navigation'
 import { SheetClose } from '@/shared/ui/ui-kit/sheet'
 import clsx from 'clsx'

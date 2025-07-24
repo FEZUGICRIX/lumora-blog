@@ -1,13 +1,7 @@
 'use client'
 
-import {
-	motion,
-	useAnimation,
-	useIsPresent,
-	useMotionValueEvent,
-	useMotionValue,
-} from 'framer-motion'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 interface Props {
 	children: React.ReactNode

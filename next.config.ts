@@ -1,7 +1,27 @@
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
-const nextConfig: NextConfig = {}
+const nextConfig: NextConfig = {
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'avatars.mds.yandex.net',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'i.pinimg.com',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'i.pravatar.cc',
+				pathname: '/**',
+			},
+		],
+	},
+}
 
 const withNextIntl = createNextIntlPlugin(
 	'./src/shared/config/i18n/request.ts',

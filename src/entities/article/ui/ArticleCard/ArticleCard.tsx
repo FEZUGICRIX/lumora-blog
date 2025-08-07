@@ -10,10 +10,10 @@ import type { ArticleCardProps } from './ArticleCard.types'
 export const ArticleCard = ({
 	title,
 	slug,
-	excerpt,
-	image,
+	coverImage,
 	isNew,
 	readingTime,
+	description,
 	category,
 	tags,
 	views,
@@ -31,7 +31,7 @@ export const ArticleCard = ({
 				className='relative min-h-48 w-full overflow-hidden rounded-t-xl'
 			>
 				<Image
-					src={image ?? BackgroundImage}
+					src={coverImage ?? BackgroundImage}
 					alt={title}
 					className='object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
 					fill
@@ -61,15 +61,17 @@ export const ArticleCard = ({
 					className='flex flex-grow flex-col gap-4'
 				>
 					<div className='text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400'>
-						<span className='font-semibold text-pink-600 dark:text-pink-400'>
-							{category}
-						</span>
+						{category?.name && (
+							<span className='font-semibold text-pink-600 dark:text-pink-400'>
+								{category.name}
+							</span>
+						)}
 						<span className='px-1'>•</span> {readingTime} мин чтения
 					</div>
 
 					<h3 className='text-xl font-bold'>{title}</h3>
 					<p className='mb-auto text-sm text-zinc-600 dark:text-zinc-300'>
-						{excerpt}
+						{description}
 					</p>
 
 					<div className='flex flex-wrap gap-2 pt-2'>
@@ -93,7 +95,7 @@ export const ArticleCard = ({
 
 						<div className='flex items-center gap-1'>
 							<CommentIcon className='h-4 w-4' />
-							<span>{comments}</span>
+							<span>{comments.length ?? 0}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>

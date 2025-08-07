@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import type { ArticleCardProps } from '@/entities/article'
+import type { Article } from '@/entities/article'
 import { ARTICLE_NOT_FOUND_METADATA } from '@/shared/constants'
 
 export function generateArticleMetadata(
-	article?: ArticleCardProps,
+	article?: Article | null,
 ): Metadata {
 	if (!article) return ARTICLE_NOT_FOUND_METADATA
 

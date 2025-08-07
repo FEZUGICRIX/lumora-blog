@@ -1,2 +1,2 @@
 export * from './social-networks'
-export * from './seo'
+export * from './seo/en'

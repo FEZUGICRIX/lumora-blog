@@ -1,6 +1,6 @@
 'use client'
 
-import { ArticleCard } from '@/entities/article'
+import { ArticleCard, type Article } from '@/entities/article'
 import { ArticleFilters } from './ArticleFilters'
 import { getSortedArticles } from '@/features/filters'
 import { GridLayout } from '@/shared/ui/GridLayout'
@@ -10,17 +10,22 @@ import type { Category, SortOption } from '@/features/filters'
 
 interface ArticleListProps {
 	withFilters?: boolean
+	articles: Article[] // TODO: поставить нормальную типизацию
 }
 
-export const ArticleList = ({ withFilters = false }: ArticleListProps) => {
+export const ArticleList = ({
+	articles,
+	withFilters = false,
+}: ArticleListProps) => {
 	const searchParams = useSearchParams()
-	const articles = mockArticles
 
 	const category = searchParams.get('category') as Category | null
 	const sort = (searchParams.get('sort') as SortOption) ?? 'date'
 
 	const filtered = category
-		? articles.filter((a) => a.category.toLocaleLowerCase() === category)
+		? articles.filter(
+				(a: any) => a.category?.toLocaleLowerCase() === category,
+			) // TODO: поставить нормальную типизацию
 		: articles
 
 	const sorted = getSortedArticles(filtered, sort)
@@ -32,7 +37,7 @@ export const ArticleList = ({ withFilters = false }: ArticleListProps) => {
 			{withFilters && <ArticleFilters />}
 
 			<GridLayout>
-				{(withFilters ? sorted : mockArticles).map((article) => (
+				{(withFilters ? sorted : articles).map((article) => (
 					<ArticleCard key={article.id} {...article} />
 				))}
 			</GridLayout>

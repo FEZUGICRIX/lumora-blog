@@ -5,7 +5,7 @@ import { PageHero } from '@/shared/ui/PageHero'
 import { BackgroundImage } from '@/shared/assets/images'
 import { useTranslations } from 'next-intl'
 
-const HomePage = () => {
+const HomePage = ({ articles }: any) => { // TODO: поставить нормальную типизацию
 	const t = useTranslations('HomePage')
 
 	return (
@@ -17,7 +17,7 @@ const HomePage = () => {
 				isCenter
 			/>
 
-			<ArticleList withFilters />
+			<ArticleList articles={articles} withFilters />
 		</div>
 	)
 }

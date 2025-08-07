@@ -11,19 +11,19 @@ interface PageHeroProps {
 	image: StaticImageData | string
 	isCenter?: boolean
 	author?: Article['author']
-	createdAt?: number
+	createdAt?: string
 }
 
 export const PageHero = ({
-	title,
 	subtitle,
 	image,
+	title,
 	author,
 	createdAt,
 	isCenter = false,
 }: PageHeroProps) => {
 	return (
-		<section className='relative mx-auto h-[40vh] w-full pt-20'>
+		<section className='relative mx-auto h-[40vh] min-h-80 w-full pt-20'>
 			<div className='mx-auto'>
 				<Image
 					src={image}

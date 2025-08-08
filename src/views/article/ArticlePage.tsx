@@ -6,6 +6,7 @@ import { PageHero } from '@/shared/ui/PageHero'
 import { Badge } from '@/shared/ui/ui-kit/badge'
 // import { useGetArticleBySlugQuery } from '@/entities/article/api/article-api'
 import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
+import millify from 'millify'
 
 const ArticlePage = ({
 	title,
@@ -64,17 +65,17 @@ const ArticlePage = ({
 						<div className='flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400'>
 							<div className='flex items-center gap-1'>
 								<HeartIcon />
-								<span>{likes.toLocaleString()}</span>
+								<span>{millify(likes)}</span>
 							</div>
 							{comments?.length > 0 && (
 								<div className='flex items-center gap-1'>
 									<MessageSquareText />
-									<span>{comments.length.toLocaleString()}</span>
+									<span>{millify(comments.length)}</span>
 								</div>
 							)}
 							<div className='flex items-center gap-1'>
 								<Eye />
-								<span>{views.toLocaleString()}</span>
+								<span>{millify(views)}</span>
 							</div>
 						</div>
 					</div>

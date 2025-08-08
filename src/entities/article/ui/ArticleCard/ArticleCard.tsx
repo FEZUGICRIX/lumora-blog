@@ -5,6 +5,7 @@ import { routes } from '@/shared/config/routes'
 import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 import { ImageDarkOverlay } from '@/shared/ui/ImageDarkOverlay'
 import { BackgroundImage } from '@/shared/assets/images'
+import millify from 'millify'
 import type { ArticleCardProps } from './ArticleCard.types'
 
 export const ArticleCard = ({
@@ -90,19 +91,19 @@ export const ArticleCard = ({
 					<div className='flex items-center gap-4'>
 						<div className='flex items-center gap-1'>
 							<ViewIcon className='h-4 w-4' />
-							<span>{views}</span>
+							<span>{millify(views)}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>
 							<CommentIcon className='h-4 w-4' />
-							<span>{comments.length ?? 0}</span>
+							<span>{millify(comments.length ?? 0)}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>
 							<HeartIcon
 								className={`${isLiked && 'fill-pink-500 text-pink-500'} h-4 w-4`}
 							/>
-							<span>{likes}</span>
+							<span>{millify(likes)}</span>
 						</div>
 					</div>
 

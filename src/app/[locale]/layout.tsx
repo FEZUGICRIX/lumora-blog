@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { ThemeProvider } from '@/shared/providers/theme-provider'
-import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/shared/config/i18n/routing'
-import { Header } from '@/widgets/header/ui'
+import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
 import '../globals.css'
+import { Providers } from '@/shared/providers'
+import { getMessages } from 'next-intl/server'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -40,18 +41,18 @@ export default async function RootLayout({
 		notFound()
 	}
 
+	const messages = await getMessages({ locale })
+
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
 			>
-				<NextIntlClientProvider>
-					<ThemeProvider defaultTheme='dark'>
-						<Header />
-						<main className='flex-1'>{children}</main>
-						<Footer />
-					</ThemeProvider>
-				</NextIntlClientProvider>
+				<Providers locale={locale} messages={messages}>
+					<Header />
+					<main className='flex-1'>{children}</main>
+					<Footer />
+				</Providers>
 			</body>
 		</html>
 	)

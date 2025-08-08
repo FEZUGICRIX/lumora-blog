@@ -1,3 +1,4 @@
+import { ActionPanel } from '@/widgets/action-panel'
 import { CustomSheet } from '@/shared/ui/CustomSheet'
 import { Button } from '@/shared/ui/ui-kit/button'
 import { BurgerMenuIcon } from '@/shared/ui/icon'
@@ -5,7 +6,7 @@ import { NavLinks } from '@/shared/ui/NavLinks'
 import { SocialLinks } from '@/shared/ui/SocialLinks'
 import { Divider } from '@/shared/ui/Divider'
 import { Logo } from '@/shared/ui/Logo'
-import { ActionPanel } from '@/shared/ui/ActionPanel'
+import { SheetClose } from '@/shared/ui/ui-kit/sheet'
 
 export const SidebarMenu = () => {
 	return (
@@ -16,7 +17,11 @@ export const SidebarMenu = () => {
 						<BurgerMenuIcon />
 					</Button>
 				}
-				title={<Logo />}
+				title={
+					<SheetClose asChild>
+						<Logo />
+					</SheetClose>
+				}
 			>
 				<div className='flex h-full flex-col'>
 					<div className='mx-auto mb-4'>

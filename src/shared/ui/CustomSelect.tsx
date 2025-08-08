@@ -31,7 +31,7 @@ export const CustomSelect = <T extends string>({
 		<Select value={value} onValueChange={onChange}>
 			<SelectTrigger
 				className={cn(
-					'glass-icon dark:glass-icon-dark all w-[120px] transition',
+					'glass-icon dark:glass-icon-dark all w-[120px] transition dark:text-white',
 					className,
 				)}
 			>

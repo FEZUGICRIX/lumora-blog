@@ -67,7 +67,6 @@ export type CreateArticleInput = {
   published?: Scalars['Boolean']['input'];
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   readingTime?: Scalars['Int']['input'];
-  slug: Scalars['String']['input'];
   tags?: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
   views?: Scalars['Int']['input'];

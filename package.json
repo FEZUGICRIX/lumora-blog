@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "gen": "graphql-codegen --config src/shared/api/graphql/codegen.ts",
+    "codegen": "graphql-codegen --config src/shared/api/graphql/codegen.ts",
     "lint": "next lint"
   },
   "dependencies": {

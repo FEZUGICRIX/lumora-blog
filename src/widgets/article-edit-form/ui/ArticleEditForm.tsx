@@ -27,7 +27,6 @@ export function ArticleEditForm({ article }: Props) {
 
 		const payload = {
 			title,
-			slug: title,
 			description,
 			content,
 			tags: tags.split(',').map((tag) => tag.trim()),

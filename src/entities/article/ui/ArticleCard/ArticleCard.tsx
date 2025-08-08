@@ -6,25 +6,29 @@ import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 import { ImageDarkOverlay } from '@/shared/ui/ImageDarkOverlay'
 import { BackgroundImage } from '@/shared/assets/images'
 import millify from 'millify'
-import type { ArticleCardProps } from './ArticleCard.types'
+import type { ArticleCardProps } from '@/entities/article/model/types'
 
 export const ArticleCard = ({
-	title,
-	slug,
-	coverImage,
+	article,
 	isNew,
-	readingTime,
-	description,
-	category,
-	tags,
-	views,
-	comments,
-	likes,
-	author,
-	createdAt,
-	onLike,
 	isLiked,
+	onLike,
 }: ArticleCardProps) => {
+	const {
+		title,
+		slug,
+		coverImage,
+		readingTime,
+		description,
+		category,
+		tags,
+		views,
+		comments,
+		likes,
+		author,
+		createdAt,
+	} = article
+
 	return (
 		<article className='group flex flex-col rounded-xl border border-zinc-200 bg-white text-zinc-800 shadow-md transition duration-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:text-white'>
 			<Link

@@ -1,11 +1,11 @@
 import { ArticleEditForm } from '@/widgets/article-edit-form'
-import type { Article } from '@/entities/article'
 import { BackgroundImage } from '@/shared/assets/images'
 import { PageHero } from '@/shared/ui/PageHero'
+import type { FullArticle } from '@/entities/article'
 
 type EditorPageProps =
 	| { isNew: true; article?: null }
-	| { isNew: false; article: Article }
+	| { isNew: false; article: FullArticle }
 
 const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 	const {
@@ -13,7 +13,6 @@ const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 		// slug,
 		description,
 		coverImage,
-		// isNew,
 		// readingTime,
 		// category,
 		// tags,
@@ -22,8 +21,6 @@ const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 		// likes,
 		author,
 		createdAt,
-		// onLike,
-		// isLiked,
 	} = article ?? {}
 
 	return (

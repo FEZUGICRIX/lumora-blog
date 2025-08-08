@@ -1,6 +1,6 @@
 import Fuse from 'fuse.js'
-import type { IFuseOptions } from 'fuse.js'
 import { useMemo } from 'react'
+import type { IFuseOptions } from 'fuse.js'
 
 export function useFuseSearch<T>(
 	data: T[],
@@ -11,6 +11,6 @@ export function useFuseSearch<T>(
 	const results = useMemo(() => {
 		if (!query) return data
 		return fuse.search(query).map((res) => res.item)
-	}, [query, fuse])
+	}, [query, fuse, data])
 	return results
 }

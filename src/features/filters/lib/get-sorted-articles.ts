@@ -1,18 +1,18 @@
-import type { Article } from '@/entities/article'
+import type { FullArticle } from '@/entities/article'
 import type { SortOption } from '../model/types'
 
 export function getSortedArticles(
-	articles: Article[],
+	articles: FullArticle[],
 	sort: SortOption,
-): Article[] {
+): FullArticle[] {
 	return [...articles].sort((a, b) => {
 		switch (sort) {
 			case 'views':
 				return b.views - a.views
 			case 'likes':
 				return b.likes - a.likes
-			case 'comments':
-				return b.comments - a.comments
+			// case 'comments':
+			// 	return b.comments - a.comments
 			case 'date':
 			default:
 				return (

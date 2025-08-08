@@ -28,5 +28,5 @@ export default async function Article({ params }: { params: Params }) {
 		notFound()
 	}
 
-	return <ArticlePage {...article} />
+	return <ArticlePage article={article} />
 }

@@ -1,23 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useFuseSearch } from '@/shared/hooks/useFuseSearch'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { SearchItem } from './SearchItem'
+// import { SearchItem } from './SearchItem'
 import { AnimatedHeight } from '@/shared/ui/AnimatedHeight'
 import { Input } from '@/shared/ui/ui-kit/input'
 import { mockArticles } from '@/shared/constants/mock/mock-articles'
 import { SearchIcon } from '@/shared/ui/icon'
 import { AnimatePresence } from 'framer-motion'
 
+// TODO: Реализовать запрос статей через RTK Query с правильной типизацией
 export const SearchModal = () => {
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, 200)
 
-	const results = useFuseSearch(mockArticles, debouncedQuery, {
-		keys: ['title', 'excerpt', 'author.name'],
-		threshold: 0.3,
-	})
+	const fuseOptions = useMemo(
+		() => ({
+			keys: ['title', 'excerpt', 'author.name'],
+			threshold: 0.3,
+		}),
+		[],
+	)
+
+	const results = useFuseSearch(mockArticles, debouncedQuery, fuseOptions)
 
 	return (
 		<div className='space-y-6'>
@@ -39,7 +45,9 @@ export const SearchModal = () => {
 								Найдено: {results.length}
 							</p>
 							<div className='max-h-[70vh] space-y-4 overflow-y-auto pr-1'>
-								{results.map((article) => (
+								{/* TODO: Реализовать запрос статей через RTK Query с правильной типизацией */}
+
+								{/* {results.map((article) => (
 									<SearchItem
 										key={article.id}
 										id={article.id}
@@ -50,7 +58,7 @@ export const SearchModal = () => {
 										createdAt={article.createdAt}
 										query={query}
 									/>
-								))}
+								))} */}
 							</div>
 						</div>
 					</AnimatedHeight>

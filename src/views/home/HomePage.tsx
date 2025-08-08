@@ -4,8 +4,13 @@ import { ArticleList } from '@/widgets/article-list'
 import { PageHero } from '@/shared/ui/PageHero'
 import { BackgroundImage } from '@/shared/assets/images'
 import { useTranslations } from 'next-intl'
+import type { ArticlePreview } from '@/entities/article'
 
-const HomePage = ({ articles }: any) => { // TODO: поставить нормальную типизацию
+interface HomePageProps {
+	articles: ArticlePreview[]
+}
+
+const HomePage = ({ articles }: HomePageProps) => {
 	const t = useTranslations('HomePage')
 
 	return (

@@ -1,17 +1,18 @@
 import Image from 'next/image'
-import type { Article } from '@/entities/article'
 import { highlightMatch } from '@/shared/lib/utils/highlightMatch'
+import { BackgroundImage } from '@/shared/assets/images'
+import type { ArticlePreview } from '@/entities/article'
 
 type SearchItemProps = Pick<
-	Article,
-	'id' | 'title' | 'excerpt' | 'image' | 'createdAt' | 'author'
+	ArticlePreview,
+	'id' | 'title' | 'description' | 'coverImage' | 'createdAt' | 'author'
 >
 
 export const SearchItem = ({
 	id,
-	image,
+	coverImage,
 	title,
-	excerpt,
+	description,
 	author,
 	createdAt,
 	query,
@@ -23,7 +24,7 @@ export const SearchItem = ({
 		>
 			{/* Изображение статьи */}
 			<Image
-				src={image}
+				src={coverImage ?? BackgroundImage}
 				alt={title}
 				width={128}
 				height={80}
@@ -36,15 +37,15 @@ export const SearchItem = ({
 					{highlightMatch(title, query)}
 				</h3>
 				<p className='text-muted-foreground line-clamp-2 text-sm'>
-					{highlightMatch(excerpt, query)}
+					{highlightMatch(description, query)}
 				</p>
 				<div className='text-muted-foreground mt-2 flex items-center gap-2 text-xs'>
 					<img
 						src={author.avatar}
-						alt={author.name}
+						alt={author.firstName}
 						className='h-5 w-5 rounded-full'
 					/>
-					<span>{highlightMatch(author.name, query)}</span>
+					<span>{highlightMatch(author.firstName, query)}</span>
 					<span>•</span>
 					<span>{createdAt}</span>
 				</div>

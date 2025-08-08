@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import type { Article } from '@/entities/article'
+import type { FullArticle } from '@/entities/article'
 import { useFormattedDate } from '@/shared/config/dayjs'
 
 interface AuthorCardProps {
-	author: Article['author']
+	author: FullArticle['author']
 	createdAt: string
 }
 

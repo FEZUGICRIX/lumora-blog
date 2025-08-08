@@ -1,30 +1,32 @@
 'use client'
 
-import type { Article } from '@/entities/article'
-import { BackgroundImage } from '@/shared/assets/images'
 import { PageHero } from '@/shared/ui/PageHero'
 import { Badge } from '@/shared/ui/ui-kit/badge'
+import { BackgroundImage } from '@/shared/assets/images'
 // import { useGetArticleBySlugQuery } from '@/entities/article/api/article-api'
 import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
 import millify from 'millify'
+import type { ArticlePageProps } from '@/entities/article'
 
-const ArticlePage = ({
-	title,
-	coverImage,
-	// isNew,
-	// readingTime,
-	// category,
-	description,
-	tags,
-	views,
-	content,
-	comments,
-	likes,
-	author,
-	createdAt,
-	// onLike,
-	// isLiked,
-}: Article) => {
+const ArticlePage = ({ article }: ArticlePageProps) => {
+	const {
+		title,
+		coverImage,
+		// readingTime,
+		// category,
+		description,
+		tags,
+		views,
+		content,
+		comments,
+		likes,
+		author,
+		createdAt,
+		// isNew,
+		// onLike,
+		// isLiked,
+	} = article
+
 	/*
 		Пример для запроса клиентских данных
 	*/
@@ -61,7 +63,6 @@ const ArticlePage = ({
 							))}
 						</div>
 
-						{/* TODO: сделать количество в формате 1.2K */}
 						<div className='flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400'>
 							<div className='flex items-center gap-1'>
 								<HeartIcon />

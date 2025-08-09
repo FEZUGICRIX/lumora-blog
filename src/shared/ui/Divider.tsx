@@ -31,7 +31,7 @@ export const Divider = ({
 			{label ? (
 				<div className='my-4 flex items-center'>
 					<div className='border-border dark:border-border flex-grow border-t' />
-					<span className='text-muted-foreground dark:text-muted-foreground mx-4 text-sm font-medium'>
+					<span className='dark:text-muted-foreground mx-4 text-sm font-medium'>
 						{label}
 					</span>
 					<div className='border-border dark:border-border flex-grow border-t' />

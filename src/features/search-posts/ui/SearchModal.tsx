@@ -1,23 +1,34 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useFuseSearch } from '@/shared/hooks/useFuseSearch'
 import { useDebounce } from '@/shared/hooks/useDebounce'
-import { SearchItem } from './SearchItem'
+import { useGetAllArticlesQuery } from '@/entities/article/api'
 import { AnimatedHeight } from '@/shared/ui/AnimatedHeight'
-import { Input } from '@/shared/ui/ui-kit/input'
-import { mockArticles } from '@/shared/constants/mock/mock-articles'
-import { SearchIcon } from '@/shared/ui/icon'
 import { AnimatePresence } from 'framer-motion'
+import { SearchItem } from './SearchItem'
+import { SearchModalSkeleton } from './skeletons/SearchModalSkeleton'
+import { SearchIcon } from '@/shared/ui/icon'
+import { Input } from '@/shared/ui/ui-kit/input'
 
+// TODO: Реализовать запрос статей через RTK Query с правильной типизацией
 export const SearchModal = () => {
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, 200)
 
-	const results = useFuseSearch(mockArticles, debouncedQuery, {
-		keys: ['title', 'excerpt', 'author.name'],
-		threshold: 0.3,
-	})
+	const { data, error, isLoading } = useGetAllArticlesQuery()
+
+	const fuseOptions = useMemo(
+		() => ({
+			keys: ['title', 'excerpt', 'author.name'],
+			threshold: 0.3,
+		}),
+		[],
+	)
+
+	const results = useFuseSearch(data ?? [], debouncedQuery, fuseOptions)
+
+	if (isLoading) return <SearchModalSkeleton />
 
 	return (
 		<div className='space-y-6'>
@@ -35,17 +46,19 @@ export const SearchModal = () => {
 				{results.length > 0 ? (
 					<AnimatedHeight key='search-results'>
 						<div className='space-y-4'>
-							<p className='text-muted-foreground text-sm'>
+							<p className='dark:text-muted-foreground text-sm text-gray-800'>
 								Найдено: {results.length}
 							</p>
 							<div className='max-h-[70vh] space-y-4 overflow-y-auto pr-1'>
+								{/* TODO: Реализовать запрос статей через RTK Query с правильной типизацией */}
+
 								{results.map((article) => (
 									<SearchItem
 										key={article.id}
 										id={article.id}
-										image={article.image}
+										coverImage={article.coverImage}
 										title={article.title}
-										excerpt={article.excerpt}
+										description={article.description}
 										author={article.author}
 										createdAt={article.createdAt}
 										query={query}

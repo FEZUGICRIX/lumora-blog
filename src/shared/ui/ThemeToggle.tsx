@@ -22,7 +22,7 @@ export const ThemeToggle = () => {
 		>
 			<TooltipWithText text='Switch Theme'>
 				{theme === 'dark' ? (
-					<Sun className='h-5 w-5' />
+					<Sun className='h-5 w-5 dark:text-white' />
 				) : (
 					<Moon className='h-5 w-5' />
 				)}

@@ -6,7 +6,9 @@ import type {
 	GetAllArticlesQueryVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
 
-export const fetchAllArticles = async () => {
+export const fetchAllArticles = async (): Promise<
+	GetAllArticlesQuery['getAllArticles']
+> => {
 	try {
 		const data = await graphqlClient.request<
 			GetAllArticlesQuery,
@@ -14,7 +16,7 @@ export const fetchAllArticles = async () => {
 		>(getAllArticlesQuery)
 
 		return data.getAllArticles
-	} catch (error) {
+	} catch {
 		return []
 	}
 }

@@ -1,49 +1,45 @@
-import type { StaticImageData } from 'next/image'
+import type {
+	Article,
+	GetAllArticlesQuery,
+	GetArticleBySlugQuery,
+} from '@/shared/api/graphql/__generated__/graphql'
 
-export interface Article {
-	id: string
-	title: string
-	slug: string
-	description: string
-	content: string
-	coverImage?: string | StaticImageData | null
+// TODO: перевести комментарии на английский
 
-	published: boolean
-	publishedAt?: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
+/* ----------------------------------------
+   TYPES FROM GRAPHQL QUERIES (API contract)
+---------------------------------------- */
 
-	// TODO: Add type for category
-	category: {
-		id: string
-		name: string
-	}
-	readingTime: number
-	views: number
+// Превью статьи из запроса getAllArticles (для списка статей, карточек, и т.п.)
+export type ArticlePreview = NonNullable<
+	GetAllArticlesQuery['getAllArticles'][number]
+>
 
-	//TODO: Add type for comments
-	comments: {
-		id: string
-		content: string
-		createdAt: string
-		updatedAt: string
-		author: {
-			id: string
-			firstName: string
-			lastName?: string
-			avatar?: string
-		}
-	}[]
-	likes: number
+// Полная статья из запроса getArticleBySlug (для страницы статьи)
+export type FullArticle = NonNullable<
+	GetArticleBySlugQuery['getArticleBySlug']
+>
+
+// Сырые типы из схемы GraphQL (используются реже, например в форме редактирования)
+export type RawArticle = Article
+
+/* ----------------------------------------
+   UI COMPONENT PROP TYPES
+---------------------------------------- */
+
+// Общие UI-пропсы для статьи (используются и в карточке, и на странице)
+export interface ArticleUIProps {
+	onLike?: () => void
 	isNew?: boolean
 	isLiked?: boolean
+}
 
-	// TODO: Add type for author
-	author: {
-		id: string
-		firstName: string
-		lastName?: string
-		avatar?: string
-	}
+// Пропсы для карточки статьи
+export interface ArticleCardProps extends ArticleUIProps {
+	article: ArticlePreview
+}
+
+// Пропсы для страницы статьи
+export interface ArticlePageProps extends ArticleUIProps {
+	article: FullArticle
 }

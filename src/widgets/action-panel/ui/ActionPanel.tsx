@@ -22,7 +22,11 @@ export const ActionPanel = () => {
 			</div>
 
 			<Modal
-				title='Найти статью'
+				title={
+					<span className='text-foreground dark:text-white'>
+						Найти статью
+					</span>
+				}
 				open={searchModal.value}
 				onOpenChange={searchModal.toggle}
 			>

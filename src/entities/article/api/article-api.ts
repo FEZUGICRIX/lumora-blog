@@ -6,7 +6,6 @@ import type {
 	CreateArticleMutation,
 	CreateArticleMutationVariables,
 	GetAllArticlesQuery,
-	GetAllArticlesQueryVariables,
 	GetArticleBySlugQuery,
 	GetArticleBySlugQueryVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
@@ -30,11 +29,13 @@ export const articleApi = createApi({
 		// Get all articles
 		getAllArticles: builder.query<
 			GetAllArticlesQuery['getAllArticles'],
-			GetAllArticlesQueryVariables
+			void
 		>({
 			query: () => ({
 				document: getAllArticlesQuery,
 			}),
+			transformResponse: (response: GetAllArticlesQuery) =>
+				response.getAllArticles,
 		}),
 
 		// Create article

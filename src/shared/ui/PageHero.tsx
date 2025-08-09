@@ -1,7 +1,7 @@
 'use client'
 
 import Image, { type StaticImageData } from 'next/image'
-import type { Article } from '@/entities/article'
+import type { FullArticle } from '@/entities/article'
 import { AuthorCard } from '@/entities/user'
 import { ImageDarkOverlay } from './ImageDarkOverlay'
 
@@ -10,7 +10,7 @@ interface PageHeroProps {
 	subtitle: string
 	image: StaticImageData | string
 	isCenter?: boolean
-	author?: Article['author']
+	author?: FullArticle['author']
 	createdAt?: string
 }
 

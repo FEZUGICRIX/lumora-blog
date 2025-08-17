@@ -1,10 +1,9 @@
+import 'dotenv/config'
+import { env } from '../../config/env'
 import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
-	// TODO: вместо localhost вставить константу url backend'а
-	schema:
-		process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT ||
-		'http://localhost:5000/graphql',
+	schema: env.apiUrl,
 
 	documents: ['src/**/*.{ts,tsx}'],
 	generates: {

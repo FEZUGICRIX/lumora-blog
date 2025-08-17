@@ -21,6 +21,7 @@ export type Article = {
   author: User;
   category: Category;
   comments: Array<Comment>;
+  commentsCount?: Maybe<Scalars['Int']['output']>;
   content: Scalars['String']['output'];
   coverImage?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
@@ -38,11 +39,20 @@ export type Article = {
   views: Scalars['Float']['output'];
 };
 
+export enum ArticleSortBy {
+  Comments = 'COMMENTS',
+  CreatedAt = 'CREATED_AT',
+  Likes = 'LIKES',
+  UpdatedAt = 'UPDATED_AT',
+  Views = 'VIEWS'
+}
+
 export type Category = {
   __typename?: 'Category';
   articles: Array<Article>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
 };
 
 export type Comment = {
@@ -132,7 +142,7 @@ export type MutationRemoveArticleArgs = {
 
 
 export type MutationRemoveCategoryArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -169,16 +179,16 @@ export type Query = {
   __typename?: 'Query';
   category: Category;
   comment: Comment;
-  getAllArticles: Array<Article>;
   getAllUsers: Array<User>;
   getArticleBySlug: Article;
+  getArticles: Array<Article>;
   getCategories: Array<Category>;
   getUserById?: Maybe<User>;
 };
 
 
 export type QueryCategoryArgs = {
-  id: Scalars['Int']['input'];
+  slug: Scalars['String']['input'];
 };
 
 
@@ -192,9 +202,26 @@ export type QueryGetArticleBySlugArgs = {
 };
 
 
+export type QueryGetArticlesArgs = {
+  categorySlugs?: InputMaybe<Array<Scalars['String']['input']>>;
+  dateFrom?: InputMaybe<Scalars['String']['input']>;
+  dateTo?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<SortOrder>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  sortBy?: InputMaybe<ArticleSortBy>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryGetUserByIdArgs = {
   id: Scalars['ID']['input'];
 };
+
+export enum SortOrder {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type UpdateArticleInput = {
   authorId?: InputMaybe<Scalars['String']['input']>;
@@ -249,64 +276,36 @@ export type CreateArticleMutationVariables = Exact<{
 
 export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
 
-export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllArticlesQuery = { __typename?: 'Query', getAllArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> }> };
-
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+
+export type GetArticlesQueryVariables = Exact<{
+  categorySlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  dateFrom?: InputMaybe<Scalars['String']['input']>;
+  dateTo?: InputMaybe<Scalars['String']['input']>;
+  sortBy?: InputMaybe<ArticleSortBy>;
+  order?: InputMaybe<SortOrder>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> }> };
+
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesQuery = { __typename?: 'Query', getCategories: Array<{ __typename?: 'Category', id: string, name: string, slug: string }> };
 
 
 export const CreateArticleDocument = `
     mutation CreateArticle($input: CreateArticleInput!) {
   createArticle(createArticleInput: $input) {
-    id
-    title
-    slug
-    description
-    content
-    tags
-    coverImage
-    published
-    publishedAt
-    readingTime
-    views
-    likes
-    createdAt
-    updatedAt
-    author {
-      id
-      firstName
-      lastName
-      avatar
-    }
-    category {
-      id
-      name
-    }
-    comments {
-      id
-      content
-      createdAt
-      updatedAt
-      author {
-        id
-        firstName
-        lastName
-        avatar
-      }
-    }
-  }
-}
-    `;
-export const GetAllArticlesDocument = `
-    query GetAllArticles {
-  getAllArticles {
     id
     title
     slug
@@ -361,6 +360,7 @@ export const GetArticleBySlugDocument = `
     readingTime
     views
     likes
+    commentsCount
     createdAt
     updatedAt
     author {
@@ -372,6 +372,7 @@ export const GetArticleBySlugDocument = `
     category {
       id
       name
+      slug
     }
     comments {
       id
@@ -388,17 +389,82 @@ export const GetArticleBySlugDocument = `
   }
 }
     `;
+export const GetArticlesDocument = `
+    query GetArticles($categorySlugs: [String!], $dateFrom: String, $dateTo: String, $sortBy: ArticleSortBy, $order: SortOrder, $take: Int, $skip: Int, $search: String) {
+  getArticles(
+    categorySlugs: $categorySlugs
+    dateFrom: $dateFrom
+    dateTo: $dateTo
+    sortBy: $sortBy
+    order: $order
+    take: $take
+    skip: $skip
+    search: $search
+  ) {
+    id
+    title
+    slug
+    description
+    content
+    tags
+    coverImage
+    published
+    publishedAt
+    readingTime
+    views
+    likes
+    commentsCount
+    createdAt
+    updatedAt
+    author {
+      id
+      firstName
+      lastName
+      avatar
+    }
+    category {
+      id
+      name
+      slug
+    }
+    comments {
+      id
+      content
+      createdAt
+      updatedAt
+      author {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+  }
+}
+    `;
+export const GetCategoriesDocument = `
+    query GetCategories {
+  getCategories {
+    id
+    name
+    slug
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     CreateArticle: build.mutation<CreateArticleMutation, CreateArticleMutationVariables>({
       query: (variables) => ({ document: CreateArticleDocument, variables })
     }),
-    GetAllArticles: build.query<GetAllArticlesQuery, GetAllArticlesQueryVariables | void>({
-      query: (variables) => ({ document: GetAllArticlesDocument, variables })
-    }),
     GetArticleBySlug: build.query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables>({
       query: (variables) => ({ document: GetArticleBySlugDocument, variables })
+    }),
+    GetArticles: build.query<GetArticlesQuery, GetArticlesQueryVariables | void>({
+      query: (variables) => ({ document: GetArticlesDocument, variables })
+    }),
+    GetCategories: build.query<GetCategoriesQuery, GetCategoriesQueryVariables | void>({
+      query: (variables) => ({ document: GetCategoriesDocument, variables })
     }),
   }),
 });

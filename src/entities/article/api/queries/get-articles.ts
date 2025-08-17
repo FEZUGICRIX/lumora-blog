@@ -1,8 +1,26 @@
 import { gql } from 'graphql-tag'
 
-export const getAllArticlesQuery = gql`
-	query GetAllArticles {
-		getAllArticles {
+export const getArticlesQuery = gql`
+	query GetArticles(
+		$categorySlugs: [String!]
+		$dateFrom: String
+		$dateTo: String
+		$sortBy: ArticleSortBy
+		$order: SortOrder
+		$take: Int
+		$skip: Int
+		$search: String
+	) {
+		getArticles(
+			categorySlugs: $categorySlugs
+			dateFrom: $dateFrom
+			dateTo: $dateTo
+			sortBy: $sortBy
+			order: $order
+			take: $take
+			skip: $skip
+			search: $search
+		) {
 			id
 			title
 			slug
@@ -15,6 +33,7 @@ export const getAllArticlesQuery = gql`
 			readingTime
 			views
 			likes
+			commentsCount
 			createdAt
 			updatedAt
 			author {
@@ -26,6 +45,7 @@ export const getAllArticlesQuery = gql`
 			category {
 				id
 				name
+				slug
 			}
 			comments {
 				id

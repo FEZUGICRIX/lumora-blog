@@ -23,7 +23,8 @@ export const ArticleCard = ({
 		category,
 		tags,
 		views,
-		comments,
+		// comments,
+		commentsCount,
 		likes,
 		author,
 		createdAt,
@@ -100,7 +101,7 @@ export const ArticleCard = ({
 
 						<div className='flex items-center gap-1'>
 							<CommentIcon className='h-4 w-4' />
-							<span>{millify(comments.length ?? 0)}</span>
+							<span>{millify(commentsCount ?? 0)}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>

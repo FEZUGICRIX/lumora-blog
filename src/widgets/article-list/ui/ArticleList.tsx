@@ -1,32 +1,98 @@
 'use client'
 
+import { useCallback, useState } from 'react'
+import { useGetArticlesQuery } from '@/entities/article/api'
+import { GridLayout } from '@/shared/ui/GridLayout'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
 import { ArticleFilters } from './ArticleFilters'
-// import { getSortedArticles } from '@/features/filters'
-import { GridLayout } from '@/shared/ui/GridLayout'
-// import { useSearchParams } from 'next/navigation'
-// import type { Category, SortOption } from '@/features/filters'
+import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
+import { ArticleError } from './ArticleError'
+
+import type { SortOption } from '@/features/filters'
+import type { CategoryMinimal } from '@/entities/category'
 
 interface ArticleListProps {
 	withFilters?: boolean
-	articles: ArticlePreview[]
+	initialArticles: ArticlePreview[]
 }
 
 export const ArticleList = ({
-	articles,
+	initialArticles,
 	withFilters = false,
 }: ArticleListProps) => {
-	// const searchParams = useSearchParams()
+	const [categories, setCategories] = useState<CategoryMinimal[]>([])
+	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
-	// const category = searchParams.get('category') as Category | null
-	// const sort = (searchParams.get('sort') as SortOption) ?? 'date'
+	const categorySlugs = categories.map((cat) => cat.slug)
+
+	// Загружаем новые статьи при изменении фильтров
+	const {
+		data: filteredArticles,
+		isFetching,
+		isError,
+	} = useGetArticlesQuery(
+		{ categorySlugs, sortBy: sort }, // TODO: добавить больше фильтров
+		{
+			skip:
+				categories.length === 0 &&
+				(!sort || sort === ArticleSortBy.CreatedAt),
+		}, // не дергаем запрос, если дефолт
+	)
+
+	// Финальный список (SSR → CSR)
+	const articlesToRender = isFetching
+		? []
+		: (filteredArticles ?? initialArticles)
+
+	const handleCategoriesChange = useCallback(
+		(newCategories: CategoryMinimal[]) => {
+			setCategories(newCategories)
+		},
+		[],
+	)
+
+	// const handleSortChange = useCallback((newSort: SortOption) => {
+	// 	setSort(newSort)
+	// }, [])
+
+	if (isError || (!filteredArticles && initialArticles.length === 0)) {
+		return (
+			<div className='container m-auto px-4'>
+				<ArticleError />
+			</div>
+		)
+	}
+
+	if (isFetching && !filteredArticles) {
+		return (
+			<div className='container m-auto px-4'>
+				<ArticleListSkeleton />
+			</div>
+		)
+	}
+
+	// если запрос успешный, но массив пустой
+	if (filteredArticles && filteredArticles.length === 0) {
+		return (
+			<div className='container m-auto px-4'>
+				<p className='text-muted-foreground text-center'>Нет статей</p>
+			</div>
+		)
+	}
 
 	return (
 		<div className='container m-auto px-4'>
-			{withFilters && <ArticleFilters />}
+			{withFilters && (
+				<ArticleFilters
+					sort={sort}
+					onSortChange={setSort}
+					onCategoriesChange={handleCategoriesChange}
+				/>
+			)}
 
 			<GridLayout>
-				{articles.map((article) => (
+				{articlesToRender.map((article: ArticlePreview) => (
 					<ArticleCard key={article.id} article={article} />
 				))}
 			</GridLayout>

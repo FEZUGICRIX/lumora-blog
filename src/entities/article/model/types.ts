@@ -1,6 +1,6 @@
 import type {
 	Article,
-	GetAllArticlesQuery,
+	GetArticlesQuery,
 	GetArticleBySlugQuery,
 } from '@/shared/api/graphql/__generated__/graphql'
 
@@ -10,9 +10,9 @@ import type {
    TYPES FROM GRAPHQL QUERIES (API contract)
 ---------------------------------------- */
 
-// Превью статьи из запроса getAllArticles (для списка статей, карточек, и т.п.)
+// Превью статьи из запроса getArticles (для списка статей, карточек, и т.п.)
 export type ArticlePreview = NonNullable<
-	GetAllArticlesQuery['getAllArticles'][number]
+	GetArticlesQuery['getArticles'][number]
 >
 
 // Полная статья из запроса getArticleBySlug (для страницы статьи)

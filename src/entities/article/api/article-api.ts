@@ -1,15 +1,18 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlBaseQuery } from '@/shared/api/graphql/base-query'
+
 import { getArticleBySlugQuery } from './queries/get-article-by-slug'
-import { getAllArticlesQuery } from './queries/get-all-articles'
+import { createArticleMutation } from './queries/create-article'
+import { getArticlesQuery } from './queries/get-articles'
+
 import type {
 	CreateArticleMutation,
 	CreateArticleMutationVariables,
-	GetAllArticlesQuery,
 	GetArticleBySlugQuery,
 	GetArticleBySlugQueryVariables,
+	GetArticlesQuery,
+	GetArticlesQueryVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
-import { createArticleMutation } from './queries/create-article'
 
 export const articleApi = createApi({
 	reducerPath: 'articleApi',
@@ -26,16 +29,17 @@ export const articleApi = createApi({
 			}),
 		}),
 
-		// Get all articles
-		getAllArticles: builder.query<
-			GetAllArticlesQuery['getAllArticles'],
-			void
+		// Get all articles or with filters/sort
+		getArticles: builder.query<
+			GetArticlesQuery['getArticles'],
+			Partial<GetArticlesQueryVariables> | void
 		>({
-			query: () => ({
-				document: getAllArticlesQuery,
+			query: (variables) => ({
+				document: getArticlesQuery,
+				variables: variables ?? {},
 			}),
-			transformResponse: (response: GetAllArticlesQuery) =>
-				response.getAllArticles,
+			transformResponse: (response: GetArticlesQuery) =>
+				response.getArticles,
 		}),
 
 		// Create article
@@ -53,6 +57,6 @@ export const articleApi = createApi({
 
 export const {
 	useGetArticleBySlugQuery,
-	useGetAllArticlesQuery,
+	useGetArticlesQuery,
 	useCreateArticleMutation,
 } = articleApi

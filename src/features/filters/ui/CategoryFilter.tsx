@@ -1,55 +1,68 @@
+// src/features/filters/ui/CategoryFilter.tsx
 'use client'
 
-import { categories } from '../model/constants'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { cn } from '@/shared/lib/shadcn/utils'
-import { Button } from '@/shared/ui/ui-kit/button'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { useGetCategoriesQuery } from '@/entities/category/api'
+import { getMulti, setMulti, toggleValue } from '@/shared/lib/url/params'
+import { CategoryItem } from '@/entities/category/ui/CategoryItem'
+import type { CategoryMinimal } from '@/entities/category'
+import { CategoryFilterSkeleton } from '@/entities/category/ui/skeletons/CategoryFilterSkeleton'
 
-export function CategoryFilter() {
+interface CategoryFilterProps {
+	onCategoriesChange: (categories: CategoryMinimal[]) => void
+}
+
+export function CategoryFilter({
+	onCategoriesChange,
+}: CategoryFilterProps) {
 	const router = useRouter()
+	const pathname = usePathname()
 	const searchParams = useSearchParams()
 
-	const currentCategories = searchParams.get('category')?.split(',') ?? []
+	const { data: categories = [], isLoading } = useGetCategoriesQuery()
 
-	const onChange = (category: string) => {
+	if (isLoading) return <CategoryFilterSkeleton />
+
+	// текущее состояние фильтра — прямо из URL
+	const currentSlugs = getMulti(
+		new URLSearchParams(searchParams.toString()),
+		'category',
+	)
+
+	const toggleCategory = (category: CategoryMinimal) => {
 		const params = new URLSearchParams(searchParams.toString())
 
-		let nextCategories = [...currentCategories]
+		// построить новый набор slug'ов
+		const nextSlugs = toggleValue(currentSlugs, category.slug)
 
-		if (currentCategories.includes(category)) {
-			nextCategories = currentCategories.filter((c) => c !== category)
-		} else {
-			nextCategories.push(category)
-		}
+		// записать мульти-параметр обратно
+		setMulti(params, 'category', nextSlugs)
 
-		if (nextCategories.length === 0) {
-			params.delete('category')
-		} else {
-			params.set('category', nextCategories.join(','))
-		}
+		// при смене фильтра сбрасываем пагинацию (если она есть)
+		params.delete('page')
 
-		router.push(`?${params.toString()}`)
+		// не теряем текущий путь/locale, не скроллим страницу: UX++
+		router.push(`${pathname}?${params.toString()}`, { scroll: false })
+
+		// пробрасываем вверх конкретные объекты категорий
+		const nextCategories = categories.filter((c) =>
+			nextSlugs.includes(c.slug),
+		)
+		onCategoriesChange(nextCategories)
 	}
 
 	return (
 		<div className='flex flex-wrap justify-center gap-2'>
 			{categories.map((category) => {
-				const isActive = currentCategories.includes(category)
+				const isActive = currentSlugs.includes(category.slug)
 
 				return (
-					<Button
-						key={category}
-						onClick={() => onChange(category)}
-						className={cn(
-							'glass-icon rounded-full border px-3 py-1 text-sm transition-all',
-							'border-border',
-							isActive
-								? 'bg-primary text-primary-foreground hover:bg-primary'
-								: 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground',
-						)}
-					>
-						{category}
-					</Button>
+					<CategoryItem
+						key={category.id}
+						category={category}
+						isActive={isActive}
+						toggleCategory={toggleCategory}
+					/>
 				)
 			})}
 		</div>

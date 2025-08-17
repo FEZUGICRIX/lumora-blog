@@ -1,8 +1,3 @@
-export type Category =
-	| 'frontend'
-	| 'backend'
-	| 'design'
-	| 'career'
-	| 'fullstack'
+import type { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 
-export type SortOption = 'date' | 'views' | 'likes' | 'comments'
+export type SortOption = ArticleSortBy

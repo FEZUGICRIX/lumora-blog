@@ -1,11 +1,13 @@
 'use client'
 
 import { useCallback, useState } from 'react'
-import { ArticleCard, type ArticlePreview } from '@/entities/article'
 import { useGetArticlesQuery } from '@/entities/article/api'
-import { ArticleFilters } from './ArticleFilters'
 import { GridLayout } from '@/shared/ui/GridLayout'
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
+import { ArticleCard, type ArticlePreview } from '@/entities/article'
+import { ArticleFilters } from './ArticleFilters'
+import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
+
 import type { SortOption } from '@/features/filters'
 import type { CategoryMinimal } from '@/entities/category'
 
@@ -59,12 +61,16 @@ export const ArticleList = ({
 				/>
 			)}
 
-			{/* TODO: сделать скелетон для статей и подготовить компонент "Не удалось загрузить статьи" */}
-			<GridLayout>
-				{articlesToRender.map((article: ArticlePreview) => (
-					<ArticleCard key={article.id} article={article} />
-				))}
-			</GridLayout>
+			{/* TODO: подготовить компонент "Не удалось загрузить статьи" */}
+			{isFetching ? (
+				<ArticleListSkeleton />
+			) : (
+				<GridLayout>
+					{articlesToRender.map((article: ArticlePreview) => (
+						<ArticleCard key={article.id} article={article} />
+					))}
+				</GridLayout>
+			)}
 		</div>
 	)
 }

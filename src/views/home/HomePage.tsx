@@ -22,7 +22,7 @@ const HomePage = ({ articles }: HomePageProps) => {
 				isCenter
 			/>
 
-			<ArticleList articles={articles} withFilters />
+			<ArticleList initialArticles={articles} withFilters />
 		</div>
 	)
 }

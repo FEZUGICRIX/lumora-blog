@@ -15,6 +15,7 @@ export const getArticleBySlugQuery = gql`
 			readingTime
 			views
 			likes
+			commentsCount
 			createdAt
 			updatedAt
 			author {
@@ -26,6 +27,7 @@ export const getArticleBySlugQuery = gql`
 			category {
 				id
 				name
+				slug
 			}
 			comments {
 				id

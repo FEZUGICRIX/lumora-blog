@@ -1,32 +1,67 @@
 'use client'
 
+import { useCallback, useState } from 'react'
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
+import { useGetArticlesQuery } from '@/entities/article/api'
 import { ArticleFilters } from './ArticleFilters'
-// import { getSortedArticles } from '@/features/filters'
 import { GridLayout } from '@/shared/ui/GridLayout'
-// import { useSearchParams } from 'next/navigation'
-// import type { Category, SortOption } from '@/features/filters'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
+import type { SortOption } from '@/features/filters'
+import type { CategoryMinimal } from '@/entities/category'
 
 interface ArticleListProps {
 	withFilters?: boolean
-	articles: ArticlePreview[]
+	initialArticles: ArticlePreview[]
 }
 
 export const ArticleList = ({
-	articles,
+	initialArticles,
 	withFilters = false,
 }: ArticleListProps) => {
-	// const searchParams = useSearchParams()
+	const [categories, setCategories] = useState<CategoryMinimal[]>([])
+	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
-	// const category = searchParams.get('category') as Category | null
-	// const sort = (searchParams.get('sort') as SortOption) ?? 'date'
+	const categorySlugs = categories.map((cat) => cat.slug)
+
+	// Загружаем новые статьи при изменении фильтров
+	const { data: filteredArticles, isFetching } = useGetArticlesQuery(
+		{ categorySlugs, sortBy: sort }, // TODO: добавить больше фильтров
+		{
+			skip:
+				categories.length === 0 &&
+				(!sort || sort === ArticleSortBy.CreatedAt),
+		}, // не дергаем запрос, если дефолт
+	)
+
+	// Финальный список (SSR → CSR)
+	const articlesToRender = isFetching
+		? []
+		: (filteredArticles ?? initialArticles)
+
+	const handleCategoriesChange = useCallback(
+		(newCategories: CategoryMinimal[]) => {
+			setCategories(newCategories)
+		},
+		[],
+	)
+
+	// const handleSortChange = useCallback((newSort: SortOption) => {
+	// 	setSort(newSort)
+	// }, [])
 
 	return (
 		<div className='container m-auto px-4'>
-			{withFilters && <ArticleFilters />}
+			{withFilters && (
+				<ArticleFilters
+					sort={sort}
+					onSortChange={setSort}
+					onCategoriesChange={handleCategoriesChange}
+				/>
+			)}
 
+			{/* TODO: сделать скелетон для статей и подготовить компонент "Не удалось загрузить статьи" */}
 			<GridLayout>
-				{articles.map((article) => (
+				{articlesToRender.map((article: ArticlePreview) => (
 					<ArticleCard key={article.id} article={article} />
 				))}
 			</GridLayout>

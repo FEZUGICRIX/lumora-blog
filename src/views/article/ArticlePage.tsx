@@ -18,7 +18,8 @@ const ArticlePage = ({ article }: ArticlePageProps) => {
 		tags,
 		views,
 		content,
-		comments,
+		// comments,
+		commentsCount,
 		likes,
 		author,
 		createdAt,
@@ -68,12 +69,10 @@ const ArticlePage = ({ article }: ArticlePageProps) => {
 								<HeartIcon />
 								<span>{millify(likes)}</span>
 							</div>
-							{comments?.length > 0 && (
-								<div className='flex items-center gap-1'>
-									<MessageSquareText />
-									<span>{millify(comments.length)}</span>
-								</div>
-							)}
+							<div className='flex items-center gap-1'>
+								<MessageSquareText />
+								<span>{millify(commentsCount ?? 0)}</span>
+							</div>
 							<div className='flex items-center gap-1'>
 								<Eye />
 								<span>{millify(views)}</span>

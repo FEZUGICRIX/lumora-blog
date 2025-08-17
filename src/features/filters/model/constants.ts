@@ -1,16 +1,10 @@
-import type { Category, SortOption } from './types'
+import type { SortOption } from './types'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 
-export const categories: Category[] = [
-	'frontend',
-	'backend',
-	'design',
-	'career',
-	'fullstack',
-]
-
+// TODO: Редактировать типизацию и значения сортировки
 export const sortOptions: { value: SortOption; label: string }[] = [
-	{ value: 'date', label: 'По дате' },
-	{ value: 'views', label: 'Популярные' },
-	{ value: 'likes', label: 'По лайкам' },
-	{ value: 'comments', label: 'Обсуждаемые' },
+	{ value: ArticleSortBy.UpdatedAt, label: 'По дате' },
+	{ value: ArticleSortBy.Views, label: 'Популярные' },
+	{ value: ArticleSortBy.Likes, label: 'По лайкам' },
+	{ value: ArticleSortBy.Comments, label: 'Обсуждаемые' },
 ]

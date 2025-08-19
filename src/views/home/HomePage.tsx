@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import type { ArticlePreview } from '@/entities/article'
 
 interface HomePageProps {
-	articles: ArticlePreview[]
+	articles: ArticlePreview[] | null
 }
 
 const HomePage = ({ articles }: HomePageProps) => {

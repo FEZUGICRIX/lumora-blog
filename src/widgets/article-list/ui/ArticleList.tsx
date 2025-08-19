@@ -14,7 +14,7 @@ import type { CategoryMinimal } from '@/entities/category'
 
 interface ArticleListProps {
 	withFilters?: boolean
-	initialArticles: ArticlePreview[]
+	initialArticles: ArticlePreview[] | null
 }
 
 export const ArticleList = ({
@@ -67,7 +67,7 @@ export const ArticleList = ({
 	const articlesToRender = filteredArticles ?? initialArticles
 
 	// --- Ошибки и пустой список ---
-	if (isError) {
+	if (isError || !initialArticles) {
 		return (
 			<div className='container m-auto px-4'>
 				<ArticleError />
@@ -75,7 +75,7 @@ export const ArticleList = ({
 		)
 	}
 
-	if (articlesToRender.length === 0) {
+	if (articlesToRender?.length === 0) {
 		return (
 			<div className='container m-auto px-4'>
 				<p className='text-muted-foreground text-center'>Нет статей</p>
@@ -100,7 +100,7 @@ export const ArticleList = ({
 				</div>
 			) : (
 				<GridLayout>
-					{articlesToRender.map((article: ArticlePreview) => (
+					{articlesToRender?.map((article: ArticlePreview) => (
 						<ArticleCard key={article.id} article={article} />
 					))}
 				</GridLayout>

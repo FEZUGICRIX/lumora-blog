@@ -36,21 +36,19 @@ export function ArticleEditForm({ article }: ArticleEditFormProps) {
 			categoryId: '05f33432-ea73-40a2-9cf9-9fb4a595fec5',
 		}
 
-		console.log('Submitting:', payload)
-
 		try {
 			const response = await createArticle({ input: payload }).unwrap()
-			toast('Успешно создано', {
+			toast.success('Успешно создано', {
 				description: 'Статья создана',
 				action: {
-					label: 'Перейти на страницу статьи',
+					label: 'Перейти на страницу',
 					onClick: () => console.log(''), // TODO: Navigate to the article page
 				},
 			})
 			console.log(response)
 		} catch (error) {
 			console.error(error)
-			toast('Статья не создана', {
+			toast.error('Статья не создана', {
 				description: 'При создании статьи произошла ошибка',
 			})
 		}

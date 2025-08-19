@@ -20,7 +20,7 @@ export function Providers({ children, locale, messages }: ProvidersProps) {
 			<ThemeProvider defaultTheme='dark'>
 				<Provider store={store}>
 					{children}
-					<Toaster />
+					<Toaster richColors closeButton />
 				</Provider>
 			</ThemeProvider>
 		</NextIntlClientProvider>

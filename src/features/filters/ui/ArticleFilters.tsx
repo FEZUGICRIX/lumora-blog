@@ -1,6 +1,7 @@
 import { CategoryFilter, type SortOption } from '@/features/filters'
 import { SortSelect } from '@/features/filters'
 import { Button } from '@/shared/ui/ui-kit/button'
+import { useResetFilters } from '../lib/use-reset-filters'
 import type { CategoryMinimal } from '@/entities/category'
 
 interface ArticleFiltersProps {
@@ -10,30 +11,26 @@ interface ArticleFiltersProps {
 }
 
 export const ArticleFilters = ({
-	// sort,
-	// onSortChange,
+	sort,
+	onSortChange,
 	onCategoriesChange,
 }: ArticleFiltersProps) => {
-	return (
-		<div className='justify-center'>
-			<div className='mt-4 flex flex-col flex-wrap items-center justify-between gap-4 md:flex-row'>
-				<CategoryFilter
-					onCategoriesChange={onCategoriesChange}
-				/>
+	const { resetFilters, isDefault } = useResetFilters(
+		onCategoriesChange,
+		onSortChange,
+	)
 
-				<SortSelect />
+	return (
+		<div className='flex flex-col justify-center'>
+			<div className='mt-4 flex flex-col flex-wrap items-center justify-between gap-4 md:flex-row'>
+				<CategoryFilter onCategoriesChange={onCategoriesChange} />
+
+				<SortSelect sort={sort} onSortChange={onSortChange} />
 			</div>
 
-			<div className='mt-2 flex justify-center md:justify-start'>
-				<Button
-					onClick={() => {
-						onCategoriesChange([])
-						// onSortChange(ArticleSortBy.CreatedAt) // или твой дефолт
-					}}
-					variant='link'
-					className='p-0 underline'
-				>
-					Reset filters
+			<div className='mt-4 flex w-full justify-center md:justify-end'>
+				<Button onClick={resetFilters} disabled={isDefault}>
+					Reset filters ↺
 				</Button>
 			</div>
 		</div>

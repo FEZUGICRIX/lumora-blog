@@ -7,12 +7,15 @@ import { Input } from '@/shared/ui/ui-kit/input'
 import { Textarea } from '@/shared/ui/ui-kit/textarea'
 import { Button } from '@/shared/ui/ui-kit/button'
 import type { FullArticle } from '@/entities/article'
+import { CategorySelect } from '@/entities/category/ui/CategorySelect' // TODO: НАстроить реэкспорт
+import type { CategoryMinimal } from '@/entities/category'
 
 interface ArticleEditFormProps {
 	article?: FullArticle | null
 }
 
 export function ArticleEditForm({ article }: ArticleEditFormProps) {
+	// TODO: Настроить react-hook-form для формы и zod validation
 	const [title, setTitle] = useState(article?.title ?? '')
 	const [description, setDescription] = useState(
 		article?.description ?? '',
@@ -22,6 +25,7 @@ export function ArticleEditForm({ article }: ArticleEditFormProps) {
 	const [coverImage, setcoverImage] = useState(article?.coverImage ?? '')
 	const [createArticle, { isLoading /* error */ }] =
 		useCreateArticleMutation()
+	const [categoryId, setCategoryId] = useState(article?.category?.id || null)
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
@@ -32,8 +36,8 @@ export function ArticleEditForm({ article }: ArticleEditFormProps) {
 			content,
 			tags: tags.split(',').map((tag) => tag.trim()),
 			coverImage,
+			categoryId,
 			authorId: 'cd71a9d7-e347-4ca2-bb46-a2c6eeb39f88',
-			categoryId: '05f33432-ea73-40a2-9cf9-9fb4a595fec5',
 		}
 
 		try {
@@ -45,7 +49,6 @@ export function ArticleEditForm({ article }: ArticleEditFormProps) {
 					onClick: () => console.log(''), // TODO: Navigate to the article page
 				},
 			})
-			console.log(response)
 		} catch (error) {
 			console.error(error)
 			toast.error('Статья не создана', {
@@ -70,6 +73,11 @@ export function ArticleEditForm({ article }: ArticleEditFormProps) {
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 				placeholder='description'
+			/>
+
+			<CategorySelect
+				categoryId={categoryId}
+				setCategoryId={setCategoryId}
 			/>
 
 			<Textarea

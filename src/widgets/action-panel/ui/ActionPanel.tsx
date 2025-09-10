@@ -2,7 +2,7 @@
 
 import { SearchModal } from '@/features/search-posts'
 import { LocaleSwitcher } from '@/features/locale-switcher'
-import { useBoolean } from '@/shared/hooks/useBoolean'
+import { useBoolean } from '@/shared/hooks'
 import { TooltipWithText } from '@/shared/ui/TooltipWithText'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import { SearchIcon } from '@/shared/ui/icon'

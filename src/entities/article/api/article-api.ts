@@ -1,9 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlBaseQuery } from '@/shared/api/graphql/base-query'
 
+import { getArticlesQuery } from './queries/get-articles'
 import { getArticleBySlugQuery } from './queries/get-article-by-slug'
 import { createArticleMutation } from './queries/create-article'
-import { getArticlesQuery } from './queries/get-articles'
+import { updateArticleMutation } from './queries/update-article'
 
 import type {
 	CreateArticleMutation,
@@ -12,6 +13,8 @@ import type {
 	GetArticleBySlugQueryVariables,
 	GetArticlesQuery,
 	GetArticlesQueryVariables,
+	UpdateArticleMutation,
+	UpdateArticleMutationVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
 
 export const articleApi = createApi({
@@ -52,6 +55,17 @@ export const articleApi = createApi({
 				variables,
 			}),
 		}),
+
+		// Update article
+		updateArticle: builder.mutation<
+			UpdateArticleMutation['updateArticle'],
+			UpdateArticleMutationVariables
+		>({
+			query: (variables) => ({
+				document: updateArticleMutation,
+				variables,
+			}),
+		}),
 	}),
 })
 
@@ -59,4 +73,5 @@ export const {
 	useGetArticleBySlugQuery,
 	useGetArticlesQuery,
 	useCreateArticleMutation,
+	useUpdateArticleMutation,
 } = articleApi

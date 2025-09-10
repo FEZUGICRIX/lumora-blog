@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from 'next/image'
 import type { FullArticle } from '@/entities/article'
 import { AuthorCard } from '@/entities/user'
 import { ImageDarkOverlay } from './ImageDarkOverlay'
+import { BackgroundImage } from '../assets/images'
 
 interface PageHeroProps {
 	title: string
@@ -25,16 +26,15 @@ export const PageHero = ({
 	return (
 		<section className='relative mx-auto h-[40vh] min-h-80 w-full pt-20'>
 			<div className='mx-auto'>
+				{/* TODO: если image невалидный, рендерить BackgroundImage */}
 				<Image
-					src={image}
+					src={image ?? BackgroundImage}
 					alt='Banner'
 					fill
 					className='object-cover object-center'
 					priority
 				/>
-
 				<ImageDarkOverlay />
-
 				<div className={`absolute inset-0 z-[2] flex items-center`}>
 					<div className='container mx-auto'>
 						<div

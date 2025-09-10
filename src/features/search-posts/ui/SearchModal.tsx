@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import { useGetArticlesQuery } from '@/entities/article/api'
-import { useFuseSearch } from '@/shared/hooks/useFuseSearch'
-import { useDebounce } from '@/shared/hooks/useDebounce'
+import { useFuseSearch } from '@/shared/hooks'
+import { useDebounce } from '@/shared/hooks'
 import { AnimatedHeight } from '@/shared/ui/AnimatedHeight'
 import { AnimatePresence } from 'framer-motion'
 import { SearchItem } from './SearchItem'

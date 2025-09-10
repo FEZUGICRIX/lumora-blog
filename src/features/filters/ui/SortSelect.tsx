@@ -16,29 +16,28 @@ export function SortSelect({ sort, onSortChange }: SortSelectProps) {
 	const router = useRouter()
 	const searchParams = useSearchParams()
 
-	// Текущее значение select: из URL или из props
-	let current = (searchParams.get('sort') as SortOption) ?? sort
+	// Получаем текущее значение из URL или используем значение по умолчанию
+	const urlSort = searchParams.get('sort') as SortOption | null
+	const current =
+		urlSort &&
+		Object.values(ArticleSortBy).includes(urlSort as ArticleSortBy)
+			? urlSort
+			: sort
 
 	useEffect(() => {
 		const params = new URLSearchParams(searchParams.toString())
 		const urlSort = searchParams.get('sort')
 
-		// Если sort нет в URL → ставим дефолт
-		if (!urlSort) {
-			params.set('sort', sort)
-			router.replace(`?${params.toString()}`)
-			onSortChange(sort)
-			current = sort
-		} else if (
+		// Если sort нет в URL или некорректный → устанавливаем корректное значение
+		if (
+			!urlSort ||
 			!Object.values(ArticleSortBy).includes(urlSort as ArticleSortBy)
 		) {
-			// Если sort некорректный → ставим дефолт
 			params.set('sort', sort)
 			router.replace(`?${params.toString()}`)
 			onSortChange(sort)
-			current = sort
 		}
-	}, [])
+	}, [searchParams, sort, onSortChange, router])
 
 	const onChange = (value: string) => {
 		const params = new URLSearchParams(searchParams.toString())

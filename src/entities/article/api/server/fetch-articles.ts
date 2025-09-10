@@ -7,7 +7,7 @@ import type {
 
 export const fetchArticles = async (
 	variables: Partial<GetArticlesQueryVariables> = {},
-): Promise<GetArticlesQuery['getArticles']> => {
+): Promise<GetArticlesQuery['getArticles'] | null> => {
 	try {
 		const data = await graphqlClient.request<
 			GetArticlesQuery,
@@ -16,6 +16,6 @@ export const fetchArticles = async (
 
 		return data.getArticles
 	} catch {
-		return []
+		return null
 	}
 }

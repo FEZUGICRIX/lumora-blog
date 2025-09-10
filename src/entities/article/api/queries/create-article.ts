@@ -7,7 +7,9 @@ export const createArticleMutation = gql`
 			title
 			slug
 			description
-			content
+			contentJson
+			contentHtml
+			contentText
 			tags
 			coverImage
 			published

@@ -14,6 +14,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   DateTime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
 };
 
 export type Article = {
@@ -22,7 +23,9 @@ export type Article = {
   category: Category;
   comments: Array<Comment>;
   commentsCount?: Maybe<Scalars['Int']['output']>;
-  content: Scalars['String']['output'];
+  contentHtml: Scalars['String']['output'];
+  contentJson: Scalars['JSON']['output'];
+  contentText: Scalars['String']['output'];
   coverImage?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -70,7 +73,7 @@ export type Comment = {
 export type CreateArticleInput = {
   authorId: Scalars['String']['input'];
   categoryId?: InputMaybe<Scalars['String']['input']>;
-  content: Scalars['String']['input'];
+  content: Scalars['JSON']['input'];
   coverImage?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   likes?: Scalars['Int']['input'];
@@ -226,7 +229,7 @@ export enum SortOrder {
 export type UpdateArticleInput = {
   authorId?: InputMaybe<Scalars['String']['input']>;
   categoryId?: InputMaybe<Scalars['String']['input']>;
-  content?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['JSON']['input']>;
   coverImage?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   likes?: InputMaybe<Scalars['Int']['input']>;
@@ -274,14 +277,14 @@ export type CreateArticleMutationVariables = Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
 
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
 
 export type GetArticlesQueryVariables = Exact<{
   categorySlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
@@ -295,7 +298,14 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, content: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> }> };
+export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> }> };
+
+export type UpdateArticleMutationVariables = Exact<{
+  input: UpdateArticleInput;
+}>;
+
+
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', id: string, title: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -310,7 +320,9 @@ export const CreateArticleDocument = `
     title
     slug
     description
-    content
+    contentJson
+    contentHtml
+    contentText
     tags
     coverImage
     published
@@ -352,7 +364,9 @@ export const GetArticleBySlugDocument = `
     title
     slug
     description
-    content
+    contentJson
+    contentHtml
+    contentText
     tags
     coverImage
     published
@@ -405,7 +419,9 @@ export const GetArticlesDocument = `
     title
     slug
     description
-    content
+    contentJson
+    contentHtml
+    contentText
     tags
     coverImage
     published
@@ -442,6 +458,48 @@ export const GetArticlesDocument = `
   }
 }
     `;
+export const UpdateArticleDocument = `
+    mutation UpdateArticle($input: UpdateArticleInput!) {
+  updateArticle(updateArticleInput: $input) {
+    id
+    title
+    description
+    contentJson
+    contentHtml
+    contentText
+    tags
+    coverImage
+    published
+    publishedAt
+    readingTime
+    views
+    likes
+    createdAt
+    updatedAt
+    author {
+      id
+      firstName
+      lastName
+      avatar
+    }
+    category {
+      id
+      name
+    }
+    comments {
+      id
+      createdAt
+      updatedAt
+      author {
+        id
+        firstName
+        lastName
+        avatar
+      }
+    }
+  }
+}
+    `;
 export const GetCategoriesDocument = `
     query GetCategories {
   getCategories {
@@ -462,6 +520,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     GetArticles: build.query<GetArticlesQuery, GetArticlesQueryVariables | void>({
       query: (variables) => ({ document: GetArticlesDocument, variables })
+    }),
+    UpdateArticle: build.mutation<UpdateArticleMutation, UpdateArticleMutationVariables>({
+      query: (variables) => ({ document: UpdateArticleDocument, variables })
     }),
     GetCategories: build.query<GetCategoriesQuery, GetCategoriesQueryVariables | void>({
       query: (variables) => ({ document: GetCategoriesDocument, variables })

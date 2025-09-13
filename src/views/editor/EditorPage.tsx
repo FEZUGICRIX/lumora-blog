@@ -34,7 +34,7 @@ const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 			/>
 
 			<div className='container mx-auto my-4'>
-				<h1 className='mb-4 text-center text-2xl font-bold text-amber-100'>
+				<h1 className='mb-4 text-center text-2xl font-bold'>
 					{isNew ? 'Новая статья' : 'Редактировать статью'}
 				</h1>
 			</div>

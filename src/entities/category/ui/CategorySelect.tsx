@@ -4,8 +4,8 @@ import { CustomSelect } from '@/shared/ui/CustomSelect'
 import { Skeleton } from '@/shared/ui/ui-kit/skeleton'
 
 interface CategorySelectProps {
-	categoryId?: string | null
-	setCategoryId: (id: string) => void
+	value?: string | null
+	onValueChange: (value: string) => void
 }
 
 interface SelectOption {
@@ -15,8 +15,8 @@ interface SelectOption {
 }
 
 export const CategorySelect = ({
-	setCategoryId,
-	categoryId,
+	onValueChange,
+	value,
 }: CategorySelectProps) => {
 	const { data: categories = [], isLoading } = useGetCategoriesQuery()
 
@@ -27,10 +27,10 @@ export const CategorySelect = ({
 	}))
 
 	useEffect(() => {
-		if (!isLoading && !categoryId && categoryOptions.length > 0) {
-			setCategoryId(categoryOptions[0].id)
+		if (!isLoading && !value && categoryOptions.length > 0) {
+			onValueChange(categoryOptions[0].id)
 		}
-	}, [isLoading, categoryId, categoryOptions, setCategoryId])
+	}, [isLoading, value, categoryOptions, onValueChange])
 
 	if (isLoading) {
 		return <Skeleton className='h-9 max-w-30' />
@@ -46,8 +46,8 @@ export const CategorySelect = ({
 
 	return (
 		<CustomSelect
-			value={categoryId || ''}
-			onChange={setCategoryId}
+			value={value || ''}
+			onChange={onValueChange}
 			options={categoryOptions}
 		/>
 	)

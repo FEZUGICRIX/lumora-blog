@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { highlightMatch } from '@/shared/lib/utils/highlightMatch'
+import { highlightMatch } from '@/shared/lib'
 import { BackgroundImage } from '@/shared/assets/images'
 import { useFormattedDate } from '@/shared/config/dayjs'
 import type { ArticlePreview } from '@/entities/article'

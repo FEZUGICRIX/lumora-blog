@@ -40,7 +40,7 @@ export const useArticleForm = ({
 		try {
 			const validatedData = articleFormSchema.parse(data)
 
-			const tagsArray = validatedData.tags
+			const tagsArray = validatedData.tags // TODO: на бэк передавать строку и там уже превращать в массив
 				.split(' ')
 				.map((tag) => tag.trim())
 				.filter((tag) => tag !== '')

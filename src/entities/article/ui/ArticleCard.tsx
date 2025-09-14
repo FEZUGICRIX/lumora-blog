@@ -6,6 +6,7 @@ import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 import { ImageDarkOverlay } from '@/shared/ui/ImageDarkOverlay'
 import { BackgroundImage } from '@/shared/assets/images'
 import millify from 'millify'
+import { generateKey } from '@/shared/lib'
 import type { ArticleCardProps } from '@/entities/article/model/types'
 
 export const ArticleCard = ({
@@ -81,9 +82,9 @@ export const ArticleCard = ({
 					</p>
 
 					<div className='flex flex-wrap gap-2 pt-2'>
-						{tags.map((tag) => (
+						{tags.map((tag: string) => (
 							<span
-								key={tag}
+								key={generateKey(tag)}
 								className='rounded-full bg-zinc-100 px-2 py-1 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
 							>
 								#{tag}

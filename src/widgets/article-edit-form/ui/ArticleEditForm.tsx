@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { FormProvider, useFormContext } from 'react-hook-form'
+import {
+	FormProvider,
+	useFormContext,
+	type UseFormReturn,
+} from 'react-hook-form'
 import { CategorySelect } from '@/entities/category/ui/CategorySelect'
 import { SimpleEditor } from '@/features/editor/ui/simple-editor'
-import { useArticleForm } from '../hooks/use-article-form'
 import { handleRTKError } from '../lib/error-handling'
 import { type ArticleFormValues } from '../models/form.types'
-import type { FullArticle } from '@/entities/article'
 import { toast } from 'sonner'
 import { Button } from '@/shared/ui/ui-kit/button'
 import { Input } from '@/shared/ui/ui-kit/input'
@@ -19,12 +21,6 @@ import {
 	FormMessage,
 	FormDescription,
 } from '@/shared/ui/ui-kit/form'
-
-interface ArticleEditFormProps {
-	article?: FullArticle | null
-	onSuccess?: () => void
-	onCancel?: () => void
-}
 
 // Кастомный селект категорий для интеграции с RHF
 function ControlledCategorySelect({ name }: { name: string }) {
@@ -39,20 +35,18 @@ function ControlledCategorySelect({ name }: { name: string }) {
 	return <CategorySelect value={value} onValueChange={handleChange} />
 }
 
+interface ArticleEditFormProps {
+	form: UseFormReturn<ArticleFormValues>
+	onSubmit: (data: ArticleFormValues) => Promise<void>
+	isEdit: boolean
+}
+
 export function ArticleEditForm({
-	article,
-	onSuccess,
-	onCancel,
+	form,
+	onSubmit,
+	isEdit,
 }: ArticleEditFormProps) {
 	const [isSubmitting, setIsSubmitting] = useState(false)
-
-	const { form, onSubmit, isEdit } = useArticleForm({
-		article,
-		onSuccess: () => {
-			toast.success(isEdit ? 'Статья обновлена' : 'Статья создана')
-			onSuccess?.()
-		},
-	})
 
 	const handleFormSubmit = async (data: ArticleFormValues) => {
 		setIsSubmitting(true)
@@ -198,17 +192,6 @@ export function ArticleEditForm({
 				/>
 				{/* Кнопки действий */}
 				<div className='flex gap-4 pt-6'>
-					{onCancel && (
-						<Button
-							type='button'
-							variant='outline'
-							onClick={onCancel}
-							disabled={isSubmitting}
-							className='flex-1'
-						>
-							Отмена
-						</Button>
-					)}
 					<Button
 						type='submit'
 						disabled={isSubmitting || !form.formState.isValid}

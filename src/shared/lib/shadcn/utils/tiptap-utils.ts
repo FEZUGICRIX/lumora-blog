@@ -1,3 +1,4 @@
+import { uploadFile } from '@/entities/upload'
 import type { Node as TiptapNode } from '@tiptap/pm/model'
 import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state'
 import type { Editor } from '@tiptap/react'
@@ -298,6 +299,14 @@ export const handleImageUpload = async (
 		throw new Error('No file provided')
 	}
 
+	const url = await uploadFile(file)
+
+	if (!url) {
+		throw new Error('Upload failed, no URL returned')
+	}
+
+	console.log(url)
+
 	if (file.size > MAX_FILE_SIZE) {
 		throw new Error(
 			`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`,
@@ -314,7 +323,7 @@ export const handleImageUpload = async (
 		onProgress?.({ progress })
 	}
 
-	return '/images/tiptap-ui-placeholder-image.jpg'
+	return url
 }
 
 type ProtocolOptions = {

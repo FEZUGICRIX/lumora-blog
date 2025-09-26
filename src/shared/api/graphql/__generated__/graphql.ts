@@ -1,4 +1,4 @@
-import { api } from '@/shared/api/baseApi';
+import { api } from '@/shared/api/base-api';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -15,6 +15,7 @@ export type Scalars = {
   Float: { input: number; output: number; }
   DateTime: { input: any; output: any; }
   JSON: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type Article = {
@@ -108,6 +109,7 @@ export type Mutation = {
   createCategory: Category;
   createComment: Comment;
   createUser: User;
+  deleteFile: UploadResponse;
   removeArticle: Article;
   removeCategory: Category;
   removeComment: Comment;
@@ -116,6 +118,7 @@ export type Mutation = {
   updateCategory: Category;
   updateComment: Comment;
   updateUser: User;
+  uploadFile: UploadResponse;
 };
 
 
@@ -176,6 +179,11 @@ export type MutationUpdateCommentArgs = {
 
 export type MutationUpdateUserArgs = {
   updateUserInput: UpdateUserInput;
+};
+
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload']['input'];
 };
 
 export type Query = {
@@ -262,6 +270,12 @@ export type UpdateUserInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UploadResponse = {
+  __typename?: 'UploadResponse';
+  message: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
 export type User = {
   __typename?: 'User';
   avatar: Scalars['String']['output'];
@@ -311,6 +325,13 @@ export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCategoriesQuery = { __typename?: 'Query', getCategories: Array<{ __typename?: 'Category', id: string, name: string, slug: string }> };
+
+export type UploadFileMutationVariables = Exact<{
+  file: Scalars['Upload']['input'];
+}>;
+
+
+export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: { __typename?: 'UploadResponse', message: string, url: string } };
 
 
 export const CreateArticleDocument = `
@@ -509,6 +530,14 @@ export const GetCategoriesDocument = `
   }
 }
     `;
+export const UploadFileDocument = `
+    mutation UploadFile($file: Upload!) {
+  uploadFile(file: $file) {
+    message
+    url
+  }
+}
+    `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -526,6 +555,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     GetCategories: build.query<GetCategoriesQuery, GetCategoriesQueryVariables | void>({
       query: (variables) => ({ document: GetCategoriesDocument, variables })
+    }),
+    UploadFile: build.mutation<UploadFileMutation, UploadFileMutationVariables>({
+      query: (variables) => ({ document: UploadFileDocument, variables })
     }),
   }),
 });

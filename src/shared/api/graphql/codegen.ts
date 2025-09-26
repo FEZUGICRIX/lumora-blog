@@ -15,8 +15,8 @@ const config: CodegenConfig = {
 			],
 			config: {
 				maybeValue: 'T | null',
-				importBaseApiFrom: '@/shared/api/baseApi',
-				exportBaseApi: 'baseApi',
+				importBaseApiFrom: '@/shared/api/base-api',
+				exportBaseApi: 'base-api',
 			},
 		},
 	},

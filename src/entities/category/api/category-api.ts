@@ -1,14 +1,11 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import { graphqlBaseQuery } from '@/shared/api/graphql/base-query'
+import { api } from '@/shared/api/base-api'
 import { getCategories } from './queries/get-categories'
 import type {
 	GetCategoriesQuery,
 	GetCategoriesQueryVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
 
-export const categoryApi = createApi({
-	reducerPath: 'categoryApi',
-	baseQuery: graphqlBaseQuery,
+export const categoryApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		// Get categories
 		getCategories: builder.query<

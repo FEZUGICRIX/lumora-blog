@@ -1,6 +1,4 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import { graphqlBaseQuery } from '@/shared/api/graphql/base-query'
-
+import { api } from '@/shared/api/base-api'
 import { getArticlesQuery } from './queries/get-articles'
 import { getArticleBySlugQuery } from './queries/get-article-by-slug'
 import { createArticleMutation } from './queries/create-article'
@@ -17,9 +15,7 @@ import type {
 	UpdateArticleMutationVariables,
 } from '@/shared/api/graphql/__generated__/graphql'
 
-export const articleApi = createApi({
-	reducerPath: 'articleApi',
-	baseQuery: graphqlBaseQuery,
+export const articleApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		// Get article by slug
 		getArticleBySlug: builder.query<

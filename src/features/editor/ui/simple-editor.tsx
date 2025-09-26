@@ -172,10 +172,13 @@ const MobileToolbarContent = ({
 
 interface SimpleEditorProps {
 	content: JSONContent | null
-	setContent: (content: JSONContent) => void
+	onChange: (content: JSONContent) => void
 }
 
-export function SimpleEditor({ content, setContent }: SimpleEditorProps) {
+export function SimpleEditor({
+	content,
+	onChange,
+}: SimpleEditorProps) {
 	const isMobile = useIsMobile()
 	const { height } = useWindowSize()
 	const [mobileView, setMobileView] = React.useState<
@@ -198,8 +201,8 @@ export function SimpleEditor({ content, setContent }: SimpleEditorProps) {
 		extensions: extensions,
 		content,
 		onUpdate: ({ editor }) => {
-			const content = editor.getJSON() // или editor.getJSON() для JSON
-			setContent(content)
+			const newContent = editor.getJSON()
+			onChange?.(newContent)
 		},
 	})
 

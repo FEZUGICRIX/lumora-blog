@@ -1,20 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { env } from '../config/env'
-
-// TODO: Настроить грамотный реэкспорт
-import { articleApi } from '@/entities/article/api/article-api'
-import { categoryApi } from '@/entities/category/api/category-api'
+import { api } from '@/shared/api/base-api'
+import { env } from '@/shared/config/env'
 
 export const store = configureStore({
 	reducer: {
-		[articleApi.reducerPath]: articleApi.reducer,
-		[categoryApi.reducerPath]: categoryApi.reducer,
+		[api.reducerPath]: api.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(
-			articleApi.middleware,
-			categoryApi.middleware,
-		),
+		getDefaultMiddleware().concat(api.middleware),
 	devTools: env.nodeEnv !== 'production',
 })
 

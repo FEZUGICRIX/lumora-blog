@@ -5,7 +5,7 @@ import { routes } from '@/shared/config/routes'
 import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 import { ImageDarkOverlay } from '@/shared/ui/ImageDarkOverlay'
 import { BackgroundImage } from '@/shared/assets/images'
-import millify from 'millify'
+import { generateKey, formatNumber } from '@/shared/lib'
 import type { ArticleCardProps } from '@/entities/article/model/types'
 
 export const ArticleCard = ({
@@ -81,9 +81,9 @@ export const ArticleCard = ({
 					</p>
 
 					<div className='flex flex-wrap gap-2 pt-2'>
-						{tags.map((tag) => (
+						{tags.map((tag: string) => (
 							<span
-								key={tag}
+								key={generateKey(tag)}
 								className='rounded-full bg-zinc-100 px-2 py-1 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
 							>
 								#{tag}
@@ -96,19 +96,19 @@ export const ArticleCard = ({
 					<div className='flex items-center gap-4'>
 						<div className='flex items-center gap-1'>
 							<ViewIcon className='h-4 w-4' />
-							<span>{millify(views)}</span>
+							<span>{formatNumber(views)}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>
 							<CommentIcon className='h-4 w-4' />
-							<span>{millify(commentsCount ?? 0)}</span>
+							<span>{formatNumber(commentsCount ?? 0)}</span>
 						</div>
 
 						<div className='flex items-center gap-1'>
 							<HeartIcon
 								className={`${isLiked && 'fill-pink-500 text-pink-500'} h-4 w-4`}
 							/>
-							<span>{millify(likes)}</span>
+							<span>{formatNumber(likes)}</span>
 						</div>
 					</div>
 

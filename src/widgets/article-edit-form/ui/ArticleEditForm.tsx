@@ -1,191 +1,210 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import {
-	useCreateArticleMutation,
-	useUpdateArticleMutation,
-} from '@/entities/article/api'
-import { toast } from 'sonner'
-import { Input } from '@/shared/ui/ui-kit/input'
-import { Button } from '@/shared/ui/ui-kit/button'
-import type { FullArticle } from '@/entities/article'
+	FormProvider,
+	useFormContext,
+	type UseFormReturn,
+} from 'react-hook-form'
 import { CategorySelect } from '@/entities/category/ui/CategorySelect'
 import { SimpleEditor } from '@/features/editor/ui/simple-editor'
+import { handleRTKError } from '../lib/error-handling'
+import { type ArticleFormValues } from '../models/form.types'
+import { toast } from 'sonner'
+import { Button } from '@/shared/ui/ui-kit/button'
+import { Input } from '@/shared/ui/ui-kit/input'
+import {
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	FormDescription,
+} from '@/shared/ui/ui-kit/form'
 
-interface RTKQueryError {
-	data?: {
-		message?: string
+// Кастомный селект категорий для интеграции с RHF
+function ControlledCategorySelect({ name }: { name: string }) {
+	const { setValue, trigger, watch } = useFormContext()
+	const value = watch(name)
+
+	const handleChange = async (newValue: string) => {
+		setValue(name, newValue)
+		await trigger(name)
 	}
-	message?: string
-	status?: number
+
+	return <CategorySelect value={value} onValueChange={handleChange} />
 }
 
 interface ArticleEditFormProps {
-	article?: FullArticle | null
+	form: UseFormReturn<ArticleFormValues>
+	onSubmit: (data: ArticleFormValues) => Promise<void>
+	isEdit: boolean
 }
 
-export function ArticleEditForm({ article }: ArticleEditFormProps) {
-	const [title, setTitle] = useState(article?.title ?? '')
-	const [description, setDescription] = useState(
-		article?.description ?? '',
-	)
-	const [tags, setTags] = useState(article?.tags.join(', ') ?? '')
-	const [coverImage, setCoverImage] = useState(article?.coverImage ?? null)
+export function ArticleEditForm({
+	form,
+	onSubmit,
+	isEdit,
+}: ArticleEditFormProps) {
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
-	const [createArticle, { isLoading: isCreating }] =
-		useCreateArticleMutation()
-	const [updateArticle, { isLoading: isUpdating }] =
-		useUpdateArticleMutation()
-
-	const [categoryId, setCategoryId] = useState(
-		article?.category?.id || null,
-	)
-	const [content, setContent] = useState(article?.contentJson || null)
-
-	const isLoading = isCreating || isUpdating
-
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-
-		// Валидация обязательных полей
-		if (!title.trim()) {
-			toast.error('Ошибка', {
-				description: 'Заголовок статьи обязателен для заполнения',
-			})
-			return
-		}
-
-		if (!content) {
-			toast.error('Ошибка', {
-				description: 'Содержание статьи не может быть пустым',
-			})
-			return
-		}
-
-		if (!categoryId) {
-			toast.error('Ошибка', {
-				description: 'Необходимо выбрать категорию',
-			})
-			return
-		}
-
-		const payload = {
-			title: title.trim(),
-			description: description.trim(),
-			content,
-			tags: tags
-				.split(' ')
-				.map((tag) => tag.trim())
-				.filter((tag) => tag !== ''),
-			coverImage: coverImage?.length ? coverImage.trim() : null,
-			categoryId,
-			authorId: '19754a8e-6b8e-4496-b90a-cb90ff912098',
-		}
-
-		console.log('Отправляемые данные:', JSON.stringify(payload, null, 2))
-
+	const handleFormSubmit = async (data: ArticleFormValues) => {
+		setIsSubmitting(true)
 		try {
-			if (article) {
-				// Обновление существующей статьи
-				if (!article.slug) {
-					toast.error('Ошибка', {
-						description: 'Не удалось определить идентификатор статьи',
-					})
-					return
-				}
-
-				const response = await updateArticle({
-					input: {
-						slug: article.slug,
-						...payload,
-					},
-				}).unwrap()
-
-				console.log('Ответ от сервера:', response)
-
-				toast.success('Успешно обновлено', {
-					description: 'Статья обновлена',
-				})
-			} else {
-				// Создание новой статьи
-				const response = await createArticle({ input: payload }).unwrap()
-
-				console.log('Ответ от сервера:', response)
-
-				toast.success('Успешно создано', {
-					description: 'Статья создана',
-				})
-			}
-		} catch (error: unknown) {
-			console.error('Полная ошибка:', error)
-
-			// Безопасное извлечение сообщения об ошибке
-			let errorMessage = 'Произошла неизвестная ошибка'
-
-			if (typeof error === 'object' && error !== null) {
-				const rtkError = error as RTKQueryError
-				if (rtkError.data?.message) {
-					errorMessage = rtkError.data.message
-				} else if (rtkError.message) {
-					errorMessage = rtkError.message
-				}
-			} else if (typeof error === 'string') {
-				errorMessage = error
-			}
-
+			await onSubmit(data)
+		} catch (error) {
+			const appError = handleRTKError(error)
 			toast.error('Ошибка', {
-				description: errorMessage,
+				description: appError.message,
+				duration: 5000,
 			})
+		} finally {
+			setIsSubmitting(false)
 		}
 	}
 
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className='container mx-auto space-y-4 py-4 dark:text-amber-100'
-		>
-			<Input
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-				placeholder='Заголовок'
-				className='dark:white'
-				required
-			/>
-
-			<Input
-				value={description}
-				onChange={(e) => setDescription(e.target.value)}
-				placeholder='Описание'
-			/>
-
-			<CategorySelect
-				categoryId={categoryId}
-				setCategoryId={setCategoryId}
-			/>
-
-			<div className='m-auto max-w-7xl'>
-				<SimpleEditor content={content} setContent={setContent} />
-			</div>
-
-			<Input
-				value={tags}
-				onChange={(e) => setTags(e.target.value)}
-				placeholder='Теги (через пробел!)'
-			/>
-
-			<Input
-				value={coverImage ?? ''}
-				onChange={(e) => setCoverImage(e.target.value)}
-				placeholder='URL обложки (необязательно)'
-			/>
-
-			<Button type='submit' className='w-full' disabled={isLoading}>
-				{isLoading
-					? 'Загрузка...'
-					: article
-						? 'Сохранить изменения'
-						: 'Создать статью'}
-			</Button>
-		</form>
+		<FormProvider {...form}>
+			<form
+				onSubmit={form.handleSubmit(handleFormSubmit)}
+				className='mx-auto max-w-4xl space-y-6'
+			>
+				{/* Заголовок */}
+				<FormField
+					control={form.control}
+					name='title'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Заголовок *</FormLabel>
+							<FormControl>
+								<Input
+									placeholder='Введите заголовок статьи'
+									{...field}
+									disabled={isSubmitting}
+								/>
+							</FormControl>
+							<FormDescription>
+								Название вашей статьи (обязательное поле)
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Описание */}
+				<FormField
+					control={form.control}
+					name='description'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Описание *</FormLabel>
+							<FormControl>
+								<Input
+									placeholder='Краткое описание статьи (до 500 символов)'
+									{...field}
+									disabled={isSubmitting}
+								/>
+							</FormControl>
+							<FormDescription>
+								Краткое описание для превью (обязательное поле)
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Категория */}
+				<FormField
+					control={form.control}
+					name='categoryId'
+					render={() => (
+						<FormItem>
+							<FormLabel>Категория *</FormLabel>
+							<FormControl>
+								<ControlledCategorySelect name='categoryId' />
+							</FormControl>
+							<FormDescription>
+								Выберите категорию для статьи
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Контент */}
+				<FormField
+					control={form.control}
+					name='content'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Содержание *</FormLabel>
+							<FormControl>
+								<SimpleEditor
+									content={field.value}
+									onChange={field.onChange}
+								/>
+							</FormControl>
+							<FormDescription>
+								Основное содержание статьи в формате Rich Text
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Теги */}
+				<FormField
+					control={form.control}
+					name='tags'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Теги</FormLabel>
+							<FormControl>
+								<Input
+									placeholder='тег1, тег2, тег3 (через запятую)'
+									value={field.value}
+									onChange={field.onChange}
+									disabled={isSubmitting}
+								/>
+							</FormControl>
+							<FormDescription>Теги (через запятую)</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Обложка */}
+				<FormField
+					control={form.control}
+					name='coverImage'
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>URL обложки</FormLabel>
+							<FormControl>
+								<Input
+									placeholder='https://example.com/image.jpg'
+									disabled={isSubmitting}
+									{...field}
+									value={field.value || ''}
+								/>
+							</FormControl>
+							<FormDescription>
+								Ссылка на изображение для обложки статьи
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				{/* Кнопки действий */}
+				<div className='flex gap-4 pt-6'>
+					<Button
+						type='submit'
+						disabled={isSubmitting || !form.formState.isValid}
+						className='flex-1'
+					>
+						{isSubmitting
+							? 'Сохранение...'
+							: isEdit
+								? 'Сохранить изменения'
+								: 'Создать статью'}
+					</Button>
+				</div>
+			</form>
+		</FormProvider>
 	)
 }

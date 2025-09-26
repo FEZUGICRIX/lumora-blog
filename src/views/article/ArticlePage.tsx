@@ -3,10 +3,10 @@
 import { TipTapRenderer } from '@/features/editor'
 import { PageHero } from '@/shared/ui/PageHero'
 import { Badge } from '@/shared/ui/ui-kit/badge'
+import { generateKey, formatNumber } from '@/shared/lib'
 import { BackgroundImage } from '@/shared/assets/images'
 import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
 import type { ArticlePageProps } from '@/entities/article'
-import millify from 'millify'
 
 const ArticlePage = ({ article }: ArticlePageProps) => {
 	const {
@@ -50,7 +50,7 @@ const ArticlePage = ({ article }: ArticlePageProps) => {
 					<div className='mt-10 flex flex-col gap-4 border-t border-zinc-200 pt-6 md:flex-row md:items-center md:justify-between dark:border-zinc-800'>
 						<div className='flex flex-wrap gap-2'>
 							{tags.map((tag: string) => (
-								<Badge key={tag} variant='secondary'>
+								<Badge key={generateKey(tag)} variant='secondary'>
 									#{tag}
 								</Badge>
 							))}
@@ -59,15 +59,15 @@ const ArticlePage = ({ article }: ArticlePageProps) => {
 						<div className='flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400'>
 							<div className='flex items-center gap-1'>
 								<HeartIcon />
-								<span>{millify(likes)}</span>
+								<span>{formatNumber(likes)}</span>
 							</div>
 							<div className='flex items-center gap-1'>
 								<MessageSquareText />
-								<span>{millify(commentsCount ?? 0)}</span>
+								<span>{formatNumber(commentsCount ?? 0)}</span>
 							</div>
 							<div className='flex items-center gap-1'>
 								<Eye />
-								<span>{millify(views)}</span>
+								<span>{formatNumber(views)}</span>
 							</div>
 						</div>
 					</div>

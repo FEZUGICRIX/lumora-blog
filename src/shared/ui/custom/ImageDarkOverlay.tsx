@@ -1,4 +1,4 @@
-import { cn } from '../lib/shadcn/utils'
+import { cn } from '../../lib/shadcn/utils'
 
 export const ImageDarkOverlay = ({ className }: { className?: string }) => {
 	return (

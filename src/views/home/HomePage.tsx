@@ -1,7 +1,7 @@
 'use client'
 
 import { ArticleList } from '@/widgets/article-list'
-import { PageHero } from '@/shared/ui/PageHero'
+import { PageHero } from '@/shared/ui/custom'
 import { BackgroundImage } from '@/shared/assets/images'
 import { useTranslations } from 'next-intl'
 import type { ArticlePreview } from '@/entities/article'

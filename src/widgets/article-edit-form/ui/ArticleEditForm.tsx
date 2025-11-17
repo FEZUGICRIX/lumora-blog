@@ -11,16 +11,16 @@ import { SimpleEditor } from '@/features/editor/ui/simple-editor'
 import { handleRTKError } from '../lib/error-handling'
 import { type ArticleFormValues } from '../models/form.types'
 import { toast } from 'sonner'
-import { Button } from '@/shared/ui/ui-kit/button'
-import { Input } from '@/shared/ui/ui-kit/input'
 import {
+	Input,
+	Button,
 	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 	FormDescription,
-} from '@/shared/ui/ui-kit/form'
+} from '@/shared/ui/ui-kit'
 
 // Кастомный селект категорий для интеграции с RHF
 function ControlledCategorySelect({ name }: { name: string }) {

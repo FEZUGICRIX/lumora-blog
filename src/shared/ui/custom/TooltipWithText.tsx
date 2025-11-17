@@ -2,7 +2,7 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
-} from '@/shared/ui/ui-kit/tooltip'
+} from '@/shared/ui/ui-kit'
 
 interface Props {
 	text: string

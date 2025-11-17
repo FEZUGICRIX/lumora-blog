@@ -1,4 +1,4 @@
-import { Skeleton } from '@/shared/ui/ui-kit/skeleton'
+import { Skeleton } from '@/shared/ui/ui-kit'
 
 /**
  * Skeleton placeholder for SearchItem component

@@ -1,3 +1,6 @@
+import { cn } from '../../lib/shadcn/utils'
+import type { ReactNode } from 'react'
+
 import {
 	Sheet,
 	SheetContent,
@@ -6,9 +9,8 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-} from '@/shared/ui/ui-kit/sheet'
-import type { ReactNode } from 'react'
-import { cn } from '../lib/shadcn/utils'
+} from '@/shared/ui/ui-kit'
+
 import { Divider } from './Divider'
 
 interface CustomSheetProps {
@@ -44,9 +46,7 @@ export const CustomSheet = ({
 				{(title || description) && (
 					<SheetHeader className='flex items-center'>
 						{title && <SheetTitle>{title}</SheetTitle>}
-						{description && (
-							<SheetDescription>{description}</SheetDescription>
-						)}
+						{description && <SheetDescription>{description}</SheetDescription>}
 						<Divider />
 					</SheetHeader>
 				)}

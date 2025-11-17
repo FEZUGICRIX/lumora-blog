@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { CustomSelect } from '@/shared/ui/CustomSelect'
+import { CustomSelect } from '@/shared/ui/custom'
 import { sortOptions } from '../model/constants'
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 import type { SortOption } from '../model/types'

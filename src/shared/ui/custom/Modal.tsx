@@ -6,8 +6,8 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogClose,
-} from '@/shared/ui/ui-kit/dialog'
-import { Button } from '@/shared/ui/ui-kit/button'
+	Button
+} from '@/shared/ui/ui-kit'
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
 

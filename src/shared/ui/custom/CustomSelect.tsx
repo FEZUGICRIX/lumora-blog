@@ -6,7 +6,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/shared/ui/ui-kit/select'
+} from '@/shared/ui/ui-kit'
 import { cn } from '@/shared/lib/shadcn/utils'
 
 type Option<T extends string> = {

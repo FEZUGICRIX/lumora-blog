@@ -2,7 +2,7 @@
 
 import { Link } from '@/shared/config/i18n'
 import { usePathname } from 'next/navigation'
-import { SheetClose } from '@/shared/ui/ui-kit/sheet'
+import { SheetClose } from '@/shared/ui/ui-kit'
 import clsx from 'clsx'
 import type { JSX } from 'react'
 

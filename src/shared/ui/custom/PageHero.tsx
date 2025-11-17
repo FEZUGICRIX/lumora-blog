@@ -1,18 +1,21 @@
 'use client'
 
 import Image, { type StaticImageData } from 'next/image'
+
 import type { FullArticle } from '@/entities/article'
 import { AuthorCard } from '@/entities/user'
+
+import { BackgroundImage } from '../../assets/images'
 import { ImageDarkOverlay } from './ImageDarkOverlay'
-import { BackgroundImage } from '../assets/images'
 
 interface PageHeroProps {
-	title: string
-	subtitle: string
-	image: StaticImageData | string
+	title?: string
+	subtitle?: string
+	image?: StaticImageData | string
 	isCenter?: boolean
 	author?: FullArticle['author']
 	createdAt?: string
+	children?: React.ReactNode
 }
 
 export const PageHero = ({
@@ -22,19 +25,36 @@ export const PageHero = ({
 	author,
 	createdAt,
 	isCenter = false,
+	children,
 }: PageHeroProps) => {
+	if (children) {
+		return (
+			<section className='relative mx-auto h-[40vh] min-h-80 w-full'>
+				{children}
+			</section>
+		)
+	}
 	return (
-		<section className='relative mx-auto h-[40vh] min-h-80 w-full pt-20'>
+		<section className='relative mx-auto h-[40vh] min-h-80 w-full'>
 			<div className='mx-auto'>
-				{/* TODO: если image невалидный, рендерить BackgroundImage */}
-				<Image
-					src={image ?? BackgroundImage}
-					alt='Banner'
-					fill
-					className='object-cover object-center'
-					priority
-				/>
-				<ImageDarkOverlay />
+				{children ? (
+					<section className='relative mx-auto h-[40vh] min-h-85 w-full'>
+						{children}
+					</section>
+				) : (
+					<div>
+						{/* TODO: если image невалидный, рендерить BackgroundImage */}
+						<Image
+							src={image ?? BackgroundImage}
+							alt='Banner'
+							fill
+							className='object-cover object-center'
+							priority
+						/>
+						<ImageDarkOverlay />
+					</div>
+				)}
+
 				<div className={`absolute inset-0 z-[2] flex items-center`}>
 					<div className='container mx-auto'>
 						<div
@@ -45,9 +65,7 @@ export const PageHero = ({
 									<h1 className='text-4xl font-extrabold text-white'>
 										{title}
 									</h1>
-									<p className='mt-2 text-base text-zinc-300'>
-										{subtitle}
-									</p>
+									<p className='mt-2 text-base text-zinc-300'>{subtitle}</p>
 								</div>
 
 								{author && typeof createdAt === 'number' && (

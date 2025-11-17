@@ -2,7 +2,7 @@
 
 import { availableLocales } from '../model/constants'
 import { type Locale } from '../model/types'
-import { CustomSelect } from '@/shared/ui/CustomSelect'
+import { CustomSelect } from '@/shared/ui/custom'
 import { useLocale } from 'next-intl'
 import {
 	useRouter,

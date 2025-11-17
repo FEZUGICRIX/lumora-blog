@@ -1,9 +1,6 @@
 import { SidebarMenu } from './SidebarMenu'
-import { SocialLinks } from '@/shared/ui/SocialLinks'
 import { ActionPanel } from '@/widgets/action-panel'
-import { NavLinks } from '@/shared/ui/NavLinks'
-import { Divider } from '@/shared/ui/Divider'
-import { Logo } from '@/shared/ui/Logo'
+import { SocialLinks,NavLinks, Divider ,Logo} from '@/shared/ui/custom'
 
 export const Header = () => {
 	return (

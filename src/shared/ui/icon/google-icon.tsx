@@ -6,12 +6,7 @@ interface GoogleIconProps extends SVGProps<SVGSVGElement> {
 	className?: string
 }
 
-export const GoogleIcon = ({
-	className,
-	width = 20,
-	height = 25,
-	...props
-}: GoogleIconProps) => (
+export const GoogleIcon = ({ className, ...props }: GoogleIconProps) => (
 	<svg
 		{...props}
 		className={cn(

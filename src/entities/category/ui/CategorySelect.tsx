@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
+
+import { CustomSelect } from '@/shared/ui/custom'
+import { Skeleton } from '@/shared/ui/ui-kit'
+
 import { useGetCategoriesQuery } from '../api'
-import { CustomSelect } from '@/shared/ui/CustomSelect'
-import { Skeleton } from '@/shared/ui/ui-kit/skeleton'
 
 interface CategorySelectProps {
 	value?: string | null
@@ -20,7 +22,7 @@ export const CategorySelect = ({
 }: CategorySelectProps) => {
 	const { data: categories = [], isLoading } = useGetCategoriesQuery()
 
-	const categoryOptions: SelectOption[] = categories.map((category) => ({
+	const categoryOptions: SelectOption[] = categories.map(category => ({
 		label: category.name,
 		value: category.id,
 		id: category.id,

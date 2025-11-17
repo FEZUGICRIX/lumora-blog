@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import LoginPage from '@/views/auth/login/LoginPage'
 
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations('Auth.Register')
+	const t = await getTranslations('Auth.Login')
 
 	return {
 		title: t('title'),

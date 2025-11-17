@@ -1,6 +1,5 @@
-import { Divider } from '@/shared/ui/custom/Divider'
-import { GithubIcon } from '@/shared/ui/icon'
-import { GoogleIcon } from '@/shared/ui/icon/google-icon'
+import { Divider } from '@/shared/ui/custom'
+import { GithubIcon, GoogleIcon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/ui-kit'
 
 export const AuthSocial = () => {

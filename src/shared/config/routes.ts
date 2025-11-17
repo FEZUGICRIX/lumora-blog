@@ -18,8 +18,8 @@ export const routes: Routes = {
 		post: (slug) => `/blog/${slug}`,
 	},
 	auth: {
-		login: '/login',
-		register: '/register',
+		login: '/auth/login',
+		register: '/auth/register',
 	},
 	profile: (username) => `/users/${username}`,
 }

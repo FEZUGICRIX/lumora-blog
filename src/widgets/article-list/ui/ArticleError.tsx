@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Button } from '@/shared/ui/ui-kit/button'
+import { Button } from '@/shared/ui/ui-kit'
 import { AlertCircle } from 'lucide-react'
 
 export const ArticleError = () => {

@@ -6,7 +6,7 @@ import {
 } from '@/widgets/article-edit-form'
 import type { FullArticle } from '@/entities/article'
 import { useFormPreview } from './hooks/use-form-preview'
-import { PageHero } from '@/shared/ui/PageHero'
+import { PageHero } from '@/shared/ui/custom'
 import { toast } from 'sonner'
 import { BackgroundImage } from '@/shared/assets/images'
 

@@ -4,12 +4,12 @@ import { useMemo, useState } from 'react'
 import { useGetArticlesQuery } from '@/entities/article/api'
 import { useFuseSearch } from '@/shared/hooks'
 import { useDebounce } from '@/shared/hooks'
-import { AnimatedHeight } from '@/shared/ui/AnimatedHeight'
+import { AnimatedHeight } from '@/shared/ui/custom'
 import { AnimatePresence } from 'framer-motion'
 import { SearchItem } from './SearchItem'
 import { SearchModalSkeleton } from './skeletons/SearchModalSkeleton'
 import { SearchIcon } from '@/shared/ui/icon'
-import { Input } from '@/shared/ui/ui-kit/input'
+import { Input } from '@/shared/ui/ui-kit'
 
 // TODO: Реализовать запрос статей через RTK Query с правильной типизацией
 export const SearchModal = () => {

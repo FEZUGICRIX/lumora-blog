@@ -1,5 +1,5 @@
 import { ArticleCardSkeleton } from '@/entities/article/ui'
-import { GridLayout } from '@/shared/ui/GridLayout'
+import { GridLayout } from '@/shared/ui/custom'
 
 export const ArticleListSkeleton = () => {
 	return (

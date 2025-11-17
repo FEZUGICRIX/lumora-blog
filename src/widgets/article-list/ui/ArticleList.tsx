@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
 import { useGetArticlesQuery } from '@/entities/article/api'
-import { GridLayout } from '@/shared/ui/GridLayout'
+import { GridLayout } from '@/shared/ui/custom'
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 import { ArticleFilters } from '@/features/filters'
 import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'

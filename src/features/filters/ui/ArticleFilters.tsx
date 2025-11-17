@@ -1,6 +1,6 @@
 import { CategoryFilter, type SortOption } from '@/features/filters'
 import { SortSelect } from '@/features/filters'
-import { Button } from '@/shared/ui/ui-kit/button'
+import { Button } from '@/shared/ui/ui-kit'
 import { useResetFilters } from '../lib/use-reset-filters'
 import type { CategoryMinimal } from '@/entities/category'
 

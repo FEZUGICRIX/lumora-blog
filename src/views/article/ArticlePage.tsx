@@ -1,8 +1,8 @@
 'use client'
 
 import { TipTapRenderer } from '@/features/editor'
-import { PageHero } from '@/shared/ui/PageHero'
-import { Badge } from '@/shared/ui/ui-kit/badge'
+import { PageHero } from '@/shared/ui/custom'
+import { Badge } from '@/shared/ui/ui-kit'
 import { generateKey, formatNumber } from '@/shared/lib'
 import { BackgroundImage } from '@/shared/assets/images'
 import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'

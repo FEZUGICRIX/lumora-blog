@@ -1,12 +1,10 @@
 'use client'
 
-import { SearchModal } from '@/features/search-posts'
 import { LocaleSwitcher } from '@/features/locale-switcher'
+import { SearchModal } from '@/features/search-posts'
 import { useBoolean } from '@/shared/hooks'
-import { TooltipWithText } from '@/shared/ui/TooltipWithText'
-import { ThemeToggle } from '@/shared/ui/ThemeToggle'
+import { Modal, ThemeToggle, TooltipWithText } from '@/shared/ui/custom'
 import { SearchIcon } from '@/shared/ui/icon'
-import { Modal } from '@/shared/ui/Modal'
 
 export const ActionPanel = () => {
 	const searchModal = useBoolean()
@@ -23,9 +21,7 @@ export const ActionPanel = () => {
 
 			<Modal
 				title={
-					<span className='text-foreground dark:text-white'>
-						Найти статью
-					</span>
+					<span className='text-foreground dark:text-white'>Найти статью</span>
 				}
 				open={searchModal.value}
 				onOpenChange={searchModal.toggle}

@@ -1,8 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTheme } from 'next-themes'
+import { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
+import { env } from '@/shared/config/env'
 import { routes } from '@/shared/config/routes'
 import {
 	Button,
@@ -19,6 +24,9 @@ import { LoginSchema, type TypeLoginSchema } from '../schema'
 import { AuthWrapper } from './AuthWrapper'
 
 export const LoginForm = () => {
+	const { theme } = useTheme()
+	const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null)
+
 	const form = useForm<TypeLoginSchema>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -28,7 +36,11 @@ export const LoginForm = () => {
 	})
 
 	const onSubmit = (data: TypeLoginSchema) => {
-		console.log(data)
+		if (recaptchaValue) {
+			console.log(data)
+		} else {
+			toast.error('Пожалуйста, завершите ReCAPTCHA')
+		}
 	}
 
 	return (
@@ -79,6 +91,14 @@ export const LoginForm = () => {
 							</FormItem>
 						)}
 					/>
+
+					<div className='flex justify-center'>
+						<ReCAPTCHA
+							onChange={setRecaptchaValue}
+							theme={theme == 'light' ? 'light' : 'dark'}
+							sitekey={env.googleRecaptchaSiteKey}
+						/>
+					</div>
 
 					<Button type='submit'>Login to account</Button>
 				</form>

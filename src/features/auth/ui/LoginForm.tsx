@@ -20,6 +20,7 @@ import {
 	Input,
 } from '@/shared/ui/ui-kit'
 
+import { useLogin } from '../api/hooks'
 import { LoginSchema, type TypeLoginSchema } from '../schema'
 import { AuthWrapper } from './AuthWrapper'
 
@@ -35,9 +36,11 @@ export const LoginForm = () => {
 		},
 	})
 
+	const { login, isLoadingLogin } = useLogin()
+
 	const onSubmit = (data: TypeLoginSchema) => {
 		if (recaptchaValue) {
-			console.log(data)
+			login({ data, recaptcha: recaptchaValue })
 		} else {
 			toast.error('Пожалуйста, завершите ReCAPTCHA')
 		}
@@ -66,6 +69,7 @@ export const LoginForm = () => {
 									<Input
 										placeholder='Type your email'
 										type='email'
+										disabled={isLoadingLogin}
 										{...field}
 									/>
 								</FormControl>
@@ -84,6 +88,7 @@ export const LoginForm = () => {
 									<Input
 										placeholder='Type your password'
 										type='password'
+										disabled={isLoadingLogin}
 										{...field}
 									/>
 								</FormControl>
@@ -100,7 +105,9 @@ export const LoginForm = () => {
 						/>
 					</div>
 
-					<Button type='submit'>Login to account</Button>
+					<Button type='submit' disabled={isLoadingLogin}>
+						Login to account
+					</Button>
 				</form>
 			</Form>
 		</AuthWrapper>

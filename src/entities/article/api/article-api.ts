@@ -1,9 +1,4 @@
 import { api } from '@/shared/api/base-api'
-import { getArticlesQuery } from './queries/get-articles'
-import { getArticleBySlugQuery } from './queries/get-article-by-slug'
-import { createArticleMutation } from './queries/create-article'
-import { updateArticleMutation } from './queries/update-article'
-
 import type {
 	CreateArticleMutation,
 	CreateArticleMutationVariables,
@@ -13,16 +8,21 @@ import type {
 	GetArticlesQueryVariables,
 	UpdateArticleMutation,
 	UpdateArticleMutationVariables,
-} from '@/shared/api/graphql/__generated__/graphql'
+} from '@/shared/api/graphql/__generated__/rtk'
+
+import { createArticleMutation } from './queries/create-article'
+import { getArticleBySlugQuery } from './queries/get-article-by-slug'
+import { getArticlesQuery } from './queries/get-articles'
+import { updateArticleMutation } from './queries/update-article'
 
 export const articleApi = api.injectEndpoints({
-	endpoints: (builder) => ({
+	endpoints: builder => ({
 		// Get article by slug
 		getArticleBySlug: builder.query<
 			GetArticleBySlugQuery['getArticleBySlug'],
 			GetArticleBySlugQueryVariables
 		>({
-			query: (variables) => ({
+			query: variables => ({
 				document: getArticleBySlugQuery,
 				variables,
 			}),
@@ -33,12 +33,11 @@ export const articleApi = api.injectEndpoints({
 			GetArticlesQuery['getArticles'],
 			Partial<GetArticlesQueryVariables> | void
 		>({
-			query: (variables) => ({
+			query: variables => ({
 				document: getArticlesQuery,
 				variables: variables ?? {},
 			}),
-			transformResponse: (response: GetArticlesQuery) =>
-				response.getArticles,
+			transformResponse: (response: GetArticlesQuery) => response.getArticles,
 		}),
 
 		// Create article
@@ -46,7 +45,7 @@ export const articleApi = api.injectEndpoints({
 			CreateArticleMutation['createArticle'],
 			CreateArticleMutationVariables
 		>({
-			query: (variables) => ({
+			query: variables => ({
 				document: createArticleMutation,
 				variables,
 			}),
@@ -57,7 +56,7 @@ export const articleApi = api.injectEndpoints({
 			UpdateArticleMutation['updateArticle'],
 			UpdateArticleMutationVariables
 		>({
-			query: (variables) => ({
+			query: variables => ({
 				document: updateArticleMutation,
 				variables,
 			}),

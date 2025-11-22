@@ -1,16 +1,19 @@
 'use client'
 
-import { useCallback, useEffect, useState, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { ArticleFilters } from '@/features/filters'
+import type { SortOption } from '@/features/filters'
+
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
 import { useGetArticlesQuery } from '@/entities/article/api'
-import { GridLayout } from '@/shared/ui/custom'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
-import { ArticleFilters } from '@/features/filters'
-import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
-import { ArticleError } from './ArticleError'
-
-import type { SortOption } from '@/features/filters'
 import type { CategoryMinimal } from '@/entities/category'
+
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
+import { GridLayout } from '@/shared/ui/custom'
+
+import { ArticleError } from './ArticleError'
+import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
 
 interface ArticleListProps {
 	withFilters?: boolean
@@ -27,7 +30,7 @@ export const ArticleList = ({
 	// Для отслеживания первого рендера (SSR) → нужен только на самом старте
 	const isInitialRender = useRef(true)
 
-	const categorySlugs = categories.map((cat) => cat.slug)
+	const categorySlugs = categories.map(cat => cat.slug)
 
 	// --- RTK Query ---
 	const {

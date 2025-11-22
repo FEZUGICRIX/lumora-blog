@@ -1,3 +1,5 @@
 export { generateKey } from './generate-key'
 export { highlightMatch } from './highlight-match'
 export { formatNumber } from './format-number'
+export { toastErrorHandler } from './toast-error-handler'
+export { toastMessage } from './toast-message'

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
 import type { CategoryMinimal } from '@/entities/category'
 import type { SortOption } from '../model/types'
 

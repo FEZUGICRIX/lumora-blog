@@ -1,8 +1,10 @@
 import Image from 'next/image'
-import { highlightMatch } from '@/shared/lib'
+
+import type { ArticlePreview } from '@/entities/article'
+
 import { BackgroundImage } from '@/shared/assets/images'
 import { useFormattedDate } from '@/shared/config/dayjs'
-import type { ArticlePreview } from '@/entities/article'
+import { highlightMatch } from '@/shared/lib'
 
 type SearchItemProps = Pick<
 	ArticlePreview,
@@ -45,17 +47,14 @@ export const SearchItem = ({
 
 				<div className='text-muted-foreground mt-2 flex items-center gap-2 text-xs'>
 					<img
-						src={author.avatar}
-						alt={author.firstName}
+						src={author.avatar ?? undefined}
+						alt={author.displayName}
 						className='h-5 max-w-5 rounded-full'
 					/>
 
 					<div className='gap-2 sm:flex'>
 						<div>
-							<span>{highlightMatch(author.firstName, query)} </span>
-							{author.lastName && (
-								<span>{highlightMatch(author.lastName, query)}</span>
-							)}
+							<span>{highlightMatch(author.displayName, query)} </span>
 						</div>
 						<span className='hidden sm:block'>•</span>
 						<span>{formattedDate}</span>

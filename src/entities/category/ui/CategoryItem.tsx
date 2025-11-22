@@ -1,6 +1,7 @@
-import { Button } from '@/shared/ui/ui-kit'
 import { cn } from '@/shared/lib/shadcn/utils'
-import type { CategoryMinimal } from '../model/category.types'
+import { Button } from '@/shared/ui/ui-kit'
+
+import type { CategoryMinimal } from '../types/category.types'
 
 interface CategoryItemProps {
 	category: CategoryMinimal

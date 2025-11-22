@@ -18,14 +18,14 @@ export const AuthorCard = ({ author, createdAt }: AuthorCardProps) => {
 		<div className='flex items-center gap-2'>
 			<Image
 				src={author.avatar ?? '/default-cover.jpg'}
-				alt={`${author.firstName} ${author.lastName || ''}`}
+				alt={author.displayName}
 				className='rounded-full'
 				width={32}
 				height={32}
 			/>
 			<div className='text-gray-300'>
 				<p className='text-sm font-semibold'>
-					{author.firstName} {author.lastName || ''}
+					{author.displayName}
 				</p>
 				<p className='text-xs'>{formattedDate}</p>
 			</div>

@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
 import { CustomSelect } from '@/shared/ui/custom'
+
 import { sortOptions } from '../model/constants'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 import type { SortOption } from '../model/types'
 
 interface SortSelectProps {
@@ -19,8 +21,7 @@ export function SortSelect({ sort, onSortChange }: SortSelectProps) {
 	// Получаем текущее значение из URL или используем значение по умолчанию
 	const urlSort = searchParams.get('sort') as SortOption | null
 	const current =
-		urlSort &&
-		Object.values(ArticleSortBy).includes(urlSort as ArticleSortBy)
+		urlSort && Object.values(ArticleSortBy).includes(urlSort as ArticleSortBy)
 			? urlSort
 			: sort
 

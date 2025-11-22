@@ -1,8 +1,8 @@
 import type {
 	Article,
-	GetArticlesQuery,
 	GetArticleBySlugQuery,
-} from '@/shared/api/graphql/__generated__/graphql'
+	GetArticlesQuery,
+} from '@/shared/api/graphql/__generated__/rtk'
 
 // TODO: перевести комментарии на английский
 
@@ -16,9 +16,7 @@ export type ArticlePreview = NonNullable<
 >
 
 // Полная статья из запроса getArticleBySlug (для страницы статьи)
-export type FullArticle = NonNullable<
-	GetArticleBySlugQuery['getArticleBySlug']
->
+export type FullArticle = NonNullable<GetArticleBySlugQuery['getArticleBySlug']>
 
 // Сырые типы из схемы GraphQL (используются реже, например в форме редактирования)
 export type RawArticle = Article

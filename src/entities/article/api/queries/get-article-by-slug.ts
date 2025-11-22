@@ -22,8 +22,7 @@ export const getArticleBySlugQuery = gql`
 			updatedAt
 			author {
 				id
-				firstName
-				lastName
+				displayName
 				avatar
 			}
 			category {
@@ -38,8 +37,7 @@ export const getArticleBySlugQuery = gql`
 				updatedAt
 				author {
 					id
-					firstName
-					lastName
+					displayName
 					avatar
 				}
 			}

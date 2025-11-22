@@ -20,6 +20,7 @@ import {
 	Input,
 } from '@/shared/ui/ui-kit'
 
+import { useRegister } from '../api/hooks'
 import { RegisterSchema, type TypeRegisterSchema } from '../schema'
 import { AuthWrapper } from './AuthWrapper'
 
@@ -31,15 +32,18 @@ export const RegisterForm = () => {
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			displayName: '',
+			username: '',
 			email: '',
 			password: '',
 			passwordRepeat: '',
 		},
 	})
 
+	const { register, isLoadingRegister } = useRegister()
+
 	const onSubmit = (data: TypeRegisterSchema) => {
 		if (recaptchaValue) {
-			console.log(data)
+			register({ data, recaptcha: recaptchaValue })
 		} else {
 			toast.error('Пожалуйста, завершите ReCAPTCHA')
 		}
@@ -65,13 +69,33 @@ export const RegisterForm = () => {
 							<FormItem>
 								<FormLabel>Name</FormLabel>
 								<FormControl>
-									<Input placeholder='Type your display name' {...field} />
+									<Input
+										placeholder='Type your display name'
+										disabled={isLoadingRegister}
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-
+					<FormField
+						control={form.control}
+						name='username'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Username</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='@username'
+										disabled={isLoadingRegister}
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					<FormField
 						control={form.control}
 						name='email'
@@ -82,6 +106,7 @@ export const RegisterForm = () => {
 									<Input
 										placeholder='Type your email'
 										type='email'
+										disabled={isLoadingRegister}
 										{...field}
 									/>
 								</FormControl>
@@ -89,7 +114,6 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
-
 					<FormField
 						control={form.control}
 						name='password'
@@ -100,6 +124,7 @@ export const RegisterForm = () => {
 									<Input
 										placeholder='Type your password'
 										type='password'
+										disabled={isLoadingRegister}
 										{...field}
 									/>
 								</FormControl>
@@ -107,7 +132,6 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
-
 					<FormField
 						control={form.control}
 						name='passwordRepeat'
@@ -118,6 +142,7 @@ export const RegisterForm = () => {
 									<Input
 										placeholder='Type your password'
 										type='password'
+										disabled={isLoadingRegister}
 										{...field}
 									/>
 								</FormControl>
@@ -125,7 +150,6 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
-
 					<div className='flex justify-center'>
 						<ReCAPTCHA
 							onChange={setRecaptchaValue}
@@ -133,8 +157,9 @@ export const RegisterForm = () => {
 							sitekey={env.googleRecaptchaSiteKey}
 						/>
 					</div>
-
-					<Button type='submit'>Create account</Button>
+					<Button type='submit' disabled={isLoadingRegister}>
+						Create account
+					</Button>
 				</form>
 			</Form>
 		</AuthWrapper>

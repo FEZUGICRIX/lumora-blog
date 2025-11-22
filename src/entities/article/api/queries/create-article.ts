@@ -21,8 +21,7 @@ export const createArticleMutation = gql`
 			updatedAt
 			author {
 				id
-				firstName
-				lastName
+				displayName
 				avatar
 			}
 			category {
@@ -36,8 +35,7 @@ export const createArticleMutation = gql`
 				updatedAt
 				author {
 					id
-					firstName
-					lastName
+					displayName
 					avatar
 				}
 			}

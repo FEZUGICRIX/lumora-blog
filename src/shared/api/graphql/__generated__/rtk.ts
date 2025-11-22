@@ -51,6 +51,13 @@ export enum ArticleSortBy {
   Views = 'VIEWS'
 }
 
+/** Supported authentication methods */
+export enum AuthMethod {
+  Credentials = 'CREDENTIALS',
+  Github = 'GITHUB',
+  Google = 'GOOGLE'
+}
+
 export type Category = {
   __typename?: 'Category';
   articles: Array<Article>;
@@ -69,6 +76,11 @@ export type Comment = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+export type ConfirmationInput = {
+  /** Email confirmation token */
+  token: Scalars['String']['input'];
 };
 
 export type CreateArticleInput = {
@@ -96,11 +108,17 @@ export type CreateCommentInput = {
   content?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type CreateUserInput = {
-  avatar: Scalars['String']['input'];
+export type LoginInput = {
+  code?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
-  firstName: Scalars['String']['input'];
-  lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type LoginResult = MessageResponse | User;
+
+export type MessageResponse = {
+  __typename?: 'MessageResponse';
+  message: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -108,16 +126,20 @@ export type Mutation = {
   createArticle: Article;
   createCategory: Category;
   createComment: Comment;
-  createUser: User;
   deleteFile: UploadResponse;
+  login: LoginResult;
+  logout: Scalars['Boolean']['output'];
+  newPassword: Scalars['Boolean']['output'];
+  newVerification: Scalars['Boolean']['output'];
+  register: MessageResponse;
   removeArticle: Article;
   removeCategory: Category;
   removeComment: Comment;
-  removeUser: User;
+  resetPassword: Scalars['Boolean']['output'];
   updateArticle: Article;
   updateCategory: Category;
   updateComment: Comment;
-  updateUser: User;
+  updateProfile: User;
   uploadFile: UploadResponse;
 };
 
@@ -137,8 +159,23 @@ export type MutationCreateCommentArgs = {
 };
 
 
-export type MutationCreateUserArgs = {
-  createUserInput: CreateUserInput;
+export type MutationLoginArgs = {
+  loginInput: LoginInput;
+};
+
+
+export type MutationNewPasswordArgs = {
+  newPasswordInput: NewPasswordInput;
+};
+
+
+export type MutationNewVerificationArgs = {
+  confirmationInput: ConfirmationInput;
+};
+
+
+export type MutationRegisterArgs = {
+  registerInput: RegisterInput;
 };
 
 
@@ -157,8 +194,8 @@ export type MutationRemoveCommentArgs = {
 };
 
 
-export type MutationRemoveUserArgs = {
-  id: Scalars['Int']['input'];
+export type MutationResetPasswordArgs = {
+  resetPasswordInput: ResetPasswordInput;
 };
 
 
@@ -177,8 +214,8 @@ export type MutationUpdateCommentArgs = {
 };
 
 
-export type MutationUpdateUserArgs = {
-  updateUserInput: UpdateUserInput;
+export type MutationUpdateProfileArgs = {
+  updateProfileInput: UpdateUserInput;
 };
 
 
@@ -186,15 +223,21 @@ export type MutationUploadFileArgs = {
   file: Scalars['Upload']['input'];
 };
 
+export type NewPasswordInput = {
+  password: Scalars['String']['input'];
+  /** Reset password token */
+  token: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   category: Category;
   comment: Comment;
-  getAllUsers: Array<User>;
+  connect: UrlResponse;
+  findProfile: User;
   getArticleBySlug: Article;
   getArticles: Array<Article>;
   getCategories: Array<Category>;
-  getUserById?: Maybe<User>;
 };
 
 
@@ -205,6 +248,11 @@ export type QueryCategoryArgs = {
 
 export type QueryCommentArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryConnectArgs = {
+  provider: Scalars['String']['input'];
 };
 
 
@@ -224,9 +272,17 @@ export type QueryGetArticlesArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type RegisterInput = {
+  avatar?: InputMaybe<Scalars['String']['input']>;
+  displayName: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  passwordRepeat: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
 
-export type QueryGetUserByIdArgs = {
-  id: Scalars['ID']['input'];
+export type ResetPasswordInput = {
+  email: Scalars['String']['input'];
 };
 
 export enum SortOrder {
@@ -263,11 +319,8 @@ export type UpdateCommentInput = {
 };
 
 export type UpdateUserInput = {
-  avatar?: InputMaybe<Scalars['String']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
-  lastName?: InputMaybe<Scalars['String']['input']>;
+  displayName: Scalars['String']['input'];
+  isTwoFactorEnabled: Scalars['Boolean']['input'];
 };
 
 export type UploadResponse = {
@@ -276,29 +329,44 @@ export type UploadResponse = {
   url: Scalars['String']['output'];
 };
 
+export type UrlResponse = {
+  __typename?: 'UrlResponse';
+  url: Scalars['String']['output'];
+};
+
 export type User = {
   __typename?: 'User';
-  avatar: Scalars['String']['output'];
+  avatar?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
+  displayName: Scalars['String']['output'];
   email: Scalars['String']['output'];
-  firstName: Scalars['String']['output'];
+  emailVerified: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
-  lastName: Scalars['String']['output'];
+  isTwoFactorEnabled: Scalars['Boolean']['output'];
+  method: AuthMethod;
+  role: UserRole;
+  username: Scalars['String']['output'];
 };
+
+/** Defines roles available in the system */
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
 
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null } }> } };
 
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type GetArticleBySlugQuery = { __typename?: 'Query', getArticleBySlug: { __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null } }> } };
 
 export type GetArticlesQueryVariables = Exact<{
   categorySlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
@@ -312,26 +380,19 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> }> };
+export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: string, title: string, slug: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, commentsCount?: number | null, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null }, category: { __typename?: 'Category', id: string, name: string, slug: string }, comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null } }> }> };
 
 export type UpdateArticleMutationVariables = Exact<{
   input: UpdateArticleInput;
 }>;
 
 
-export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', id: string, title: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, firstName: string, lastName: string, avatar: string } }> } };
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', id: string, title: string, description: string, contentJson: any, contentHtml: string, contentText: string, tags: Array<string>, coverImage?: string | null, published: boolean, publishedAt?: any | null, readingTime: number, views: number, likes: number, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null }, category: { __typename?: 'Category', id: string, name: string }, comments: Array<{ __typename?: 'Comment', id: string, createdAt: any, updatedAt: any, author: { __typename?: 'User', id: string, displayName: string, avatar?: string | null } }> } };
 
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCategoriesQuery = { __typename?: 'Query', getCategories: Array<{ __typename?: 'Category', id: string, name: string, slug: string }> };
-
-export type UploadFileMutationVariables = Exact<{
-  file: Scalars['Upload']['input'];
-}>;
-
-
-export type UploadFileMutation = { __typename?: 'Mutation', uploadFile: { __typename?: 'UploadResponse', message: string, url: string } };
 
 
 export const CreateArticleDocument = `
@@ -355,8 +416,7 @@ export const CreateArticleDocument = `
     updatedAt
     author {
       id
-      firstName
-      lastName
+      displayName
       avatar
     }
     category {
@@ -370,8 +430,7 @@ export const CreateArticleDocument = `
       updatedAt
       author {
         id
-        firstName
-        lastName
+        displayName
         avatar
       }
     }
@@ -400,8 +459,7 @@ export const GetArticleBySlugDocument = `
     updatedAt
     author {
       id
-      firstName
-      lastName
+      displayName
       avatar
     }
     category {
@@ -416,8 +474,7 @@ export const GetArticleBySlugDocument = `
       updatedAt
       author {
         id
-        firstName
-        lastName
+        displayName
         avatar
       }
     }
@@ -455,8 +512,7 @@ export const GetArticlesDocument = `
     updatedAt
     author {
       id
-      firstName
-      lastName
+      displayName
       avatar
     }
     category {
@@ -471,8 +527,7 @@ export const GetArticlesDocument = `
       updatedAt
       author {
         id
-        firstName
-        lastName
+        displayName
         avatar
       }
     }
@@ -499,8 +554,7 @@ export const UpdateArticleDocument = `
     updatedAt
     author {
       id
-      firstName
-      lastName
+      displayName
       avatar
     }
     category {
@@ -513,8 +567,7 @@ export const UpdateArticleDocument = `
       updatedAt
       author {
         id
-        firstName
-        lastName
+        displayName
         avatar
       }
     }
@@ -527,14 +580,6 @@ export const GetCategoriesDocument = `
     id
     name
     slug
-  }
-}
-    `;
-export const UploadFileDocument = `
-    mutation UploadFile($file: Upload!) {
-  uploadFile(file: $file) {
-    message
-    url
   }
 }
     `;
@@ -555,9 +600,6 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     GetCategories: build.query<GetCategoriesQuery, GetCategoriesQueryVariables | void>({
       query: (variables) => ({ document: GetCategoriesDocument, variables })
-    }),
-    UploadFile: build.mutation<UploadFileMutation, UploadFileMutationVariables>({
-      query: (variables) => ({ document: UploadFileDocument, variables })
     }),
   }),
 });

@@ -1,12 +1,15 @@
 'use client'
 
-import { Provider } from 'react-redux'
-import { store } from '../store'
-import { ThemeProvider } from './theme-provider'
 import { NextIntlClientProvider } from 'next-intl'
-import { Toaster } from '../ui/ui-kit/sonner'
-import type { Locale } from '@/features/locale-switcher'
 import type { AbstractIntlMessages } from 'next-intl'
+import { Provider } from 'react-redux'
+
+import type { Locale } from '@/features/locale-switcher'
+
+import { store } from '../store'
+import { Toaster } from '../ui/ui-kit/sonner'
+import { TanstackQueryProvider } from './TanstackQueryProvider'
+import { ThemeProvider } from './theme-provider'
 
 interface ProvidersProps {
 	children: React.ReactNode
@@ -18,10 +21,12 @@ export function Providers({ children, locale, messages }: ProvidersProps) {
 	return (
 		<NextIntlClientProvider locale={locale} messages={messages}>
 			<ThemeProvider defaultTheme='dark'>
-				<Provider store={store}>
-					{children}
-					<Toaster richColors closeButton />
-				</Provider>
+				<TanstackQueryProvider>
+					<Provider store={store}>
+						{children}
+						<Toaster richColors closeButton />
+					</Provider>
+				</TanstackQueryProvider>
 			</ThemeProvider>
 		</NextIntlClientProvider>
 	)

@@ -1,0 +1,5 @@
+query GetOAuthConnectUrl($provider: String!) {
+	connect(provider: $provider) {
+		url
+	}
+}

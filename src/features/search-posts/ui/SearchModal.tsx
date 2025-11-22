@@ -23,8 +23,7 @@ export const SearchModal = () => {
 			keys: [
 				'title',
 				'description',
-				'author.firstName',
-				'author.lastName',
+				'author.displayName',
 			],
 			threshold: 0.3,
 		}),

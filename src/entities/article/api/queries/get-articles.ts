@@ -40,8 +40,7 @@ export const getArticlesQuery = gql`
 			updatedAt
 			author {
 				id
-				firstName
-				lastName
+				displayName
 				avatar
 			}
 			category {
@@ -56,8 +55,7 @@ export const getArticlesQuery = gql`
 				updatedAt
 				author {
 					id
-					firstName
-					lastName
+					displayName
 					avatar
 				}
 			}

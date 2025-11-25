@@ -7,6 +7,7 @@ type Routes = {
 	auth: {
 		login: string
 		register: string
+		passwordRecovery: string
 	}
 	profile: (username: string) => string
 }
@@ -15,11 +16,12 @@ export const routes: Routes = {
 	home: '/',
 	blog: {
 		root: '/blog',
-		post: (slug) => `/blog/${slug}`,
+		post: slug => `/blog/${slug}`,
 	},
 	auth: {
 		login: '/auth/login',
 		register: '/auth/register',
+		passwordRecovery: '/auth/password-recovery',
 	},
-	profile: (username) => `/users/${username}`,
+	profile: username => `/users/${username}`,
 }

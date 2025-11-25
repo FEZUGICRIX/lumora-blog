@@ -1,0 +1,15 @@
+mutation Login($email: String!, $password: String!, $code: String) {
+	login(loginInput: { email: $email, password: $password, code: $code }) {
+		... on User {
+			id
+			email
+			username
+			displayName
+			role
+			emailVerified
+		}
+		... on MessageResponse {
+			message
+		}
+	}
+}

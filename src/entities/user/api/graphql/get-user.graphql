@@ -1,0 +1,14 @@
+query GetUser {
+	findProfile {
+		id
+		username
+		email
+		displayName
+		avatar
+		role
+		method
+		emailVerified
+		isTwoFactorEnabled
+		createdAt
+	}
+}

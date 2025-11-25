@@ -1,4 +1,4 @@
-import { SettingsFrom } from '@/entities/user/ui'
+import { SettingsFrom } from '@/features/user/user-settings'
 
 const DashboardPage = () => {
 	return (

@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { ArticleFilters } from '@/features/filters'
-import type { SortOption } from '@/features/filters'
+import { ArticleFilters } from '@/features/article/filters'
+import type { SortOption } from '@/features/article/filters'
 
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
 import { useGetArticlesQuery } from '@/entities/article/api'

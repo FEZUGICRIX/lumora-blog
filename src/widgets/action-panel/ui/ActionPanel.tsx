@@ -1,7 +1,7 @@
 'use client'
 
 import { LocaleSwitcher } from '@/features/locale-switcher'
-import { SearchModal } from '@/features/search-posts'
+import { SearchModal } from '@/features/article/search-posts'
 import { useBoolean } from '@/shared/hooks'
 import { Modal, ThemeToggle, TooltipWithText } from '@/shared/ui/custom'
 import { SearchIcon } from '@/shared/ui/icon'

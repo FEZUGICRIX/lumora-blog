@@ -4,7 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { SettingsSchema, type TypeSettingsSchema } from '@/features/user'
+import { useGetUser } from '@/entities/user/api/hooks'
+import { UserButton, UserButtonSkeleton } from '@/entities/user/ui'
 
 import {
 	Button,
@@ -24,8 +25,8 @@ import {
 	Switch,
 } from '@/shared/ui/ui-kit'
 
-import { useGetUser, useUpdateUser } from '../api/hooks'
-import { UserButton, UserButtonSkeleton } from './UserButton'
+import { useUpdateUser } from '../api'
+import { SettingsSchema, type TypeSettingsSchema } from '../schema'
 
 export const SettingsFrom = () => {
 	const { user, isLoading } = useGetUser()

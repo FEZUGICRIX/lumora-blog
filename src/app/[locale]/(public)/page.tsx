@@ -3,7 +3,7 @@ import { fetchArticles } from '@/entities/article/api/server'
 import { getTranslations } from 'next-intl/server'
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
 import type { Metadata } from 'next'
-import type { SortOption } from '@/features/filters'
+import type { SortOption } from '@/features/article/filters'
 
 export const dynamic = 'force-dynamic'
 

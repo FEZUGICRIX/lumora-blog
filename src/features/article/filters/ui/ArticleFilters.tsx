@@ -1,8 +1,11 @@
-import { CategoryFilter, type SortOption } from '@/features/filters'
-import { SortSelect } from '@/features/filters'
-import { Button } from '@/shared/ui/ui-kit'
-import { useResetFilters } from '../lib/use-reset-filters'
+import { CategoryFilter, type SortOption } from '@/features/article/filters'
+import { SortSelect } from '@/features/article/filters'
+
 import type { CategoryMinimal } from '@/entities/category'
+
+import { Button } from '@/shared/ui/ui-kit'
+
+import { useResetFilters } from '../lib/use-reset-filters'
 
 interface ArticleFiltersProps {
 	sort: SortOption

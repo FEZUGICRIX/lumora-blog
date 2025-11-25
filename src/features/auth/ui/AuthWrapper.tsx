@@ -31,8 +31,15 @@ export const AuthWrapper = ({
 	return (
 		<Card className='w-[400px]'>
 			<CardHeader>
-				<CardTitle>{title}</CardTitle>
-				{description && <CardDescription>{description}</CardDescription>}
+				<CardTitle>
+					<div className='text-center'>{title}</div>
+				</CardTitle>
+				{description && (
+					<CardDescription>
+						{' '}
+						<div className='text-center'>{description}</div>
+					</CardDescription>
+				)}
 			</CardHeader>
 
 			<CardContent>

@@ -1,4 +1,4 @@
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 
 import type { SortOption } from './types'
 

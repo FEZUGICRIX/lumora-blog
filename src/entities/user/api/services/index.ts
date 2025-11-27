@@ -1,1 +1,1 @@
-export { getUser } from './get-user'
+export { getUserService } from './get-user.service'

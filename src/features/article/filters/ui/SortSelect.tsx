@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 import { CustomSelect } from '@/shared/ui/custom'
 
 import { sortOptions } from '../model/constants'

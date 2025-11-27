@@ -6,4 +6,4 @@ import 'dayjs/locale/ru'
 dayjs.extend(localizedFormat)
 
 export { dayjs }
-export { useFormattedDate } from './useFormattedDate'
+export { useFormattedDate } from './use-formatted-date'

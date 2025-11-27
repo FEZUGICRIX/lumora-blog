@@ -1,45 +1,44 @@
 'use client'
 
+import { AnimatePresence } from 'framer-motion'
 import { useMemo, useState } from 'react'
-import { useGetArticlesQuery } from '@/entities/article/api'
+
+import { useGetArticles } from '@/entities/article/api'
+
 import { useFuseSearch } from '@/shared/hooks'
 import { useDebounce } from '@/shared/hooks'
 import { AnimatedHeight } from '@/shared/ui/custom'
-import { AnimatePresence } from 'framer-motion'
-import { SearchItem } from './SearchItem'
-import { SearchModalSkeleton } from './skeletons/SearchModalSkeleton'
 import { SearchIcon } from '@/shared/ui/icon'
 import { Input } from '@/shared/ui/ui-kit'
+
+import { SearchItem } from './SearchItem'
+import { SearchModalSkeleton } from './skeletons/SearchModalSkeleton'
 
 // TODO: Реализовать запрос статей через RTK Query с правильной типизацией
 export const SearchModal = () => {
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, 200)
 
-	const { data, isLoading } = useGetArticlesQuery()
+	const { articles, isLoadingArticles } = useGetArticles()
 
 	const fuseOptions = useMemo(
 		() => ({
-			keys: [
-				'title',
-				'description',
-				'author.displayName',
-			],
+			keys: ['title', 'description', 'author.displayName'],
 			threshold: 0.3,
 		}),
 		[],
 	)
 
-	const results = useFuseSearch(data ?? [], debouncedQuery, fuseOptions)
+	const results = useFuseSearch(articles ?? [], debouncedQuery, fuseOptions)
 
-	if (isLoading) return <SearchModalSkeleton />
+	if (isLoadingArticles) return <SearchModalSkeleton />
 
 	return (
 		<div className='space-y-6'>
 			<div className='relative'>
 				<SearchIcon className='absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2' />
 				<Input
-					onChange={(e) => setQuery(e.target.value)}
+					onChange={e => setQuery(e.target.value)}
 					placeholder='Поиск статьи...'
 					type='search'
 					className='glass-dark h-11 rounded-xl pl-10 shadow-sm backdrop-blur-md'
@@ -56,7 +55,7 @@ export const SearchModal = () => {
 							<div className='max-h-[70vh] space-y-4 overflow-y-auto pr-1'>
 								{/* TODO: Реализовать запрос статей через RTK Query с правильной типизацией */}
 
-								{results.map((article) => (
+								{results.map(article => (
 									<SearchItem
 										key={article.id}
 										id={article.id}

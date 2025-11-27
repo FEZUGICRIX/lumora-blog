@@ -305,8 +305,6 @@ export const handleImageUpload = async (
 		throw new Error('Upload failed, no URL returned')
 	}
 
-	console.log(url)
-
 	if (file.size > MAX_FILE_SIZE) {
 		throw new Error(
 			`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`,

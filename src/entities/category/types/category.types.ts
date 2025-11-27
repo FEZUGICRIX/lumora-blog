@@ -1,3 +1,0 @@
-import type { Category } from '@/shared/api/graphql/__generated__/rtk'
-
-export type CategoryMinimal = Pick<Category, 'slug' | 'name' | 'id'>

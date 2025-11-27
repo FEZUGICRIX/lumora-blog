@@ -29,7 +29,7 @@ import { useUpdateUser } from '../api'
 import { SettingsSchema, type TypeSettingsSchema } from '../schema'
 
 export const SettingsFrom = () => {
-	const { user, isLoading } = useGetUser()
+	const { user, isLoadingUser } = useGetUser()
 	const { update, isLoadingUpdate } = useUpdateUser()
 
 	const form = useForm<TypeSettingsSchema>({
@@ -62,11 +62,11 @@ export const SettingsFrom = () => {
 		<Card className='w-[400px]'>
 			<CardHeader className='flex flex-row items-center justify-between'>
 				<CardTitle>Настройки профиля</CardTitle>
-				{isLoading ? <UserButtonSkeleton /> : <UserButton user={user} />}
+				{isLoadingUser ? <UserButtonSkeleton /> : <UserButton user={user} />}
 			</CardHeader>
 
 			<CardContent>
-				{isLoading ? (
+				{isLoadingUser ? (
 					<Spinner />
 				) : (
 					<Form {...form}>

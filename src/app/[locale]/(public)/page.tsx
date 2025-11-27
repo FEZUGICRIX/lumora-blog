@@ -1,9 +1,13 @@
-import HomePage from '@/views/home/HomePage'
-import { fetchArticles } from '@/entities/article/api/server'
-import { getTranslations } from 'next-intl/server'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+
+import { HomePage } from '@/screens/home'
+
 import type { SortOption } from '@/features/article/filters'
+
+import { getArticlesService } from '@/entities/article/api'
+
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,14 +36,12 @@ export default async function Home(props: {
 	let sortBy: SortOption | undefined = undefined
 	if (
 		searchParams.sort &&
-		Object.values(ArticleSortBy).includes(
-			searchParams.sort as ArticleSortBy,
-		)
+		Object.values(ArticleSortBy).includes(searchParams.sort as ArticleSortBy)
 	) {
 		sortBy = searchParams.sort as ArticleSortBy
 	}
 
-	const articles = await fetchArticles({
+	const articles = await getArticlesService({
 		categorySlugs: searchParams.category,
 		sortBy, // Попадет либо валидный enum, либо undefined
 	})

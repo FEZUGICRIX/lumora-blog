@@ -1,12 +1,14 @@
 import Image from 'next/image'
-import { Link } from '@/shared/config/i18n'
-import { AuthorCard } from '@/entities/user'
-import { routes } from '@/shared/config/routes'
-import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
-import { ImageDarkOverlay } from '@/shared/ui/custom'
+
+import type { ArticleCardProps } from '@/entities/article/model/article.types'
+import { AuthorCard } from '@/entities/user/ui'
+
 import { BackgroundImage } from '@/shared/assets/images'
-import { generateKey, formatNumber } from '@/shared/lib'
-import type { ArticleCardProps } from '@/entities/article/model/types'
+import { Link } from '@/shared/config/i18n'
+import { routes } from '@/shared/config/routes'
+import { formatNumber, generateKey } from '@/shared/lib'
+import { ImageDarkOverlay } from '@/shared/ui/custom'
+import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
 
 export const ArticleCard = ({
 	article,
@@ -55,9 +57,7 @@ export const ArticleCard = ({
 					onClick={onLike}
 					className='absolute top-3 right-3 z-[2] rounded-full bg-white p-1.5 text-zinc-600 shadow transition hover:bg-pink-500 hover:text-white dark:bg-zinc-800 dark:text-zinc-300'
 				>
-					<HeartIcon
-						className={isLiked ? 'fill-pink-500 text-pink-500' : ''}
-					/>
+					<HeartIcon className={isLiked ? 'fill-pink-500 text-pink-500' : ''} />
 				</button>
 			</Link>
 

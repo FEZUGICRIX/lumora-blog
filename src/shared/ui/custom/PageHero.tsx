@@ -3,7 +3,7 @@
 import Image, { type StaticImageData } from 'next/image'
 
 import type { FullArticle } from '@/entities/article'
-import { AuthorCard } from '@/entities/user'
+import { AuthorCard } from '@/entities/user/ui'
 
 import { BackgroundImage } from '../../assets/images'
 import { ImageDarkOverlay } from './ImageDarkOverlay'

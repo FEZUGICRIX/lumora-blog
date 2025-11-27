@@ -1,1 +1,1 @@
-export { useGetCategoriesQuery } from './category-api'
+export { useGetCategories } from './hooks'

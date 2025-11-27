@@ -6,21 +6,25 @@ import {
 	useFormContext,
 	type UseFormReturn,
 } from 'react-hook-form'
-import { CategorySelect } from '@/entities/category/ui/CategorySelect'
-import { SimpleEditor } from '@/features/editor/ui/simple-editor'
-import { handleRTKError } from '../lib/error-handling'
-import { type ArticleFormValues } from '../models/form.types'
 import { toast } from 'sonner'
+
+import { SimpleEditor } from '@/features/editor/ui/simple-editor'
+
+import { CategorySelect } from '@/entities/category/ui'
+
 import {
-	Input,
 	Button,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
-	FormDescription,
+	Input,
 } from '@/shared/ui/ui-kit'
+
+import { handleRTKError } from '../lib/error-handling'
+import { type ArticleFormValues } from '../models/form.types'
 
 // Кастомный селект категорий для интеграции с RHF
 function ControlledCategorySelect({ name }: { name: string }) {
@@ -121,9 +125,7 @@ export function ArticleEditForm({
 							<FormControl>
 								<ControlledCategorySelect name='categoryId' />
 							</FormControl>
-							<FormDescription>
-								Выберите категорию для статьи
-							</FormDescription>
+							<FormDescription>Выберите категорию для статьи</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -136,10 +138,7 @@ export function ArticleEditForm({
 						<FormItem>
 							<FormLabel>Содержание *</FormLabel>
 							<FormControl>
-								<SimpleEditor
-									content={field.value}
-									onChange={field.onChange}
-								/>
+								<SimpleEditor content={field.value} onChange={field.onChange} />
 							</FormControl>
 							<FormDescription>
 								Основное содержание статьи в формате Rich Text

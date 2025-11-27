@@ -2,14 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { ArticleFilters } from '@/features/article/filters'
-import type { SortOption } from '@/features/article/filters'
+import { ArticleFilters, type SortOption } from '@/features/article/filters'
 
 import { ArticleCard, type ArticlePreview } from '@/entities/article'
-import { useGetArticlesQuery } from '@/entities/article/api'
-import type { CategoryMinimal } from '@/entities/category'
+import { useGetArticles } from '@/entities/article/api'
+import type { CategoryMinimal } from '@/entities/category/model'
 
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/rtk'
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 import { GridLayout } from '@/shared/ui/custom'
 
 import { ArticleError } from './ArticleError'
@@ -28,30 +27,34 @@ export const ArticleList = ({
 	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
 	// Для отслеживания первого рендера (SSR) → нужен только на самом старте
-	const isInitialRender = useRef(true)
+	const isInitialFetch = useRef(true)
 
 	const categorySlugs = categories.map(cat => cat.slug)
 
+	const isDefaultInitialState =
+		categories.length === 0 && sort === ArticleSortBy.CreatedAt
+
+	const isReadyToFetch = !isInitialFetch.current || !isDefaultInitialState
+
 	// --- RTK Query ---
 	const {
-		data: filteredArticles,
-		isFetching,
-		isError,
-	} = useGetArticlesQuery(
+		articles: filteredArticles,
+		isLoadingArticles,
+		isArticlesError,
+	} = useGetArticles(
 		{ categorySlugs, sortBy: sort },
 		{
 			// Пропускаем первый фетч только если нет фильтров и дефолтная сортировка
-			skip:
-				isInitialRender.current &&
-				categories.length === 0 &&
-				sort === ArticleSortBy.CreatedAt,
+			enabled: isReadyToFetch,
+			staleTime: 5 * 60 * 1000, // 5 минут
+			cacheTime: 10 * 60 * 1000, // 10 минут
 		},
 	)
 
 	// Как только происходит любой фетч (или пользователь меняет фильтры) → первый рендер больше не нужен
 	useEffect(() => {
-		if (isInitialRender.current) {
-			isInitialRender.current = false
+		if (isInitialFetch.current) {
+			isInitialFetch.current = false
 		}
 	}, [categories, sort])
 
@@ -70,7 +73,7 @@ export const ArticleList = ({
 	const articlesToRender = filteredArticles ?? initialArticles
 
 	// --- Ошибки и пустой список ---
-	if (isError || !initialArticles) {
+	if (isArticlesError || !initialArticles) {
 		return (
 			<div className='container m-auto px-4'>
 				<ArticleError />
@@ -97,7 +100,7 @@ export const ArticleList = ({
 				/>
 			)}
 
-			{isFetching ? (
+			{isLoadingArticles && !isInitialFetch ? (
 				<div className='container m-auto px-4'>
 					<ArticleListSkeleton />
 				</div>

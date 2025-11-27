@@ -1,27 +1,27 @@
-// src/features/filters/ui/CategoryFilter.tsx
 'use client'
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { useGetCategoriesQuery } from '@/entities/category/api'
-import { getMulti, setMulti, toggleValue } from '@/shared/lib/url/params'
-import { CategoryItem } from '@/entities/category/ui/CategoryItem'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
 import type { CategoryMinimal } from '@/entities/category'
-import { CategoryFilterSkeleton } from '@/entities/category/ui/skeletons/CategoryFilterSkeleton'
+import { useGetCategories } from '@/entities/category/api'
+import { CategoryFilterSkeleton, CategoryItem } from '@/entities/category/ui'
+
+import { getMulti, setMulti, toggleValue } from '@/shared/lib/url/params'
 
 interface CategoryFilterProps {
 	onCategoriesChange: (categories: CategoryMinimal[]) => void
 }
 
-export function CategoryFilter({
-	onCategoriesChange,
-}: CategoryFilterProps) {
+export function CategoryFilter({ onCategoriesChange }: CategoryFilterProps) {
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 
-	const { data: categories = [], isLoading } = useGetCategoriesQuery()
+	const { categories, isLoadingCategories } = useGetCategories()
 
-	if (isLoading) return <CategoryFilterSkeleton />
+	if (isLoadingCategories) return <CategoryFilterSkeleton />
+
+	if (!categories) return null
 
 	// текущее состояние фильтра — прямо из URL
 	const currentSlugs = getMulti(
@@ -45,15 +45,13 @@ export function CategoryFilter({
 		router.push(`${pathname}?${params.toString()}`, { scroll: false })
 
 		// пробрасываем вверх конкретные объекты категорий
-		const nextCategories = categories.filter((c) =>
-			nextSlugs.includes(c.slug),
-		)
+		const nextCategories = categories.filter(c => nextSlugs.includes(c.slug))
 		onCategoriesChange(nextCategories)
 	}
 
 	return (
 		<div className='flex flex-wrap justify-center gap-2'>
-			{categories.map((category) => {
+			{categories.map(category => {
 				const isActive = currentSlugs.includes(category.slug)
 
 				return (

@@ -1,1 +1,1 @@
-export { usePasswordRecovery } from './usePasswordRecovery'
+export { usePasswordRecovery } from './use-password-recovery'

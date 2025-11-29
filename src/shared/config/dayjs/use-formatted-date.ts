@@ -2,6 +2,7 @@
 
 import { useLocale } from 'next-intl'
 import { useMemo } from 'react'
+
 import { dayjs } from './index'
 
 export function useFormattedDate(
@@ -11,8 +12,13 @@ export function useFormattedDate(
 	const locale = useLocale()
 
 	const formatted = useMemo(() => {
-		dayjs.locale(locale)
-		return dayjs(date).format(format)
+		if (!date) return '' // Обработка пустого значения
+
+		return dayjs
+			.utc(date) // 1. Парсим как UTC (как рендерит сервер)
+			.locale(locale) // 2. Устанавливаем локаль для форматирования (en/ru)
+			.local() // 3. Конвертируем в локальный часовой пояс пользователя (только на клиенте)
+			.format(format) // 4. Форматируем
 	}, [date, format, locale])
 
 	return formatted

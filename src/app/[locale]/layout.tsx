@@ -1,13 +1,16 @@
 import type { Metadata } from 'next'
-import { hasLocale } from 'next-intl'
-import { notFound } from 'next/navigation'
-import { getMessages } from 'next-intl/server'
-import { Header } from '@/widgets/header'
-import { Footer } from '@/widgets/footer'
-import { Providers } from '@/shared/providers'
-import { routing } from '@/shared/config/i18n/routing'
+import { type AbstractIntlMessages, hasLocale } from 'next-intl'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { notFound } from 'next/navigation'
+
+import { Footer } from '@/widgets/footer'
+import { Header } from '@/widgets/header'
+
+import { routing } from '@/shared/config/i18n'
+import getRequestConfig from '@/shared/config/i18n/request'
+import { Providers } from '@/shared/providers'
 import '@/shared/styles/index.scss'
+
 import '../globals.css'
 
 const geistSans = Geist({
@@ -42,14 +45,21 @@ export default async function RootLayout({
 		notFound()
 	}
 
-	const messages = await getMessages({ locale })
+	const config = await getRequestConfig({
+		requestLocale: Promise.resolve(locale),
+	})
+	const messages = config.messages as AbstractIntlMessages
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
 			>
-				<Providers locale={locale} messages={messages}>
+				<Providers
+					locale={locale}
+					messages={messages}
+					timeZone={config.timeZone as string}
+				>
 					<Header />
 					<main className='flex-1'>{children}</main>
 					<Footer />

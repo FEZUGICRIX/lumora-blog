@@ -1,1 +1,1 @@
-export { useGetOAuthConnectUrl } from './useGetOAuthConnectUrl'
+export { useGetOAuthConnectUrl } from './use-get-oauth-connect-url'

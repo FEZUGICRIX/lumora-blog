@@ -16,6 +16,7 @@ export const AuthorCard = ({ author, createdAt }: AuthorCardProps) => {
 
 	return (
 		<div className='flex items-center gap-2'>
+			{/* TODO: поставить компонент как в logout */}
 			<Image
 				src={author.avatar ?? '/default-cover.jpg'}
 				alt={author.displayName}

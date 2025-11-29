@@ -1,6 +1,10 @@
 import type { z } from 'zod'
-import { articleFormSchema } from '../lib/validations'
+
 import type { FullArticle } from '@/entities/article'
+
+import type { User } from '@/shared/api/graphql/__generated__/documents'
+
+import { articleFormSchema } from '../lib/validations'
 
 // Тип для Tiptap контента с индексной сигнатурой
 export interface TiptapContent extends Record<string, unknown> {
@@ -27,6 +31,7 @@ export type ArticleFormData = z.infer<typeof articleFormSchema>
 // Пропсы для хука формы
 export interface UseArticleFormProps {
 	article?: FullArticle | null
+	user?: User
 	onSuccess?: () => void
 }
 

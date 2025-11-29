@@ -1,9 +1,13 @@
-import EditorPage from '@/views/editor/EditorPage'
-import { generateArticleMetadata } from '@/shared/lib/seo'
-import { fetchArticle } from '@/entities/article/api/server'
-import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+
+import { EditorPage } from '@/screens/editor'
+
 import type { Locale } from '@/features/locale-switcher'
+
+import { getArticleBySlugService } from '@/entities/article'
+
+import { generateArticleMetadata } from '@/shared/lib/seo'
 
 type Params = Promise<{
 	slug: string
@@ -16,13 +20,13 @@ export async function generateMetadata({
 	params: Params
 }): Promise<Metadata> {
 	const { slug } = await params
-	const article = await fetchArticle(slug)
+	const article = await getArticleBySlugService({ slug })
 	return generateArticleMetadata(article)
 }
 
 export default async function Editor({ params }: { params: Params }) {
 	const { slug } = await params
-	const article = await fetchArticle(slug)
+	const article = await getArticleBySlugService({ slug })
 
 	if (!article) notFound()
 

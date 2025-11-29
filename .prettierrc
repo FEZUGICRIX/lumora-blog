@@ -19,7 +19,7 @@
 		"<THIRD_PARTY_MODULES>",
 
 		"@/app/(.*)$",
-		"@/views/(.*)$",
+		"@/screens/(.*)$",
 		"@/features/(.*)$",
 		"@/entities/(.*)$",
 		"@/widgets/(.*)$",

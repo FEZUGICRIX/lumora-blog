@@ -3,24 +3,19 @@ import { useEffect } from 'react'
 import { CustomSelect } from '@/shared/ui/custom'
 import { Skeleton } from '@/shared/ui/ui-kit'
 
-import { useGetCategoriesQuery } from '../api'
+import { useGetCategories } from '../api/hooks'
+import type { SelectOption } from '../model/category.types'
 
 interface CategorySelectProps {
 	value?: string | null
 	onValueChange: (value: string) => void
 }
 
-interface SelectOption {
-	label: string
-	value: string
-	id: string
-}
-
 export const CategorySelect = ({
 	onValueChange,
 	value,
 }: CategorySelectProps) => {
-	const { data: categories = [], isLoading } = useGetCategoriesQuery()
+	const { categories, isLoadingCategories } = useGetCategories()
 
 	const categoryOptions: SelectOption[] = categories.map(category => ({
 		label: category.name,
@@ -29,13 +24,21 @@ export const CategorySelect = ({
 	}))
 
 	useEffect(() => {
-		if (!isLoading && !value && categoryOptions.length > 0) {
+		if (!isLoadingCategories && !value && categoryOptions.length > 0) {
 			onValueChange(categoryOptions[0].id)
 		}
-	}, [isLoading, value, categoryOptions, onValueChange])
+	}, [isLoadingCategories, value, categoryOptions, onValueChange])
 
-	if (isLoading) {
+	if (isLoadingCategories) {
 		return <Skeleton className='h-9 max-w-30' />
+	}
+
+	if (!categories) {
+		return (
+			<div className='text-muted-foreground text-sm'>
+				Нет удалось загрузить категории
+			</div>
+		)
 	}
 
 	if (categoryOptions.length === 0) {

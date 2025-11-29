@@ -1,29 +1,41 @@
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { routing } from '@/shared/config/i18n/routing'
+import { routing } from '@/shared/config/i18n'
+import { getPathnameWithoutLocale } from '@/shared/lib'
 
-// next-intl middleware
+const PUBLIC_ROUTES = [
+	'/auth', // Все старицы авторизации
+	'/blog',
+]
+
 const intlMiddleware = createIntlMiddleware(routing)
 
-// auth middleware
 const authMiddleware = (req: NextRequest) => {
-	const { url, cookies } = req
+	const { cookies, nextUrl, url } = req
 	const session = cookies.get('session')?.value
 
-	const isAuthPage = url.includes('/auth')
+	// 1. Получаем путь без локали (например, /en/login -> /login)
+	const nonLocalePathname = getPathnameWithoutLocale(nextUrl.pathname)
 
-	// Если мы на /auth/* и юзер уже залогинен — отправляем в dashboard
-	if (isAuthPage) {
-		if (session) {
-			return NextResponse.redirect(new URL('/dashboard/settings', url))
+	const isAuthRoute = nonLocalePathname.startsWith('/auth')
+	const isPublicRoute =
+		nonLocalePathname === '/' ||
+		PUBLIC_ROUTES.some(route => nonLocalePathname.startsWith(route))
+
+	if (session) {
+		if (isAuthRoute) {
+			return NextResponse.redirect(new URL(`/dashboard/settings`, url))
 		}
 		return NextResponse.next()
 	}
 
-	// Если мы НЕ на /auth/* и нет сессии → редирект на login
-	if (!session) {
-		return NextResponse.redirect(new URL('/auth/login', url))
+	if (!isPublicRoute) {
+		const callbackUrl = nextUrl.pathname + nextUrl.search
+		const loginUrl = new URL(`/auth/login`, url)
+		loginUrl.searchParams.set('callbackUrl', callbackUrl)
+
+		return NextResponse.redirect(loginUrl)
 	}
 
 	return NextResponse.next()
@@ -53,16 +65,17 @@ const applyMiddlewares =
 		return NextResponse.next()
 	}
 
-// 4. Финальный export — один middleware
 export default applyMiddlewares(
 	intlMiddleware, // сначала определение локали и rewrite
-	authMiddleware, // затем твоя логика доступа
+	authMiddleware,
 )
 
 export const config = {
 	matcher: [
 		'/:locale/auth/:path*',
-		'/:locale/dashboard/settings/:path*',
+		'/:locale/dashboard/:path*',
+		'/:locale/editor/:path*',
+
 		'/((?!api|trpc|_next|_vercel|.*\\..*).*)',
 	],
 }

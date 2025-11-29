@@ -1,2 +1,1 @@
-export { getUser } from './get-user'
-export { updateUser } from './update-user'
+export { getUserService } from './get-user.service'

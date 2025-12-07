@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import React, { useEffect, useRef } from 'react'
 
 interface FuzzyTextProps {
@@ -18,14 +19,17 @@ export const FuzzyText: React.FC<FuzzyTextProps> = ({
 	fontSize = 'clamp(100rem, 80vw, 200rem)',
 	fontWeight = 900,
 	fontFamily = 'inherit',
-	color = '#fff',
+	color,
 	enableHover = true,
 	baseIntensity = 0.18,
 	hoverIntensity = 0.5,
 }) => {
+	const { theme } = useTheme()
 	const canvasRef = useRef<
 		HTMLCanvasElement & { cleanupFuzzyText?: () => void }
 	>(null)
+
+	const textColor = color ? color : theme == 'light' ? 'black' : 'white'
 
 	useEffect(() => {
 		let animationFrameId: number
@@ -89,7 +93,7 @@ export const FuzzyText: React.FC<FuzzyTextProps> = ({
 			const xOffset = extraWidthBuffer / 2
 			offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`
 			offCtx.textBaseline = 'alphabetic'
-			offCtx.fillStyle = color
+			offCtx.fillStyle = textColor
 			offCtx.fillText(text, xOffset - actualLeft, actualAscent)
 
 			const horizontalMargin = 100
@@ -202,7 +206,7 @@ export const FuzzyText: React.FC<FuzzyTextProps> = ({
 		fontSize,
 		fontWeight,
 		fontFamily,
-		color,
+		textColor,
 		enableHover,
 		baseIntensity,
 		hoverIntensity,

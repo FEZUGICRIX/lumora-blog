@@ -50,6 +50,9 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	experimental: {
+		globalNotFound: true,
+	},
 }
 
 const withNextIntl = createNextIntlPlugin('./src/shared/config/i18n/request.ts')

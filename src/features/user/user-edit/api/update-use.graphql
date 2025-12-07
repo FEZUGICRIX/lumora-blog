@@ -1,0 +1,38 @@
+mutation UpdateUser(
+	$username: String
+	$displayName: String
+	$bio: String
+	$location: String
+	$coverUrl: String
+	$avatarUrl: String
+	$websiteUrl: String
+	$isTwoFactorEnabled: Boolean
+) {
+	updateProfile(
+		updateProfileInput: {
+			username: $username
+			displayName: $displayName
+			bio: $bio
+			location: $location
+			coverUrl: $coverUrl
+			avatarUrl: $avatarUrl
+			websiteUrl: $websiteUrl
+			isTwoFactorEnabled: $isTwoFactorEnabled
+		}
+	) {
+		id
+		username
+		bio
+		location
+		websiteUrl
+		email
+		displayName
+		avatarUrl
+		coverUrl
+		role
+		method
+		emailVerified
+		isTwoFactorEnabled
+		createdAt
+	}
+}

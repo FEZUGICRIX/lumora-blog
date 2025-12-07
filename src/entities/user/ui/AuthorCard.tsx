@@ -4,7 +4,7 @@ import { useFormattedDate } from '@/shared/config/dayjs'
 
 interface AuthorCardProps {
 	author: FullArticle['author']
-	createdAt: string
+	createdAt: string | Date
 }
 
 export const AuthorCard = ({ author, createdAt }: AuthorCardProps) => {
@@ -18,7 +18,7 @@ export const AuthorCard = ({ author, createdAt }: AuthorCardProps) => {
 		<div className='flex items-center gap-2'>
 			{/* TODO: поставить компонент как в logout */}
 			<Image
-				src={author.avatar ?? '/default-cover.jpg'}
+				src={author.avatarUrl ?? '/default-cover.jpg'}
 				alt={author.displayName}
 				className='rounded-full'
 				width={32}

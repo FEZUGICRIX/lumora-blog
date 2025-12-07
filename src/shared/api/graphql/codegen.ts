@@ -13,6 +13,13 @@ const config: CodegenConfig = {
 			config: {
 				maybeValue: 'T | null',
 				useTypeImports: true,
+
+				scalars: {
+					// Указываем, что скаляр 'DateTime' должен быть типом 'Date' в TypeScript
+					DateTime: 'Date',
+					// Часто также полезно явно сопоставить 'ID' со 'string'
+					ID: 'string',
+				},
 			},
 		},
 	},

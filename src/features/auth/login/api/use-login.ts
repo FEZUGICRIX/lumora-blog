@@ -34,7 +34,8 @@ export const useLogin = (
 					message: 'Вы успешно вошли в аккаунт!',
 					type: 'success',
 				})
-				router.push(routes.dashboard.settings)
+				if ('usename' in response)
+					router.push(routes.profile(response.usename as string))
 			}
 		},
 

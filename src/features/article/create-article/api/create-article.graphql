@@ -19,7 +19,7 @@ mutation CreateArticle($input: CreateArticleInput!) {
 		author {
 			id
 			displayName
-			avatar
+			avatarUrl
 		}
 		category {
 			id
@@ -33,7 +33,7 @@ mutation CreateArticle($input: CreateArticleInput!) {
 			author {
 				id
 				displayName
-				avatar
+				avatarUrl
 			}
 		}
 	}

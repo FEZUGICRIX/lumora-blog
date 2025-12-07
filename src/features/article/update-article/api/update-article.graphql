@@ -18,7 +18,7 @@ mutation UpdateArticle($input: UpdateArticleInput!) {
 		author {
 			id
 			displayName
-			avatar
+			avatarUrl
 		}
 		category {
 			id
@@ -31,7 +31,7 @@ mutation UpdateArticle($input: UpdateArticleInput!) {
 			author {
 				id
 				displayName
-				avatar
+				avatarUrl
 			}
 		}
 	}

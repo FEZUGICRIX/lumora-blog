@@ -7,6 +7,7 @@ import { getPathnameWithoutLocale } from '@/shared/lib'
 const PUBLIC_ROUTES = [
 	'/auth', // Все старицы авторизации
 	'/blog',
+	'/user',
 ]
 
 const intlMiddleware = createIntlMiddleware(routing)
@@ -25,7 +26,7 @@ const authMiddleware = (req: NextRequest) => {
 
 	if (session) {
 		if (isAuthRoute) {
-			return NextResponse.redirect(new URL(`/dashboard/settings`, url))
+			return NextResponse.redirect(new URL(`/`, url))
 		}
 		return NextResponse.next()
 	}
@@ -73,7 +74,7 @@ export default applyMiddlewares(
 export const config = {
 	matcher: [
 		'/:locale/auth/:path*',
-		'/:locale/dashboard/:path*',
+		'/:locale/user/:path*',
 		'/:locale/editor/:path*',
 
 		'/((?!api|trpc|_next|_vercel|.*\\..*).*)',

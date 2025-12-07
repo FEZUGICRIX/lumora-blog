@@ -2,7 +2,7 @@ import type { z } from 'zod'
 
 import type { FullArticle } from '@/entities/article'
 
-import type { User } from '@/shared/api/graphql/__generated__/documents'
+import type { UserProfile } from '@/shared/api/graphql/__generated__/documents'
 
 import { articleFormSchema } from '../lib/validations'
 
@@ -31,7 +31,7 @@ export type ArticleFormData = z.infer<typeof articleFormSchema>
 // Пропсы для хука формы
 export interface UseArticleFormProps {
 	article?: FullArticle | null
-	user?: User
+	user?: UserProfile
 	onSuccess?: () => void
 }
 

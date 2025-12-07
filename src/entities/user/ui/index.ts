@@ -1,2 +1,4 @@
 export { AuthorCard } from './AuthorCard'
-export { UserButton, UserButtonSkeleton } from './UserButton'
+export { UserAvatar } from './UserAvatar'
+export { ProfileMetaInfo } from './ProfileMetaInfo'
+export { UserRoleBadge } from './UserRole'

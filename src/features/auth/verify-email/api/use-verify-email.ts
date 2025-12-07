@@ -15,7 +15,7 @@ export const useVerifyEmail = () => {
 
 		onSuccess() {
 			toast.success('Почта успешно подтверждена!')
-			router.push('/dashboard/settings')
+			router.push('/')
 		},
 
 		onError() {

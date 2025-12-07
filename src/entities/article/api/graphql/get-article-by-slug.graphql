@@ -20,7 +20,7 @@ query GetArticleBySlug($slug: String!) {
 		author {
 			id
 			displayName
-			avatar
+			avatarUrl
 		}
 		category {
 			id
@@ -35,7 +35,7 @@ query GetArticleBySlug($slug: String!) {
 			author {
 				id
 				displayName
-				avatar
+				avatarUrl
 			}
 		}
 	}

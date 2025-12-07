@@ -1,7 +1,7 @@
 'use client'
 
 import type { FullArticle } from '@/entities/article'
-import { useGetUser } from '@/entities/user/api/hooks'
+import { useGetProfile } from '@/entities/user/api'
 
 import { ArticleEditForm, useArticleForm } from '@/widgets/article-edit-form'
 
@@ -16,7 +16,7 @@ type EditorPageProps =
 
 export const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 	const { coverImage, author, createdAt } = article ?? {}
-	const { user } = useGetUser()
+	const { user } = useGetProfile()
 
 	const { form, onSubmit, isEdit } = useArticleForm({
 		article,

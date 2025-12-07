@@ -47,7 +47,7 @@ export const SearchItem = ({
 
 				<div className='text-muted-foreground mt-2 flex items-center gap-2 text-xs'>
 					<img
-						src={author.avatar ?? undefined}
+						src={author.avatarUrl ?? undefined}
 						alt={author.displayName}
 						className='h-5 max-w-5 rounded-full'
 					/>

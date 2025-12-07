@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
+import { routes } from '@/shared/config/routes'
 import { toastErrorHandler } from '@/shared/lib'
 
 import type { TypeNewPasswordSchema } from '../schema'
@@ -33,7 +34,7 @@ export const useNewPassword = () => {
 				description: 'Теперь вы можете войти в свой аккаунт',
 			})
 
-			router.push('/dashboard/settings')
+			router.push(routes.auth.login)
 		},
 
 		onError(error) {

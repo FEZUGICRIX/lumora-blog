@@ -1,6 +1,6 @@
 mutation Login($email: String!, $password: String!, $code: String) {
 	login(loginInput: { email: $email, password: $password, code: $code }) {
-		... on User {
+		... on UserProfile {
 			id
 			email
 			username

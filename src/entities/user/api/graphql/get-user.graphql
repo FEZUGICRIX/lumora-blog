@@ -1,14 +1,14 @@
-query GetUser {
-	findProfile {
+query GetUserPublic($username: String!) {
+	user(username: $username) {
 		id
 		username
-		email
 		displayName
-		avatar
+		bio
+		location
+		websiteUrl
+		avatarUrl
+		coverUrl
 		role
-		method
-		emailVerified
-		isTwoFactorEnabled
 		createdAt
 	}
 }

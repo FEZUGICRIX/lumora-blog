@@ -18,7 +18,7 @@ export default function GlobalNotFound() {
 		<html lang='en' className={`${inter.className} `}>
 			<body className='bg-background text-foreground min-h-screen'>
 				<main className='flex flex-col items-center justify-center'>
-					<NotFoundPage />
+					<NotFoundPage color='black' />
 				</main>
 			</body>
 		</html>

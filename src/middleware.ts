@@ -74,7 +74,7 @@ export default applyMiddlewares(
 export const config = {
 	matcher: [
 		'/:locale/auth/:path*',
-		'/:locale/user/:path*',
+		'/:locale/settings/:path*',
 		'/:locale/editor/:path*',
 
 		'/((?!api|trpc|_next|_vercel|.*\\..*).*)',

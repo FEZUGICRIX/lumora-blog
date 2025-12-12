@@ -1,9 +1,10 @@
 'use client'
 
-import { useMemo, useState, useEffect } from 'react'
 import { generateHTML } from '@tiptap/html'
-import { extensions } from '@/features/editor/config/extensions'
 import type { JSONContent } from '@tiptap/react'
+import { useEffect, useMemo, useState } from 'react'
+
+import { extensions } from '@/features/editor/config/extensions'
 
 interface TipTapRendererProps {
 	/**
@@ -53,7 +54,7 @@ interface TipTapRendererProps {
  */
 export function TipTapRenderer({
 	contentJson,
-	contentHtml = '',
+	contentHtml,
 	className = '',
 }: TipTapRendererProps) {
 	const [isClient, setIsClient] = useState(false)

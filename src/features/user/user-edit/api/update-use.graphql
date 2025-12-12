@@ -1,6 +1,7 @@
 mutation UpdateUser(
 	$username: String
 	$displayName: String
+	$readmeContent: JSON
 	$bio: String
 	$location: String
 	$coverUrl: String
@@ -12,6 +13,7 @@ mutation UpdateUser(
 		updateProfileInput: {
 			username: $username
 			displayName: $displayName
+			readmeContent: $readmeContent
 			bio: $bio
 			location: $location
 			coverUrl: $coverUrl
@@ -22,6 +24,7 @@ mutation UpdateUser(
 	) {
 		id
 		username
+		readmeContent
 		bio
 		location
 		websiteUrl

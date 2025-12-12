@@ -3,6 +3,7 @@ query GetUserPublic($username: String!) {
 		id
 		username
 		displayName
+		readmeContent
 		bio
 		location
 		websiteUrl

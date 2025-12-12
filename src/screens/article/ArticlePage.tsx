@@ -2,7 +2,7 @@
 
 import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
 
-import { TipTapRenderer } from '@/features/editor'
+import { TipTapRenderer } from '@/features/editor/ui'
 
 import type { ArticlePageProps } from '@/entities/article'
 

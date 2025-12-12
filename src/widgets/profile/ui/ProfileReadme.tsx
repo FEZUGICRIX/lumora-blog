@@ -1,34 +1,113 @@
 'use client'
 
-import { FileText } from 'lucide-react'
 import type { JSONContent } from '@tiptap/react'
+import { FileText, Pencil, Save, X } from 'lucide-react'
+import { useCallback, useState } from 'react'
 
-import { TipTapRenderer } from '@/features/editor'
+import { Editor, TipTapRenderer } from '@/features/editor/ui'
+import { useUpdateUser } from '@/features/user/user-edit'
+
+import { Button } from '@/shared/ui/ui-kit'
 
 interface ProfileReadmeProps {
 	username: string
-	content: JSONContent | null
-	contentHtml?: string
+	isOwnProfile: boolean
+	contentJson: JSONContent | null
 }
 
-export const ProfileReadme = ({ username, content, contentHtml }: ProfileReadmeProps) => {
-	return (
-		<div className="mx-4 rounded-xl border border-border/50 bg-card/30 dark:text-white md:mx-0">
-			{/* Header */}
-			<div className="flex items-center gap-2 border-b border-border/50 px-3 py-2.5 md:px-4 md:py-3">
-				<FileText className="size-3.5 text-muted-foreground md:size-4" />
-				<span className="text-xs text-muted-foreground md:text-sm">{username}</span>
-				<span className="text-xs text-muted-foreground md:text-sm">/</span>
-				<span className="text-xs font-medium md:text-sm">README.md</span>
-			</div>
+export const ProfileReadme = ({
+	username,
+	isOwnProfile,
+	contentJson,
+}: ProfileReadmeProps) => {
+	const { update, isLoadingUpdate } = useUpdateUser()
+	const [draftContent, setDraftContent] = useState(contentJson)
+	const [isEditing, setIsEditing] = useState(false)
 
-			{/* Content */}
-			<div className="p-4 md:p-6">
-				<TipTapRenderer
-					contentJson={content}
-					contentHtml={contentHtml}
-					className="prose-headings:mt-4 prose-headings:mb-2 prose-p:my-2 prose-sm md:prose-base"
-				/>
+	// 1. Обработка Сохранения
+	const handleSave = useCallback(() => {
+		// В TipTap contentJson уже содержит корневой узел doc,
+		// но если state был null, пропускаем.
+		if (!draftContent) return
+		update({ readmeContent: draftContent })
+		setIsEditing(false)
+	}, [draftContent, update])
+
+	return (
+		<div>
+			<div className='border-border/50 bg-card/30 mx-4 rounded-xl border md:mx-0 dark:text-white'>
+				{/* Header */}
+				<div className='border-border/50 flex flex-wrap items-center justify-between gap-5 border-b px-3 py-2.5 md:px-4 md:py-3'>
+					<div className='flex items-center gap-2'>
+						<FileText className='text-muted-foreground size-3.5 md:size-4' />
+						<div className='flex gap-1'>
+							<span className='text-muted-foreground block text-xs md:text-sm'>
+								{username}
+							</span>
+							<span className='text-muted-foreground text-xs md:text-sm'>
+								/
+							</span>
+							<span className='text-xs font-medium md:text-sm'>README.md</span>
+						</div>
+					</div>
+
+					{/* Правая часть: Кнопки (Рендер только для владельца профиля) */}
+					{isOwnProfile && (
+						<div className='flex gap-2'>
+							{/* Режим Редактирования (Save & Cancel) */}
+							{isEditing ? (
+								<>
+									<Button
+										onClick={() => setIsEditing(false)}
+										variant='ghost'
+										size='sm'
+										disabled={isLoadingUpdate}
+										className='md:h-10 md:px-4 md:py-2 md:text-sm'
+									>
+										<X className='mr-2 size-4' /> Отмена
+									</Button>
+									<Button
+										onClick={handleSave}
+										size='sm'
+										disabled={isLoadingUpdate}
+										className='md:h-10 md:px-4 md:py-2 md:text-sm'
+									>
+										<Save className='mr-2 size-4' /> Сохранить
+									</Button>
+								</>
+							) : (
+								/* Режим Просмотра (Edit) */
+								<Button
+									className='md:h-10 md:px-4 md:py-2 md:text-sm'
+									onClick={() => {
+										setIsEditing(true)
+									}}
+								>
+									<Pencil className='mr-2 size-4' /> Изменить
+								</Button>
+							)}
+						</div>
+					)}
+				</div>
+
+				{!isEditing && (
+					<>
+						{/* Content */}
+						<div className='p-4 md:p-6'>
+							<TipTapRenderer
+								contentJson={draftContent}
+								className='prose-headings:mt-4 prose-headings:mb-2 prose-p:my-2 prose-sm md:prose-base'
+							/>
+						</div>
+					</>
+				)}
+
+				{isEditing && (
+					<Editor
+						content={draftContent}
+						onChange={value => setDraftContent(value)}
+					/>
+				)}
 			</div>
 		</div>
 	)

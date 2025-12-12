@@ -6,50 +6,6 @@ import { ProfileHeader, ProfileReadme } from '@/widgets/profile/ui'
 
 import type { UserPublicProfile } from '@/shared/api/graphql/__generated__/documents'
 
-const mockReadmeContent = {
-	type: 'doc',
-	content: [
-		{
-			type: 'heading',
-			attrs: { level: 2 },
-			content: [{ type: 'text', text: "Hi there, I'm Delia 👋" }],
-		},
-		{
-			type: 'paragraph',
-			content: [
-				{ type: 'text', text: "I'm a passionate " },
-				{ type: 'text', marks: [{ type: 'bold' }], text: 'Frontend Engineer' },
-				{
-					type: 'text',
-					text: " specializing in building exceptional digital experiences. Currently, I'm focused on accessible design systems and high-performance React applications.",
-				},
-			],
-		},
-		{
-			type: 'paragraph',
-			content: [],
-		},
-		{
-			type: 'heading',
-			attrs: { level: 4 },
-			content: [{ type: 'text', text: 'Current Focus' }],
-		},
-		{
-			type: 'paragraph',
-			content: [{ type: 'text', text: 'Building Lumora UI Kit' }],
-		},
-		{
-			type: 'heading',
-			attrs: { level: 4 },
-			content: [{ type: 'text', text: 'Learning' }],
-		},
-		{
-			type: 'paragraph',
-			content: [{ type: 'text', text: 'Rust & WebAssembly' }],
-		},
-	],
-}
-
 interface ProfilePageProps {
 	isOwnProfile?: boolean
 	user: UserPublicProfile
@@ -74,7 +30,11 @@ export const ProfilePage = ({
 
 				<div className='container mx-auto flex flex-col gap-4 px-4'>
 					{/* README */}
-					<ProfileReadme username={user.username} content={mockReadmeContent} />
+					<ProfileReadme
+						username={user.username}
+						isOwnProfile={isOwnProfile}
+						contentJson={user.readmeContent}
+					/>
 				</div>
 			</div>
 		</section>

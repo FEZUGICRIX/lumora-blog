@@ -1,13 +1,25 @@
 'use client'
 
-import * as React from 'react'
 import {
 	EditorContent,
 	EditorContext,
-	useEditor,
 	type JSONContent,
+	useEditor,
 } from '@tiptap/react'
+import * as React from 'react'
 
+// --- Icons ---
+import { ArrowLeftIcon } from '@/features/editor/ui/tiptap/tiptap-icons/arrow-left-icon'
+import { HighlighterIcon } from '@/features/editor/ui/tiptap/tiptap-icons/highlighter-icon'
+import { LinkIcon } from '@/features/editor/ui/tiptap/tiptap-icons/link-icon'
+// --- Tiptap Node ---
+import '@/features/editor/ui/tiptap/tiptap-node/blockquote-node/blockquote-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/code-block-node/code-block-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/heading-node/heading-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/image-node/image-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/list-node/list-node.scss'
+import '@/features/editor/ui/tiptap/tiptap-node/paragraph-node/paragraph-node.scss'
 // --- UI Primitives ---
 import { Button } from '@/features/editor/ui/tiptap/tiptap-ui-primitive/button'
 import { Spacer } from '@/features/editor/ui/tiptap/tiptap-ui-primitive/spacer'
@@ -16,51 +28,35 @@ import {
 	ToolbarGroup,
 	ToolbarSeparator,
 } from '@/features/editor/ui/tiptap/tiptap-ui-primitive/toolbar'
-
-// --- Tiptap Node ---
-import '@/features/editor/ui/tiptap/tiptap-node/blockquote-node/blockquote-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/code-block-node/code-block-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/list-node/list-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/image-node/image-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/heading-node/heading-node.scss'
-import '@/features/editor/ui/tiptap/tiptap-node/paragraph-node/paragraph-node.scss'
-
-// --- Tiptap UI ---
-import { HeadingDropdownMenu } from '@/features/editor/ui/tiptap/tiptap-ui/heading-dropdown-menu'
-import { ImageUploadButton } from '@/features/editor/ui/tiptap/tiptap-ui/image-upload-button'
-import { ListDropdownMenu } from '@/features/editor/ui/tiptap/tiptap-ui/list-dropdown-menu'
 import { BlockquoteButton } from '@/features/editor/ui/tiptap/tiptap-ui/blockquote-button'
 import { CodeBlockButton } from '@/features/editor/ui/tiptap/tiptap-ui/code-block-button'
 import {
 	ColorHighlightPopover,
-	ColorHighlightPopoverContent,
 	ColorHighlightPopoverButton,
+	ColorHighlightPopoverContent,
 } from '@/features/editor/ui/tiptap/tiptap-ui/color-highlight-popover'
+// --- Tiptap UI ---
+import { HeadingDropdownMenu } from '@/features/editor/ui/tiptap/tiptap-ui/heading-dropdown-menu'
+import { ImageUploadButton } from '@/features/editor/ui/tiptap/tiptap-ui/image-upload-button'
 import {
-	LinkPopover,
-	LinkContent,
 	LinkButton,
+	LinkContent,
+	LinkPopover,
 } from '@/features/editor/ui/tiptap/tiptap-ui/link-popover'
+import { ListDropdownMenu } from '@/features/editor/ui/tiptap/tiptap-ui/list-dropdown-menu'
 import { MarkButton } from '@/features/editor/ui/tiptap/tiptap-ui/mark-button'
 import { TextAlignButton } from '@/features/editor/ui/tiptap/tiptap-ui/text-align-button'
 import { UndoRedoButton } from '@/features/editor/ui/tiptap/tiptap-ui/undo-redo-button'
 
-// --- Icons ---
-import { ArrowLeftIcon } from '@/features/editor/ui/tiptap/tiptap-icons/arrow-left-icon'
-import { HighlighterIcon } from '@/features/editor/ui/tiptap/tiptap-icons/highlighter-icon'
-import { LinkIcon } from '@/features/editor/ui/tiptap/tiptap-icons/link-icon'
-
+import { useCursorVisibility } from '@/shared/hooks/shadcn/use-cursor-visibility'
 // --- Hooks ---
 import { useIsMobile } from '@/shared/hooks/shadcn/use-mobile'
 import { useWindowSize } from '@/shared/hooks/shadcn/use-window-size'
-import { useCursorVisibility } from '@/shared/hooks/shadcn/use-cursor-visibility'
+// --- Styles ---
+import '@/shared/ui/ui-kit/tiptap-templates/simple/simple-editor.scss'
 
 // -- Config --
 import { extensions } from '../config/extensions'
-
-// --- Styles ---
-import '@/shared/ui/ui-kit/tiptap-templates/simple/simple-editor.scss'
 
 const MainToolbarContent = ({
 	onHighlighterClick,
@@ -105,11 +101,7 @@ const MainToolbarContent = ({
 				) : (
 					<ColorHighlightPopoverButton onClick={onHighlighterClick} />
 				)}
-				{!isMobile ? (
-					<LinkPopover />
-				) : (
-					<LinkButton onClick={onLinkClick} />
-				)}
+				{!isMobile ? <LinkPopover /> : <LinkButton onClick={onLinkClick} />}
 			</ToolbarGroup>
 
 			<ToolbarSeparator />
@@ -170,15 +162,12 @@ const MobileToolbarContent = ({
 	</>
 )
 
-interface SimpleEditorProps {
+interface EditorProps {
 	content: JSONContent | null
 	onChange: (content: JSONContent) => void
 }
 
-export function SimpleEditor({
-	content,
-	onChange,
-}: SimpleEditorProps) {
+export function Editor({ content, onChange }: EditorProps) {
 	const isMobile = useIsMobile()
 	const { height } = useWindowSize()
 	const [mobileView, setMobileView] = React.useState<
@@ -198,6 +187,7 @@ export function SimpleEditor({
 				class: 'simple-editor',
 			},
 		},
+		autofocus: true,
 		extensions: extensions,
 		content,
 		onUpdate: ({ editor }) => {
@@ -246,7 +236,7 @@ export function SimpleEditor({
 
 				<EditorContent
 					editor={editor}
-					role='presentation'
+					role='main'
 					className='simple-editor-content'
 				/>
 			</EditorContext.Provider>

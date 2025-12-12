@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { SimpleEditor } from '@/features/editor/ui/simple-editor'
+import { Editor } from '@/features/editor/ui'
 
 import { CategorySelect } from '@/entities/category/ui'
 
@@ -138,7 +138,7 @@ export function ArticleEditForm({
 						<FormItem>
 							<FormLabel>Содержание *</FormLabel>
 							<FormControl>
-								<SimpleEditor content={field.value} onChange={field.onChange} />
+								<Editor content={field.value} onChange={field.onChange} />
 							</FormControl>
 							<FormDescription>
 								Основное содержание статьи в формате Rich Text

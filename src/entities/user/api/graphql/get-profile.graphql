@@ -4,6 +4,7 @@ query GetProfile {
 		username
 		displayName
 		email
+		readmeContent
 		bio
 		location
 		websiteUrl

@@ -3,9 +3,10 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
+import { AuthWrapper } from '@/entities/auth/ui'
+
 import { Spinner } from '@/shared/ui/ui-kit'
 
-import { AuthWrapper } from '../../ui'
 import { useVerifyEmail } from '../api'
 
 export const VerifyEmail = () => {

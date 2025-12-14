@@ -5,7 +5,6 @@ import { useGetProfile } from '@/entities/user/api'
 
 import { ArticleEditForm, useArticleForm } from '@/widgets/article-edit-form'
 
-import { BackgroundImage } from '@/shared/assets/images'
 import { PageHero } from '@/shared/ui/custom'
 
 import { useFormPreview } from './hooks/use-form-preview'
@@ -32,7 +31,11 @@ export const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 			<PageHero
 				title={demoTitle}
 				subtitle={demoDescription}
-				image={coverImage ?? BackgroundImage}
+				// TODO: поставить номральный мок
+				image={
+					coverImage ??
+					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
+				}
 				author={author}
 				createdAt={createdAt}
 			/>

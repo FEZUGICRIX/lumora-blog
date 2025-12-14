@@ -6,7 +6,7 @@ import { Divider } from '@/shared/ui/custom'
 import { GithubIcon, GoogleIcon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/ui-kit'
 
-import { useGetOAuthConnectUrl } from '../oauth-connect'
+import { useGetOAuthConnectUrl } from '../../../features/auth/oauth-connect'
 import type { OAuthProvider } from '../types'
 
 export const AuthSocial = () => {

@@ -1,6 +1,8 @@
-import Image from 'next/image'
 import type { FullArticle } from '@/entities/article'
+
 import { useFormattedDate } from '@/shared/config/dayjs'
+
+import { UserAvatar } from './UserAvatar'
 
 interface AuthorCardProps {
 	author: FullArticle['author']
@@ -16,18 +18,12 @@ export const AuthorCard = ({ author, createdAt }: AuthorCardProps) => {
 
 	return (
 		<div className='flex items-center gap-2'>
-			{/* TODO: поставить компонент как в logout */}
-			<Image
-				src={author.avatarUrl ?? '/default-cover.jpg'}
-				alt={author.displayName}
-				className='rounded-full'
-				width={32}
-				height={32}
+			<UserAvatar
+				displayName={author.displayName}
+				avatarUrl={author.avatarUrl}
 			/>
 			<div className='text-gray-300'>
-				<p className='text-sm font-semibold'>
-					{author.displayName}
-				</p>
+				<p className='text-sm font-semibold'>{author.displayName}</p>
 				<p className='text-xs'>{formattedDate}</p>
 			</div>
 		</div>

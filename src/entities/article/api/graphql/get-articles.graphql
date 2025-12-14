@@ -38,6 +38,7 @@ query GetArticles(
 		author {
 			id
 			displayName
+			username
 			avatarUrl
 		}
 		category {
@@ -52,6 +53,7 @@ query GetArticles(
 			updatedAt
 			author {
 				id
+				username
 				displayName
 				avatarUrl
 			}

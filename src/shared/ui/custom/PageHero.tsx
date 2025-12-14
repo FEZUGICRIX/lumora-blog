@@ -1,17 +1,14 @@
 'use client'
 
-import Image, { type StaticImageData } from 'next/image'
-
 import type { FullArticle } from '@/entities/article'
 import { AuthorCard } from '@/entities/user/ui'
 
-import { BackgroundImage } from '@/shared/assets/images'
 import { ImageDarkOverlay } from '@/shared/ui/custom'
 
 interface PageHeroProps {
 	title?: string
 	subtitle?: string
-	image?: StaticImageData | string
+	image?: string
 	isCenter?: boolean
 	author?: FullArticle['author']
 	createdAt?: string | Date
@@ -43,12 +40,10 @@ export const PageHero = ({
 					</section>
 				) : (
 					<div className='relative h-full w-full'>
-						{/* TODO: если image невалидный, рендерить BackgroundImage */}
-						<Image
-							src={image ?? BackgroundImage}
-							alt='Banner'
-							fill
-							className='transform object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-110'
+						<img
+							src={image}
+							alt={title}
+							className='h-full w-full transform object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-110'
 						/>
 						<ImageDarkOverlay />
 					</div>

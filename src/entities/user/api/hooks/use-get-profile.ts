@@ -8,5 +8,7 @@ export const useGetProfile = () => {
 		queryFn: () => getProfileService(),
 	})
 
-	return { user, isLoadingUser }
+	const isAuthenticated = Boolean(user)
+
+	return { user, isLoadingUser, isAuthenticated }
 }

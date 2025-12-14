@@ -6,7 +6,6 @@ import type { ArticlePreview } from '@/entities/article'
 
 import { ArticleList } from '@/widgets/article-list'
 
-import { BackgroundImage } from '@/shared/assets/images'
 import { PageHero } from '@/shared/ui/custom'
 
 interface HomePageProps {
@@ -21,7 +20,10 @@ export const HomePage = ({ articles }: HomePageProps) => {
 			<PageHero
 				title={t('title')}
 				subtitle={t('subtitle')}
-				image={BackgroundImage}
+				// TODO: поставить номральный мок
+				image={
+					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
+				}
 				isCenter
 			/>
 

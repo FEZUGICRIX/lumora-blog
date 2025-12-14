@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 
-import type { OAuthProvider } from '../../types'
+import type { OAuthProvider } from '@/entities/auth/types'
+
 import { getOAuthConnectUrlService } from './get-oauth-connect-url.service'
 
 export const useGetOAuthConnectUrl = () => {

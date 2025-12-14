@@ -19,6 +19,7 @@ query GetArticleBySlug($slug: String!) {
 		updatedAt
 		author {
 			id
+			username
 			displayName
 			avatarUrl
 		}
@@ -34,6 +35,7 @@ query GetArticleBySlug($slug: String!) {
 			updatedAt
 			author {
 				id
+				username
 				displayName
 				avatarUrl
 			}

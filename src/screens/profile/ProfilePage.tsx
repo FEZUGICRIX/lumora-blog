@@ -18,7 +18,7 @@ export const ProfilePage = ({
 	const [isFollowing, setIsFollowing] = useState(false)
 
 	return (
-		<section className=''>
+		<section>
 			<div className='space-y-4'>
 				{/* Header with cover & avatar */}
 				<ProfileHeader

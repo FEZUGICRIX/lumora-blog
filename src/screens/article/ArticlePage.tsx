@@ -5,13 +5,17 @@ import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
 import { TipTapRenderer } from '@/features/editor/ui'
 
 import type { ArticlePageProps } from '@/entities/article'
+import { useGetProfile } from '@/entities/user/api'
 
-import { BackgroundImage } from '@/shared/assets/images'
+import { Comments } from '@/widgets/comment/ui'
+
 import { formatNumber, generateKey } from '@/shared/lib'
 import { PageHero } from '@/shared/ui/custom'
 import { Badge } from '@/shared/ui/ui-kit'
 
 export const ArticlePage = ({ article }: ArticlePageProps) => {
+	const { user, isAuthenticated } = useGetProfile()
+
 	const {
 		title,
 		coverImage,
@@ -20,6 +24,7 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		description,
 		tags,
 		views,
+		comments,
 		contentJson,
 		contentHtml,
 		commentsCount,
@@ -31,12 +36,18 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		// isLiked,
 	} = article
 
+	console.log(article)
+
 	return (
 		<div>
 			<PageHero
 				title={title}
 				subtitle={description}
-				image={coverImage ?? BackgroundImage}
+				// TODO: поставить номральный мок
+				image={
+					coverImage ??
+					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
+				}
 				author={author}
 				createdAt={createdAt}
 			/>
@@ -76,6 +87,14 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 					</div>
 				</div>
 			</section>
+
+			<Comments
+				commentList={comments}
+				user={user}
+				isAuthenticated={isAuthenticated}
+				commentsCount={commentsCount || 0}
+				onSubmit={() => console.log('submit')}
+			/>
 		</div>
 	)
 }

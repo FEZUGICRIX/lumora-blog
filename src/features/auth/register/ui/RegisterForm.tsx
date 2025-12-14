@@ -7,6 +7,8 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
+import { AuthWrapper } from '@/entities/auth/ui'
+
 import { env } from '@/shared/config/env'
 import { routes } from '@/shared/config/routes'
 import {
@@ -20,7 +22,6 @@ import {
 	Input,
 } from '@/shared/ui/ui-kit'
 
-import { AuthWrapper } from '../../ui'
 import { useRegister } from '../api'
 import { RegisterSchema, type TypeRegisterSchema } from '../schema'
 

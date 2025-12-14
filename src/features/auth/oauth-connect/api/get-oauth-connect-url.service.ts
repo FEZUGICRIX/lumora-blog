@@ -1,11 +1,11 @@
+import type { OAuthProvider } from '@/entities/auth/types'
+
 import { graphqlClient } from '@/shared/api/graphql-client'
 import {
 	GetOAuthConnectUrlDocument,
 	type GetOAuthConnectUrlQuery,
 	type GetOAuthConnectUrlQueryVariables,
 } from '@/shared/api/graphql/__generated__/documents'
-
-import type { OAuthProvider } from '../../types'
 
 export const getOAuthConnectUrlService = async (
 	provider: OAuthProvider,

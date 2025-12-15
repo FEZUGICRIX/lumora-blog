@@ -1,30 +1,47 @@
+import { useRouter } from 'next/navigation'
+
+import { useSendComment } from '@/features/comment/send-comment'
+
 import type { CommentPublic } from '@/entities/comment/model/comment.types'
-import { CommentForm } from '@/entities/comment/ui'
 import { CommentItem } from '@/entities/comment/ui/CommentItem'
 
-import type { UserProfile } from '@/shared/api/graphql/__generated__/documents'
+import { CommentForm } from '@/widgets/comment/ui'
+
+import type {
+	CreateCommentInput,
+	UserProfile,
+} from '@/shared/api/graphql/__generated__/documents'
 
 interface CommentsProps {
 	commentList: CommentPublic[]
+	articleId: string
 	user?: UserProfile | null
 	isAuthenticated: boolean
-	onSubmit: () => void
 	commentsCount: number
 }
 
 export const Comments = ({
+	commentList,
+	articleId,
 	user,
 	isAuthenticated,
-	commentList,
 	commentsCount,
-	onSubmit,
 }: CommentsProps) => {
+	const { sendComment } = useSendComment()
+	const router = useRouter()
+
+	const handleCreateComment = (data: CreateCommentInput) => {
+		sendComment(data)
+		router.refresh()
+	}
+
 	return (
 		<section className='container mx-auto px-4'>
 			<CommentForm
 				user={user}
+				articleId={articleId}
 				isAuthenticated={isAuthenticated}
-				onSubmit={onSubmit}
+				onSubmit={handleCreateComment}
 				commentsCount={commentsCount}
 			/>
 

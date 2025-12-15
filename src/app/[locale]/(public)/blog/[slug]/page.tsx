@@ -5,7 +5,7 @@ import { ArticlePage } from '@/screens/article'
 
 import type { Locale } from '@/features/locale-switcher'
 
-import { getArticleBySlugService } from '@/entities/article/api'
+import { fetchArticleOrNull } from '@/entities/article/api/server-adapters'
 
 import { generateArticleMetadata } from '@/shared/lib/seo/generate-article-metadata'
 
@@ -20,13 +20,13 @@ export async function generateMetadata({
 	params: Params
 }): Promise<Metadata> {
 	const { slug } = await params
-	const article = await getArticleBySlugService({ slug })
+	const article = await fetchArticleOrNull({ slug })
 	return generateArticleMetadata(article)
 }
 
 export default async function Article({ params }: { params: Params }) {
 	const { slug } = await params
-	const article = await getArticleBySlugService({ slug })
+	const article = await fetchArticleOrNull({ slug })
 
 	if (!article) {
 		notFound()

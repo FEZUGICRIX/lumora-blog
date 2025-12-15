@@ -4,7 +4,7 @@ import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
 
 import { TipTapRenderer } from '@/features/editor/ui'
 
-import type { ArticlePageProps } from '@/entities/article'
+import { type ArticlePageProps } from '@/entities/article'
 import { useGetProfile } from '@/entities/user/api'
 
 import { Comments } from '@/widgets/comment/ui'
@@ -17,6 +17,7 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const { user, isAuthenticated } = useGetProfile()
 
 	const {
+		id,
 		title,
 		coverImage,
 		// readingTime,
@@ -90,10 +91,10 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 
 			<Comments
 				commentList={comments}
+				articleId={id}
 				user={user}
 				isAuthenticated={isAuthenticated}
 				commentsCount={commentsCount || 0}
-				onSubmit={() => console.log('submit')}
 			/>
 		</div>
 	)

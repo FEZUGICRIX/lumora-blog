@@ -5,7 +5,7 @@ import type {
 
 export type AuthorPublic = Pick<
 	UserPublicProfile,
-	'__typename' | 'id' | 'username' | 'displayName' | 'avatarUrl'
+	'__typename' | 'id' | 'username' | 'displayName' | 'avatarUrl' | 'role'
 >
 
 export type CommentPublic = Pick<

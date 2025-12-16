@@ -38,6 +38,7 @@ query GetArticleBySlug($slug: String!) {
 				username
 				displayName
 				avatarUrl
+				role
 			}
 		}
 	}

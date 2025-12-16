@@ -1,0 +1,6 @@
+mutation RemoveComment($id: String!) {
+	removeComment(id: $id) {
+		id
+		content
+	}
+}

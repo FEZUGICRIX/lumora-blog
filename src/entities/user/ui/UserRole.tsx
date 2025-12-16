@@ -5,10 +5,12 @@ import { ROLE_CONFIGS } from '../model/role.config'
 
 interface UserRoleBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	role: UserRole
+	size?: 'default' | 'small'
 }
 
 export function UserRoleBadge({
 	role,
+	size = 'default',
 	className,
 	...props
 }: UserRoleBadgeProps) {
@@ -21,11 +23,25 @@ export function UserRoleBadge({
 	}
 
 	const { label, Icon, colorClass } = config
+
+	const badgeStyles = {
+		default: {
+			icon: 'h-6 w-6',
+			badge: 'px-3 text-sm',
+		},
+		small: {
+			icon: 'h-4 w-4',
+			badge: 'px-1 pr-2 text-xs',
+		},
+	}
+
+	const badgeStyle = size == 'default' ? badgeStyles.default : badgeStyles.small
+
 	return (
 		<div
 			className={cn(
 				// Базовые стили для бейджа
-				'inline-flex items-center gap-1 rounded-full px-3 text-sm font-bold uppercase',
+				`inline-flex items-center gap-1 rounded-full px-3 font-bold uppercase ${badgeStyle.badge}`,
 				'cursor-default shadow-lg', // Для эффекта тени и интерактивности
 
 				// Градиентная подложка, имитирующая фиолетовый/темный фон
@@ -44,7 +60,7 @@ export function UserRoleBadge({
 			)}
 			{...props}
 		>
-			<Icon className='h-6 w-6' /> {/* Иконка */}
+			<Icon className={badgeStyle.icon} /> {/* Иконка */}
 			<span>{label}</span> {/* Текст роли */}
 		</div>
 	)

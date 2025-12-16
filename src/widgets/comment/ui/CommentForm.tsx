@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import TextareaAutosize from 'react-textarea-autosize'
 
 import { UserAvatar } from '@/entities/user/ui'
 
@@ -7,7 +6,9 @@ import type {
 	CreateCommentInput,
 	UserProfile,
 } from '@/shared/api/graphql/__generated__/documents'
-import { Button } from '@/shared/ui/ui-kit'
+import { Link } from '@/shared/config/i18n'
+import { routes } from '@/shared/config/routes'
+import { Button, Textarea } from '@/shared/ui/ui-kit'
 
 interface CommentFormProps {
 	user?: UserProfile | null
@@ -53,18 +54,18 @@ export const CommentForm = ({
 
 			<div className='flex items-center gap-4'>
 				{user && (
-					<UserAvatar
-						avatarUrl={user.avatarUrl}
-						displayName={user.displayName}
-						className='h-12 w-12'
-					/>
+					<Link href={routes.profile(user.username)}>
+						<UserAvatar
+							avatarUrl={user.avatarUrl}
+							displayName={user.displayName}
+							className='h-12 w-12'
+						/>
+					</Link>
 				)}
 
-				<div className='w-full rounded-2xl bg-white/70 py-3 shadow-sm backdrop-blur dark:bg-zinc-900/80'>
-					<TextareaAutosize
+				<div className='w-full rounded-2xl bg-white/70 shadow-sm backdrop-blur dark:bg-zinc-900/80'>
+					<Textarea
 						name='comment'
-						minRows={1}
-						maxRows={6}
 						placeholder={
 							isAuthenticated
 								? 'Join the discussion…'

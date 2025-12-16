@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation'
 
+import { useCommentActions } from '@/features/comment/comment-actions'
 import { useSendComment } from '@/features/comment/send-comment'
 
 import type { CommentPublic } from '@/entities/comment/model/comment.types'
@@ -27,7 +28,9 @@ export const Comments = ({
 	isAuthenticated,
 	commentsCount,
 }: CommentsProps) => {
+	const { canModify, handleEdit, handleDelete } = useCommentActions(user?.id)
 	const { sendComment } = useSendComment()
+
 	const router = useRouter()
 
 	const handleCreateComment = (data: CreateCommentInput) => {
@@ -50,36 +53,22 @@ export const Comments = ({
 				{commentList.map(comment => (
 					<CommentItem
 						user={comment.author!}
-						isAuthor={comment.author.id == user?.id}
+						isAuthor={canModify(comment.author.id)}
 						comment={comment.content}
 						createdAt={comment.createdAt}
 						updatedAt={comment.updatedAt}
 						key={comment.id}
+						onDelete={() => {
+							handleDelete(comment.id, comment.author.id)
+							router.refresh()
+						}}
+						onEdit={(newContent: string) => {
+							handleEdit(comment.id, comment.author.id, newContent)
+							router.refresh()
+						}}
 					/>
 				))}
 
-				{/* Reply */}
-				{/* <div className='relative ml-12 pl-6'>
-					<div className='absolute top-0 left-0 h-full w-px bg-gradient-to-b from-zinc-300/60 to-transparent dark:from-zinc-700/60' />
-
-					<div className='flex gap-4'>
-						<div className='h-8 w-8 rounded-full bg-gradient-to-br from-zinc-300 to-zinc-400 dark:from-zinc-600 dark:to-zinc-700' />
-
-						<div className='space-y-1'>
-							<div className='flex items-center gap-2 text-xs text-zinc-400'>
-								<span className='font-medium text-zinc-900 dark:text-zinc-100'>
-									another_user
-								</span>
-								<span>·</span>
-								<span>30m ago</span>
-							</div>
-
-							<p className='text-sm text-zinc-800 dark:text-zinc-300'>
-								+1. Especially liked how FSD was explained without dogma.
-							</p>
-						</div>
-					</div>
-				</div> */}
 			</div>
 		</section>
 	)

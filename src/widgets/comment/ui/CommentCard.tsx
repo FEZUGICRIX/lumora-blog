@@ -16,6 +16,7 @@ import { ReactionList } from '@/entities/reaction/ui'
 import { UserAvatar, UserRoleBadge } from '@/entities/user/ui'
 
 import {
+	ReactionTargetType,
 	type ToggleReactionInput,
 	UserRole,
 } from '@/shared/api/graphql/__generated__/documents'
@@ -134,7 +135,8 @@ export const CommentCard = ({
 
 					{/* Reactions */}
 					<ReactionList
-						commentId={commentId}
+						targetId={commentId}
+						targetType={ReactionTargetType.Comment}
 						reactions={reactions}
 						myReactions={myReactions}
 						isAuthenticated={isAuthenticated}

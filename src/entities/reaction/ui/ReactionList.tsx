@@ -13,8 +13,10 @@ interface ReactionListProps {
 	reactions: Partial<Record<ReactionType, number>>
 	myReactions?: Partial<Record<ReactionType, number>>
 	isAuthenticated: boolean
+	targetId: string
+	targetType: ReactionTargetType
+
 	onReactionToggle: (data: ToggleReactionInput) => void
-	commentId: string
 	className?: string
 }
 
@@ -22,8 +24,10 @@ export const ReactionList = ({
 	reactions,
 	myReactions,
 	isAuthenticated,
+	targetId,
+	targetType,
+
 	onReactionToggle,
-	commentId,
 	className,
 }: ReactionListProps) => {
 	return (
@@ -40,8 +44,8 @@ export const ReactionList = ({
 						onClick={() => {
 							if (isAuthenticated) {
 								onReactionToggle({
-									targetId: commentId,
-									targetType: ReactionTargetType.Comment,
+									targetId,
+									targetType,
 									type,
 								})
 							}

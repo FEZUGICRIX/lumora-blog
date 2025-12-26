@@ -15,7 +15,7 @@ export const fetchArticleOrNull = async ({
 	slug: GetArticleBySlugQueryVariables
 }): Promise<GetArticleBySlugQuery['getArticleBySlug'] | null> => {
 	try {
-		const client = createServerGraphqlClient()
+		const client = await createServerGraphqlClient()
 
 		// 💡 Вызываем чистый сервис
 		const { getArticleBySlug: article } = await client.request<

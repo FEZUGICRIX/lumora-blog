@@ -12,7 +12,6 @@ mutation UpdateArticle($input: UpdateArticleInput!) {
 		publishedAt
 		readingTime
 		views
-		likes
 		createdAt
 		updatedAt
 		author {

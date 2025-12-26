@@ -18,7 +18,7 @@ export const CommentEditForm = ({
 	const isDisabled = value.trim().length === 0 || value.trim() === initialValue
 
 	return (
-		<form className='space-y-3'>
+		<form className='mb-4 space-y-3'>
 			<Textarea
 				autoFocus
 				value={value}

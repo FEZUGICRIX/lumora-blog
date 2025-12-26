@@ -31,7 +31,8 @@ query GetArticles(
 		publishedAt
 		readingTime
 		views
-		likes
+		reactions
+		# myReactions
 		commentsCount
 		createdAt
 		updatedAt
@@ -45,18 +46,6 @@ query GetArticles(
 			id
 			name
 			slug
-		}
-		comments {
-			id
-			content
-			createdAt
-			updatedAt
-			author {
-				id
-				username
-				displayName
-				avatarUrl
-			}
 		}
 	}
 }

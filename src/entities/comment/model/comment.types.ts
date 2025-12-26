@@ -10,7 +10,13 @@ export type AuthorPublic = Pick<
 
 export type CommentPublic = Pick<
 	Comment,
-	'__typename' | 'id' | 'content' | 'createdAt' | 'updatedAt'
+	| '__typename'
+	| 'id'
+	| 'content'
+	| 'createdAt'
+	| 'updatedAt'
+	| 'reactions'
+	| 'myReactions'
 > & {
 	author: AuthorPublic
 }

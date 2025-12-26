@@ -327,8 +327,6 @@ export const handleImageUpload = async (
 
 		const uploadResult = await uploadFileService(variables)
 
-		console.log(uploadResult)
-
 		if (abortSignal?.aborted) {
 			throw new Error('Upload cancelled.')
 		}

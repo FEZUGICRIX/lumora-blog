@@ -13,7 +13,6 @@ mutation CreateArticle($input: CreateArticleInput!) {
 		publishedAt
 		readingTime
 		views
-		likes
 		createdAt
 		updatedAt
 		author {

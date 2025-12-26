@@ -1,0 +1,9 @@
+mutation ToggleReaction(
+	$targetId: ID!
+	$targetType: ReactionTargetType!
+	$type: ReactionType!
+) {
+	toggleReaction(
+		input: { targetId: $targetId, targetType: $targetType, type: $type }
+	)
+}

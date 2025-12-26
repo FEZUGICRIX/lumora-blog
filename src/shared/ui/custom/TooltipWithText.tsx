@@ -1,8 +1,4 @@
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from '@/shared/ui/ui-kit'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/ui-kit'
 
 interface Props {
 	text: string

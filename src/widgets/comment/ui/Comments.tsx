@@ -2,16 +2,19 @@ import { useRouter } from 'next/navigation'
 
 import { useCommentActions } from '@/features/comment/comment-actions'
 import { useSendComment } from '@/features/comment/send-comment'
+import { useToggleReaction } from '@/features/reactions/toggle-reaction'
 
 import type { CommentPublic } from '@/entities/comment/model/comment.types'
-import { CommentItem } from '@/entities/comment/ui/CommentItem'
 
 import { CommentForm } from '@/widgets/comment/ui'
 
 import type {
 	CreateCommentInput,
+	ToggleReactionInput,
 	UserProfile,
 } from '@/shared/api/graphql/__generated__/documents'
+
+import { CommentCard } from './CommentCard'
 
 interface CommentsProps {
 	commentList: CommentPublic[]
@@ -30,6 +33,7 @@ export const Comments = ({
 }: CommentsProps) => {
 	const { canModify, handleEdit, handleDelete } = useCommentActions(user?.id)
 	const { sendComment } = useSendComment()
+	const { toggleReaction } = useToggleReaction()
 
 	const router = useRouter()
 
@@ -37,6 +41,8 @@ export const Comments = ({
 		sendComment(data)
 		router.refresh()
 	}
+
+	// if (!user) return null
 
 	return (
 		<section className='container mx-auto px-4'>
@@ -48,27 +54,29 @@ export const Comments = ({
 				commentsCount={commentsCount}
 			/>
 
-			{/* Comment */}
+			{/* Comments */}
 			<div className='group mt-5 space-y-4'>
 				{commentList.map(comment => (
-					<CommentItem
-						user={comment.author!}
-						isAuthor={canModify(comment.author.id)}
-						comment={comment.content}
-						createdAt={comment.createdAt}
-						updatedAt={comment.updatedAt}
+					<CommentCard
 						key={comment.id}
-						onDelete={() => {
-							handleDelete(comment.id, comment.author.id)
+						author={comment.author}
+						comment={comment}
+						isAuthor={canModify(comment.author.id)}
+						isAuthenticated={isAuthenticated}
+						onReactionToggle={(data: ToggleReactionInput) => {
+							toggleReaction(data)
 							router.refresh()
 						}}
 						onEdit={(newContent: string) => {
 							handleEdit(comment.id, comment.author.id, newContent)
 							router.refresh()
 						}}
+						onDelete={() => {
+							handleDelete(comment.id, comment.author.id)
+							router.refresh()
+						}}
 					/>
 				))}
-
 			</div>
 		</section>
 	)

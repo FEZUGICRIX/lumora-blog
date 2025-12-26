@@ -20,13 +20,13 @@ export async function generateMetadata({
 	params: Params
 }): Promise<Metadata> {
 	const { slug } = await params
-	const article = await fetchArticleOrNull({ slug })
+	const article = await fetchArticleOrNull({ slug: { slug } })
 	return generateArticleMetadata(article)
 }
 
 export default async function Article({ params }: { params: Params }) {
 	const { slug } = await params
-	const article = await fetchArticleOrNull({ slug })
+	const article = await fetchArticleOrNull({ slug: { slug } })
 
 	if (!article) {
 		notFound()

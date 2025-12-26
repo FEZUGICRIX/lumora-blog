@@ -1,6 +1,6 @@
 'use client'
 
-import { Eye, HeartIcon, MessageSquareText } from 'lucide-react'
+import { Eye, MessageSquareText } from 'lucide-react'
 
 import { TipTapRenderer } from '@/features/editor/ui'
 
@@ -16,6 +16,8 @@ import { Badge } from '@/shared/ui/ui-kit'
 export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const { user, isAuthenticated } = useGetProfile()
 
+	console.log(article.comments)
+
 	const {
 		id,
 		title,
@@ -29,15 +31,13 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		contentJson,
 		contentHtml,
 		commentsCount,
-		likes,
+		// likes,
 		author,
 		createdAt,
 		// isNew,
 		// onLike,
 		// isLiked,
 	} = article
-
-	console.log(article)
 
 	return (
 		<div>
@@ -72,10 +72,10 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 						</div>
 
 						<div className='flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400'>
-							<div className='flex items-center gap-1'>
+							{/* <div className='flex items-center gap-1'>
 								<HeartIcon />
 								<span>{formatNumber(likes)}</span>
-							</div>
+							</div> */}
 							<div className='flex items-center gap-1'>
 								<MessageSquareText />
 								<span>{formatNumber(commentsCount ?? 0)}</span>

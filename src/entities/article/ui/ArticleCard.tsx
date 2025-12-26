@@ -25,9 +25,7 @@ export const ArticleCard = ({
 		category,
 		tags,
 		views,
-		// comments,
 		commentsCount,
-		likes,
 		author,
 		createdAt,
 	} = article
@@ -104,12 +102,12 @@ export const ArticleCard = ({
 							<span>{formatNumber(commentsCount ?? 0)}</span>
 						</div>
 
-						<div className='flex items-center gap-1'>
+						{/* <div className='flex items-center gap-1'>
 							<HeartIcon
 								className={`${isLiked && 'fill-pink-500 text-pink-500'} h-4 w-4`}
 							/>
 							<span>{formatNumber(likes)}</span>
-						</div>
+						</div> */}
 					</div>
 
 					<AuthorCard author={author} createdAt={createdAt} />

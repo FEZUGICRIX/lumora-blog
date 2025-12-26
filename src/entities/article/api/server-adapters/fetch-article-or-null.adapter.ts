@@ -1,6 +1,9 @@
-import type { GetArticleBySlugQuery } from '@/shared/api/graphql/__generated__/documents'
-
-import { getArticleBySlugService } from '../services'
+import { createServerGraphqlClient } from '@/shared/api/graphql-server'
+import {
+	GetArticleBySlugDocument,
+	type GetArticleBySlugQuery,
+	type GetArticleBySlugQueryVariables,
+} from '@/shared/api/graphql/__generated__/documents'
 
 /**
  * Адаптер для Server Component: Преобразует 404 (Not Found Error) в null.
@@ -9,11 +12,17 @@ import { getArticleBySlugService } from '../services'
 export const fetchArticleOrNull = async ({
 	slug,
 }: {
-	slug: string
+	slug: GetArticleBySlugQueryVariables
 }): Promise<GetArticleBySlugQuery['getArticleBySlug'] | null> => {
 	try {
+		const client = createServerGraphqlClient()
+
 		// 💡 Вызываем чистый сервис
-		const article = await getArticleBySlugService({ slug })
+		const { getArticleBySlug: article } = await client.request<
+			GetArticleBySlugQuery,
+			GetArticleBySlugQueryVariables
+		>(GetArticleBySlugDocument, slug)
+
 		return article
 	} catch (error) {
 		// 💡 КЛЮЧЕВОЙ ШАГ: Ловим ошибку и проверяем код/сообщение

@@ -9,10 +9,7 @@ interface GoogleIconProps extends SVGProps<SVGSVGElement> {
 export const GoogleIcon = ({ className, ...props }: GoogleIconProps) => (
 	<svg
 		{...props}
-		className={cn(
-			'h-[20px] w-[20px] text-white transition dark:text-black',
-			className,
-		)}
+		className={cn('h-5 w-5 text-white transition dark:text-black', className)}
 		xmlns='http://www.w3.org/2000/svg'
 		width='100'
 		height='100'

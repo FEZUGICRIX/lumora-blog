@@ -12,7 +12,7 @@ export const CrownIcon = ({ className, ...props }: CrownIconProps) => (
 		viewBox='0 0 512 512'
 		{...props}
 		className={cn(
-			'h-[20px] w-[20px] text-black transition dark:text-zinc-300',
+			'h-5 w-5 text-black transition dark:text-zinc-300',
 			className,
 		)}
 	>

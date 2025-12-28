@@ -4,7 +4,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ArticleFilters, type SortOption } from '@/features/article/filters'
 
-import { ArticleCard, type ArticlePreview } from '@/entities/article'
+import {
+	ArticleCard,
+	type ArticlePreview,
+	isNewArticle,
+} from '@/entities/article'
 import { useGetArticles } from '@/entities/article/api'
 import type { CategoryMinimal } from '@/entities/category/model'
 
@@ -36,7 +40,6 @@ export const ArticleList = ({
 
 	const isReadyToFetch = !isInitialFetch.current || !isDefaultInitialState
 
-	// --- RTK Query ---
 	const {
 		articles: filteredArticles,
 		isLoadingArticles,
@@ -107,7 +110,11 @@ export const ArticleList = ({
 			) : (
 				<GridLayout>
 					{articlesToRender?.map((article: ArticlePreview) => (
-						<ArticleCard key={article.id} article={article} />
+						<ArticleCard
+							key={article.id}
+							article={article}
+							isNew={isNewArticle(article.createdAt)}
+						/>
 					))}
 				</GridLayout>
 			)}

@@ -11,11 +11,11 @@ import {
 	Skeleton,
 } from '@/shared/ui/ui-kit'
 
-interface UserButtonProps {
+interface UserSettingsButtonProps {
 	user: UserPublicProfile
 }
 
-export const UserButton = ({ user }: UserButtonProps) => {
+export const UserSettingsButton = ({ user }: UserSettingsButtonProps) => {
 	const { logout, isLoadingLogout } = useLogout()
 
 	if (!user) return null
@@ -36,6 +36,6 @@ export const UserButton = ({ user }: UserButtonProps) => {
 	)
 }
 
-export const UserButtonSkeleton = () => {
+export const UserSettingsButtonSkeleton = () => {
 	return <Skeleton className='h-10 w-10 rounded-full' />
 }

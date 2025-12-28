@@ -18,6 +18,7 @@ interface AuthWrapperProps {
 	backButtonLabel?: string
 	backButtonHref?: string
 	isShowSocial?: boolean
+	className?: string
 }
 
 export const AuthWrapper = ({
@@ -27,9 +28,10 @@ export const AuthWrapper = ({
 	backButtonLabel,
 	backButtonHref,
 	isShowSocial = false,
+	className,
 }: PropsWithChildren<AuthWrapperProps>) => {
 	return (
-		<Card className='w-[400px]'>
+		<Card className={`mx-4 mt-25 max-w-[420px] md:mt-[120px] ${className}`}>
 			<CardHeader>
 				<CardTitle>
 					<div className='text-center'>{title}</div>

@@ -4,7 +4,7 @@ export const ImageDarkOverlay = ({ className }: { className?: string }) => {
 	return (
 		<div
 			className={cn(
-				'absolute inset-0 z-[1] bg-black/5 dark:bg-black/30',
+				'absolute inset-0  bg-black/30 dark:bg-black/50',
 				className,
 			)}
 		/>

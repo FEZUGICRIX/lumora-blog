@@ -17,16 +17,7 @@ export const HomePage = ({ articles }: HomePageProps) => {
 
 	return (
 		<div>
-			<PageHero
-				title={t('title')}
-				subtitle={t('subtitle')}
-				// TODO: поставить номральный мок
-				image={
-					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
-				}
-				isCenter
-			/>
-
+			<PageHero title={t('title')} subtitle={t('subtitle')} isCenter />
 			<ArticleList initialArticles={articles} withFilters />
 		</div>
 	)

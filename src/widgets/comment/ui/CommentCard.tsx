@@ -119,7 +119,10 @@ export const CommentCard = ({
 					{/* Actions */}
 					{!isEditing && (
 						<div className='flex flex-wrap items-center gap-4 pt-2 text-xs font-medium text-zinc-500'>
-							<button className='flex items-center gap-1 transition hover:text-zinc-900 dark:hover:text-zinc-100'>
+							<button
+								className='flex cursor-not-allowed items-center gap-1 transition'
+								disabled
+							>
 								<CornerUpLeft className='h-4 w-4' />
 								Reply
 							</button>

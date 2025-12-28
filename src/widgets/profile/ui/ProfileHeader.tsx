@@ -1,7 +1,6 @@
 'use client'
 
-import { UserButton } from '@/features/auth/logout'
-
+import { UserSettingsButton } from '@/entities/user/ui'
 import { UserAvatar } from '@/entities/user/ui'
 import { UserRoleBadge } from '@/entities/user/ui'
 
@@ -41,11 +40,11 @@ export const ProfileHeader = ({
 		<div className='relative'>
 			{/* Cover Image */}
 			<div className='relative w-full overflow-hidden'>
-				<PageHero image={user?.coverUrl ?? undefined} />
+				<PageHero image={user.coverUrl} />
 			</div>
 
 			{/* Profile Info - Desktop: row, Mobile: column */}
-			<div className='relative z-2 container mx-auto flex flex-col px-4 pt-4 md:flex-row md:gap-6 md:px-0'>
+			<div className='relative z-4 container mx-auto flex flex-col px-4 pt-4 md:flex-row md:gap-6 md:px-0'>
 				{/* Avatar - overlapping cover */}
 				<div className='-mt-16 shrink-0 self-center md:-mt-20 md:ml-6 md:self-start'>
 					<div className='border-background bg-background size-24 overflow-hidden rounded-full border-4 md:size-32'>
@@ -80,7 +79,7 @@ export const ProfileHeader = ({
 										<Link href={routes.profileEdit}>Редактировать</Link>
 									</Button>
 
-									<UserButton user={user} />
+									<UserSettingsButton user={user} />
 								</>
 							) : (
 								<Button

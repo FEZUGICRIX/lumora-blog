@@ -27,9 +27,7 @@ export type RawArticle = Article
 
 // Общие UI-пропсы для статьи (используются и в карточке, и на странице)
 export interface ArticleUIProps {
-	onLike?: () => void
 	isNew?: boolean
-	isLiked?: boolean
 }
 
 // Пропсы для карточки статьи

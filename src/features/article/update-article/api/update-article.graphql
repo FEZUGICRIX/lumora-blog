@@ -1,6 +1,7 @@
 mutation UpdateArticle($input: UpdateArticleInput!) {
 	updateArticle(updateArticleInput: $input) {
 		id
+		slug
 		title
 		description
 		contentJson

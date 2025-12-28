@@ -1,16 +1,19 @@
 import { z } from 'zod'
-import type { TiptapContent } from '../models/form.types'
+
+import type { TiptapContent } from '@/widgets/article-edit-form/models/form.types'
+
+import { ZodOptionalUrl } from '@/shared/lib/zod'
 
 export const articleFormSchema = z.object({
 	title: z
 		.string()
 		.min(1, 'Заголовок обязателен для заполнения')
-		.max(115, 'Заголовок не должен превышать 115 символов')
+		.max(85, 'Заголовок не должен превышать 85 символов')
 		.trim(),
 	description: z
 		.string()
 		.min(1, 'Описание обязательно для заполнения')
-		.max(250, 'Описание не должно превышать 250 символов')
+		.max(300, 'Описание не должно превышать 300 символов')
 		.trim(),
 	content: z
 		.record(z.any(), z.unknown())
@@ -18,7 +21,7 @@ export const articleFormSchema = z.object({
 			message: 'Контент должен быть в формате Tiptap',
 		})
 		.refine(
-			(data) => {
+			data => {
 				const content = data as TiptapContent
 				return (
 					(content.content &&
@@ -36,11 +39,11 @@ export const articleFormSchema = z.object({
 		.string()
 		.min(1, 'Теги обязательны для заполнения')
 		.refine(
-			(value) => {
+			value => {
 				const tags = value
 					.split(' ')
-					.map((tag) => tag.trim())
-					.filter((tag) => tag !== '')
+					.map(tag => tag.trim())
+					.filter(tag => tag !== '')
 				return tags.length > 0 // хотя бы один тег
 			},
 			{
@@ -48,11 +51,11 @@ export const articleFormSchema = z.object({
 			},
 		)
 		.refine(
-			(value) => {
+			value => {
 				const tags = value
 					.split(' ')
-					.map((tag) => tag.trim())
-					.filter((tag) => tag !== '')
+					.map(tag => tag.trim())
+					.filter(tag => tag !== '')
 				return tags.length <= 10 // не более 10 тегов
 			},
 			{
@@ -60,24 +63,19 @@ export const articleFormSchema = z.object({
 			},
 		)
 		.refine(
-			(value) => {
+			value => {
 				const tags = value
 					.split(' ')
-					.map((tag) => tag.trim())
-					.filter((tag) => tag !== '')
-				return tags.every((tag) => tag.length <= 20) // каждый тег не более 20 символов
+					.map(tag => tag.trim())
+					.filter(tag => tag !== '')
+				return tags.every(tag => tag.length <= 20) // каждый тег не более 20 символов
 			},
 			{
 				message: 'Каждый тег не должен превышать 20 символов',
 			},
 		),
-	coverImage: z
-		.string()
-		.url('Неверный URL изображения')
-		.nullable()
-		.transform((value) => value || null),
+	coverImage: ZodOptionalUrl.nullable(),
 	categoryId: z
-		.string()
 		.uuid('Неверный ID категории')
 		.min(1, 'Категория обязательна для заполнения'),
 })

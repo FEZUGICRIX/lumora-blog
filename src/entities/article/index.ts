@@ -1,3 +1,4 @@
 export * from './api'
-export * from './model/article.types'
+export * from './lib'
+export * from './model'
 export * from './ui'

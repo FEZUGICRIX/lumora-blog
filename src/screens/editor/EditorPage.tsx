@@ -1,6 +1,7 @@
 'use client'
 
-import type { FullArticle } from '@/entities/article'
+import { ArticleHero, type FullArticle } from '@/entities/article'
+import { useGetCategories } from '@/entities/category/api'
 import { useGetProfile } from '@/entities/user/api'
 
 import { ArticleEditForm, useArticleForm } from '@/widgets/article-edit-form'
@@ -14,31 +15,41 @@ type EditorPageProps =
 	| { isNew: false; article: FullArticle }
 
 export const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
-	const { coverImage, author, createdAt } = article ?? {}
+	const { coverImage, author } = article ?? {}
 	const { user } = useGetProfile()
+	const { categories } = useGetCategories()
 
 	const { form, onSubmit, isEdit } = useArticleForm({
 		article,
 		user,
 	})
 
-	const { demoTitle, demoDescription } = useFormPreview(form, article, isNew)
+	const { demoTitle, demoDescription, demoCoverImage, demoCategory } =
+		useFormPreview(form, article, categories, isNew)
 
 	if (!user) return null
 
 	return (
 		<div>
-			<PageHero
-				title={demoTitle}
-				subtitle={demoDescription}
-				// TODO: поставить номральный мок
-				image={
-					coverImage ??
-					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
-				}
-				author={author}
-				createdAt={createdAt}
-			/>
+			<PageHero image={demoCoverImage}>
+				<ArticleHero
+					title={demoTitle}
+					hasImage={!!coverImage}
+					description={demoDescription}
+					category={demoCategory || article?.category}
+					readingTime={article?.readingTime}
+					createdAt={article?.createdAt ?? new Date()}
+					author={
+						author || {
+							id: user.id,
+							username: user.username,
+							displayName: user.displayName,
+							avatarUrl: user.avatarUrl,
+						}
+					}
+				/>
+			</PageHero>
+
 			<div className='container mx-auto my-4'>
 				<h1 className='mb-4 text-center text-2xl font-bold'>
 					{isNew ? 'Новая статья' : 'Редактировать статью'}

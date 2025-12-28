@@ -8,14 +8,9 @@ import { Link } from '@/shared/config/i18n'
 import { routes } from '@/shared/config/routes'
 import { formatNumber, generateKey } from '@/shared/lib'
 import { ImageDarkOverlay } from '@/shared/ui/custom'
-import { CommentIcon, HeartIcon, ViewIcon } from '@/shared/ui/icon'
+import { CommentIcon, ViewIcon } from '@/shared/ui/icon'
 
-export const ArticleCard = ({
-	article,
-	isNew,
-	isLiked,
-	onLike,
-}: ArticleCardProps) => {
+export const ArticleCard = ({ article, isNew }: ArticleCardProps) => {
 	const {
 		title,
 		slug,
@@ -46,23 +41,16 @@ export const ArticleCard = ({
 				<ImageDarkOverlay />
 
 				{isNew && (
-					<span className='absolute top-3 left-3 z-[2] rounded-full bg-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow'>
+					<span className='absolute top-3 left-3 z-4 rounded-full bg-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow'>
 						Новое
 					</span>
 				)}
-
-				<button
-					onClick={onLike}
-					className='absolute top-3 right-3 z-[2] rounded-full bg-white p-1.5 text-zinc-600 shadow transition hover:bg-pink-500 hover:text-white dark:bg-zinc-800 dark:text-zinc-300'
-				>
-					<HeartIcon className={isLiked ? 'fill-pink-500 text-pink-500' : ''} />
-				</button>
 			</Link>
 
 			<div className='flex h-full flex-col justify-between p-6'>
 				<Link
 					href={routes.blog.post(slug)}
-					className='flex flex-grow flex-col gap-4'
+					className='flex grow flex-col gap-4'
 				>
 					<div className='text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400'>
 						{category?.name && (
@@ -101,13 +89,6 @@ export const ArticleCard = ({
 							<CommentIcon className='h-4 w-4' />
 							<span>{formatNumber(commentsCount ?? 0)}</span>
 						</div>
-
-						{/* <div className='flex items-center gap-1'>
-							<HeartIcon
-								className={`${isLiked && 'fill-pink-500 text-pink-500'} h-4 w-4`}
-							/>
-							<span>{formatNumber(likes)}</span>
-						</div> */}
 					</div>
 
 					<AuthorCard author={author} createdAt={createdAt} />

@@ -21,10 +21,14 @@ import {
 	FormLabel,
 	FormMessage,
 	Input,
+	InputWithCounter,
 } from '@/shared/ui/ui-kit'
 
 import { handleRTKError } from '../lib/error-handling'
 import { type ArticleFormValues } from '../models/form.types'
+
+const TITLE_MAX_LENGTH = 85
+const DESCRIPTION_MAX_LENGTH = 300
 
 // Кастомный селект категорий для интеграции с RHF
 function ControlledCategorySelect({ name }: { name: string }) {
@@ -71,7 +75,7 @@ export function ArticleEditForm({
 		<FormProvider {...form}>
 			<form
 				onSubmit={form.handleSubmit(handleFormSubmit)}
-				className='mx-auto max-w-4xl space-y-6'
+				className='mx-auto max-w-4xl space-y-6 p-4'
 			>
 				{/* Заголовок */}
 				<FormField
@@ -81,9 +85,11 @@ export function ArticleEditForm({
 						<FormItem>
 							<FormLabel>Заголовок *</FormLabel>
 							<FormControl>
-								<Input
+								<InputWithCounter
 									placeholder='Введите заголовок статьи'
-									{...field}
+									maxLength={TITLE_MAX_LENGTH}
+									value={field.value}
+									onChange={field.onChange}
 									disabled={isSubmitting}
 								/>
 							</FormControl>
@@ -102,9 +108,11 @@ export function ArticleEditForm({
 						<FormItem>
 							<FormLabel>Описание *</FormLabel>
 							<FormControl>
-								<Input
-									placeholder='Краткое описание статьи (до 500 символов)'
-									{...field}
+								<InputWithCounter
+									placeholder='Краткое описание статьи'
+									maxLength={DESCRIPTION_MAX_LENGTH}
+									value={field.value}
+									onChange={field.onChange}
 									disabled={isSubmitting}
 								/>
 							</FormControl>

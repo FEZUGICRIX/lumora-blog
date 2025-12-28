@@ -1,10 +1,9 @@
 import type { z } from 'zod'
 
 import type { FullArticle } from '@/entities/article'
+import { articleFormSchema } from '@/entities/article'
 
 import type { UserProfile } from '@/shared/api/graphql/__generated__/documents'
-
-import { articleFormSchema } from '../lib/validations'
 
 // Тип для Tiptap контента с индексной сигнатурой
 export interface TiptapContent extends Record<string, unknown> {
@@ -20,7 +19,7 @@ export type ArticleFormValues = {
 	title: string
 	description: string
 	tags: string
-	coverImage: string | null
+	coverImage?: string | null
 	categoryId: string
 	content: Record<string, unknown> // ← Используем Record<string, unknown>
 }

@@ -1,35 +1,42 @@
 'use client'
 
-import { Link } from '@/shared/config/i18n'
-import { usePathname } from 'next/navigation'
-import { SheetClose } from '@/shared/ui/ui-kit'
 import clsx from 'clsx'
+import { usePathname } from 'next/navigation'
 import type { JSX } from 'react'
+
+import { Link } from '@/shared/config/i18n'
+import { routes } from '@/shared/config/routes'
+import { SheetClose } from '@/shared/ui/ui-kit'
 
 type NavLink = {
 	href: string
 	label: string
 	external?: boolean
+	auth?: 'public' | 'auth' | 'guest'
+	dynamic?: (isAuthenticated: boolean, username?: string) => string
 }
 
 const links: NavLink[] = [
-	{ href: '/', label: 'Главная' },
-	{ href: '/favorites', label: 'Понравившиеся' },
-	{ href: '/about', label: 'Обо мне' },
-	{ href: '/#contacts', label: 'Контакты' },
+	{ href: '/', label: 'Главная', auth: 'public' },
+	{ href: routes.editor.new, label: 'Написать статью' },
+	{ href: '/about', label: 'Обо мне', auth: 'public' },
 ]
 
-type Props = {
+type NavLinksProps = {
+	isAuthenticated?: boolean
+	username?: string
 	direction?: 'row' | 'col'
 	withSheetClose?: boolean
 	className?: string
 }
 
 export const NavLinks = ({
-	direction = 'row',
+	isAuthenticated = false,
+	username,
 	withSheetClose = false,
+	direction = 'row',
 	className = '',
-}: Props) => {
+}: NavLinksProps) => {
 	const pathname = usePathname()
 
 	const navClass = clsx(
@@ -38,13 +45,13 @@ export const NavLinks = ({
 			? 'flex flex-col gap-4 px-1 pt-2'
 			: 'flex items-center gap-6',
 		'text-zinc-800 dark:text-zinc-300',
-		className,
 	)
 
 	const getLinkClass = (href: string) =>
 		clsx(
 			'transition-colors hover:text-pink-600',
 			pathname === href && 'text-pink-500 font-semibold',
+			className,
 		)
 
 	const wrapLink = (link: JSX.Element, href: string) =>
@@ -56,9 +63,20 @@ export const NavLinks = ({
 			<span key={href}>{link}</span>
 		)
 
+	const visibleLinks = filterLinksByAuth(links, isAuthenticated)
+
+	// Добавляем профиль в рендере (на второе место)
+	if (isAuthenticated && username) {
+		visibleLinks.splice(1, 0, {
+			href: routes.profile(username),
+			label: 'Мой профиль',
+			auth: 'auth',
+		})
+	}
+
 	return (
 		<nav className={navClass}>
-			{links.map(({ href, label, external }) =>
+			{visibleLinks.map(({ href, label, external }) =>
 				wrapLink(
 					<Link
 						href={href}
@@ -74,3 +92,10 @@ export const NavLinks = ({
 		</nav>
 	)
 }
+
+const filterLinksByAuth = (links: NavLink[], isAuthenticated: boolean) =>
+	links.filter(link => {
+		if (link.auth === 'auth') return isAuthenticated
+		if (link.auth === 'guest') return !isAuthenticated
+		return true
+	})

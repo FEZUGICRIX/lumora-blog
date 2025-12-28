@@ -1,15 +1,16 @@
 import type { SVGProps } from 'react'
+
 import { cn } from '@/shared/lib/shadcn/utils'
 
 interface ViewIconProps extends SVGProps<SVGSVGElement> {
-  className?: string
+	className?: string
 }
 
 export const ViewIcon = ({ className, ...props }: ViewIconProps) => (
 	<svg
 		{...props}
 		className={cn(
-			'h-[20px] w-[20px] text-black transition dark:text-zinc-300',
+			'h-5 w-5 text-black transition dark:text-zinc-300',
 			className,
 		)}
 		fill='currentColor'

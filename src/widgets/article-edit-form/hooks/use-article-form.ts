@@ -6,9 +6,10 @@ import { useForm } from 'react-hook-form'
 import { useCreateArticle } from '@/features/article/create-article'
 import { useUpdateArticle } from '@/features/article/update-article'
 
+import { articleFormSchema } from '@/entities/article'
+
 import type { CreateArticleInput } from '@/shared/api/graphql/__generated__/documents'
 
-import { articleFormSchema } from '../lib/validations'
 import {
 	type ArticleFormValues,
 	type UseArticleFormProps,
@@ -43,7 +44,7 @@ export const useArticleForm = ({ article, user }: UseArticleFormProps) => {
 
 			const validatedData = articleFormSchema.parse(data)
 
-			const tagsArray = validatedData.tags // TODO: на бэк передавать строку и там уже превращать в массив
+			const tagsArray = data.tags // TODO: на бэк передавать строку и там уже превращать в массив
 				.split(' ')
 				.map(tag => tag.trim())
 				.filter(tag => tag !== '')
@@ -53,7 +54,7 @@ export const useArticleForm = ({ article, user }: UseArticleFormProps) => {
 				description: validatedData.description,
 				content: validatedData.content,
 				tags: tagsArray,
-				coverImage: validatedData.coverImage,
+				coverImage: validatedData.coverImage || null,
 				categoryId: validatedData.categoryId,
 				authorId: article?.author.id || user.id,
 			}

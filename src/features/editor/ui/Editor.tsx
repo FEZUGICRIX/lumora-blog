@@ -208,7 +208,7 @@ export function Editor({ content, onChange }: EditorProps) {
 	}, [isMobile, mobileView])
 
 	return (
-		<div className='simple-editor-wrapper'>
+		<div className='simple-editor-wrapper min-h-[350px]'>
 			<EditorContext.Provider value={{ editor }}>
 				<Toolbar
 					ref={toolbarRef}

@@ -1,17 +1,6 @@
 import { z } from 'zod'
 
-// 1. Переиспользуемый опциональный URL-тип
-// Принимает: Валидный URL, Пустую строку (''), или undefined
-const ZodOptionalUrl = z
-	.union([
-		z.literal(''),
-		z.url('URL-адрес должен быть валидным (например, https://lumora.dev)'),
-	])
-	.optional()
-
-// 2. Переиспользуемый опциональный строковый тип
-// Принимает: любую строку, Пустую строку (''), или undefined
-const ZodOptionalString = z.string().optional().or(z.literal(''))
+import { ZodOptionalString, ZodOptionalUrl } from '@/shared/lib/zod'
 
 export const ProfileEditSchema = z.object({
 	displayName: z.string().min(1, { message: 'Введите отображаемое имя' }),

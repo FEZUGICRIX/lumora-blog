@@ -5,7 +5,7 @@ import { HomePage } from '@/screens/home'
 
 import type { SortOption } from '@/features/article/filters'
 
-import { getArticlesService } from '@/entities/article/api'
+import { fetchArticlesOrNull } from '@/entities/article/api/server-adapters/fetch-articles-or-null.adapter'
 
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 
@@ -41,7 +41,7 @@ export default async function Home(props: {
 		sortBy = searchParams.sort as ArticleSortBy
 	}
 
-	const articles = await getArticlesService({
+	const articles = await fetchArticlesOrNull({
 		categorySlugs: searchParams.category,
 		sortBy, // Попадет либо валидный enum, либо undefined
 	})

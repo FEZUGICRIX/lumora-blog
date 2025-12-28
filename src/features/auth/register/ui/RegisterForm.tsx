@@ -61,7 +61,7 @@ export const RegisterForm = () => {
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
-					className='grid gap-2 space-y-2'
+					className='grid grid-cols-1 gap-4 md:grid-cols-2'
 				>
 					<FormField
 						control={form.control}
@@ -80,6 +80,7 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name='username'
@@ -97,11 +98,12 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name='email'
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className='col-span-1 md:col-span-2'>
 								<FormLabel>Email</FormLabel>
 								<FormControl>
 									<Input
@@ -115,6 +117,7 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name='password'
@@ -133,6 +136,7 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name='passwordRepeat'
@@ -151,14 +155,20 @@ export const RegisterForm = () => {
 							</FormItem>
 						)}
 					/>
-					<div className='flex justify-center'>
+
+					<div className='col-span-1 flex justify-center md:col-span-2'>
 						<ReCAPTCHA
 							onChange={setRecaptchaValue}
 							theme={theme == 'light' ? 'light' : 'dark'}
 							sitekey={env.googleRecaptchaSiteKey}
 						/>
 					</div>
-					<Button type='submit' disabled={isLoadingRegister}>
+
+					<Button
+						type='submit'
+						disabled={isLoadingRegister}
+						className='col-span-1 md:col-span-2'
+					>
 						Create account
 					</Button>
 				</form>

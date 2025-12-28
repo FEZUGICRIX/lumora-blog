@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { TipTapRenderer } from '@/features/editor/ui'
 import { useToggleReaction } from '@/features/reactions/toggle-reaction'
 
-import { type ArticlePageProps } from '@/entities/article'
+import { ArticleHero, type ArticlePageProps } from '@/entities/article'
 import { ReactionList } from '@/entities/reaction/ui'
 import { useGetProfile } from '@/entities/user/api'
 
@@ -30,9 +30,8 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		id,
 		title,
 		coverImage,
-		// readingTime,
-		// category,
-		// isNew,
+		readingTime,
+		category,
 		description,
 		tags,
 		views,
@@ -48,17 +47,17 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 
 	return (
 		<div>
-			<PageHero
-				title={title}
-				subtitle={description}
-				// TODO: поставить номральный мок
-				image={
-					coverImage ??
-					'https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-hno1-p-zastavki-na-rabochii-stol-bogataya-zhizn-2.jpg'
-				}
-				author={author}
-				createdAt={createdAt}
-			/>
+			<PageHero image={coverImage}>
+				<ArticleHero
+					title={title}
+					hasImage={!!coverImage}
+					description={description}
+					category={category}
+					readingTime={readingTime}
+					author={author}
+					createdAt={createdAt}
+				/>
+			</PageHero>
 
 			<section className='container mx-auto px-4 py-12'>
 				<div className='md:p-10" bg-gray/10 rounded-2xl p-6 shadow-xl backdrop-blur-md dark:bg-zinc-900/80'>

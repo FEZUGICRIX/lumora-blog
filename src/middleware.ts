@@ -5,7 +5,7 @@ import { routing } from '@/shared/config/i18n'
 import { getPathnameWithoutLocale } from '@/shared/lib'
 
 const PUBLIC_ROUTES = [
-	'/auth', // Все старицы авторизации
+	'/auth', // Все страницы авторизации
 	'/blog',
 	'/user',
 ]

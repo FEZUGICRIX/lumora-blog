@@ -4,6 +4,10 @@ type Routes = {
 		root: string
 		post: (slug: string) => string
 	}
+	editor: {
+		new: string
+		editArticle: (slug: string) => string
+	}
 	auth: {
 		login: string
 		register: string
@@ -20,6 +24,10 @@ export const routes: Routes = {
 	blog: {
 		root: '/blog',
 		post: slug => `/blog/${slug}`,
+	},
+	editor: {
+		new: '/editor/new',
+		editArticle: slug => `/editor/${slug}`,
 	},
 	auth: {
 		login: '/auth/login',

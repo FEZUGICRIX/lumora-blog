@@ -2,7 +2,7 @@
 
 import { Edit, Eye, MessageSquareText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { useDeleteArticle } from '@/features/article/delete-article'
 import { useTrackArticleView } from '@/features/article/track-article-view'
@@ -26,7 +26,7 @@ import {
 } from '@/shared/api/graphql/__generated__/documents'
 import { routes } from '@/shared/config/routes'
 import { formatNumber, generateKey } from '@/shared/lib'
-import { PageHero } from '@/shared/ui/custom'
+import { PageHero, ScrollProgress } from '@/shared/ui/custom'
 import { Badge } from '@/shared/ui/ui-kit'
 
 export const ArticlePage = ({ article }: ArticlePageProps) => {
@@ -55,6 +55,8 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		reactions,
 		myReactions,
 	} = article
+
+	const articleRef = useRef<HTMLElement>(null)
 
 	const isAuthor = user?.id === author?.id
 	const isAdmin = user?.role === UserRole.Admin
@@ -85,6 +87,8 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 					createdAt={createdAt}
 				/>
 			</PageHero>
+
+			<ScrollProgress target={articleRef} />
 
 			{/* Author actions */}
 			{canEdit && (
@@ -121,7 +125,10 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 			<section className='container mx-auto mt-5 mb-5 px-4'>
 				<div className='md:p-10" bg-gray/10 rounded-2xl p-6 shadow-md backdrop-blur-md dark:bg-zinc-900/80'>
 					{/* Article content */}
-					<article className='prose prose-neutral dark:prose-invert max-w-none'>
+					<article
+						ref={articleRef}
+						className='prose prose-neutral dark:prose-invert max-w-none'
+					>
 						<TipTapRenderer
 							contentJson={contentJson}
 							contentHtml={contentHtml}

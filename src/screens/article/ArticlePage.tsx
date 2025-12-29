@@ -1,12 +1,17 @@
 'use client'
 
-import { Eye, MessageSquareText } from 'lucide-react'
+import { Edit, Eye, MessageSquareText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+import { useDeleteArticle } from '@/features/article/delete-article'
 import { TipTapRenderer } from '@/features/editor/ui'
 import { useToggleReaction } from '@/features/reactions/toggle-reaction'
 
-import { ArticleHero, type ArticlePageProps } from '@/entities/article'
+import {
+	ArticleActions,
+	ArticleHero,
+	type ArticlePageProps,
+} from '@/entities/article'
 import { ReactionList } from '@/entities/reaction/ui'
 import { useGetProfile } from '@/entities/user/api'
 
@@ -15,7 +20,9 @@ import { Comments } from '@/widgets/comment/ui'
 import {
 	ReactionTargetType,
 	type ToggleReactionInput,
+	UserRole,
 } from '@/shared/api/graphql/__generated__/documents'
+import { routes } from '@/shared/config/routes'
 import { formatNumber, generateKey } from '@/shared/lib'
 import { PageHero } from '@/shared/ui/custom'
 import { Badge } from '@/shared/ui/ui-kit'
@@ -23,11 +30,13 @@ import { Badge } from '@/shared/ui/ui-kit'
 export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const { user, isAuthenticated } = useGetProfile()
 	const { toggleReaction } = useToggleReaction()
+	const { deleteArticle } = useDeleteArticle()
 
 	const router = useRouter()
 
 	const {
 		id,
+		slug,
 		title,
 		coverImage,
 		readingTime,
@@ -45,6 +54,10 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 		myReactions,
 	} = article
 
+	const isAuthor = user?.id === author?.id
+	const isAdmin = user?.role === UserRole.Admin
+	const canEdit = isAuthor
+
 	return (
 		<div>
 			<PageHero image={coverImage}>
@@ -59,8 +72,40 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 				/>
 			</PageHero>
 
-			<section className='container mx-auto px-4 py-12'>
-				<div className='md:p-10" bg-gray/10 rounded-2xl p-6 shadow-xl backdrop-blur-md dark:bg-zinc-900/80'>
+			{/* Author actions */}
+			{canEdit && (
+				<section className='container m-auto mt-5'>
+					<div className='bg-card/50 border-border/50 flex w-full flex-col items-center justify-between gap-4 rounded-xl border p-4 shadow-md sm:flex-row'>
+						<div className='flex items-center gap-3'>
+							<div className='bg-primary/10 flex size-10 items-center justify-center rounded-lg'>
+								<Edit className='text-primary size-5' />
+							</div>
+							<div>
+								<p className='text-sm font-medium'>
+									{isAdmin ? (
+										<span>Вы являетесь администратором</span>
+									) : (
+										<span>Вы автор этой статьи</span>
+									)}
+								</p>
+								<p className='text-muted-foreground text-xs'>
+									Вы можете редактировать или удалить её
+								</p>
+							</div>
+						</div>
+
+						<ArticleActions
+							articleSlug={slug}
+							onDelete={() => {
+								deleteArticle(article.slug)
+								router.push(routes.home)
+							}}
+						/>
+					</div>
+				</section>
+			)}
+			<section className='container mx-auto mt-5 mb-5 px-4'>
+				<div className='md:p-10" bg-gray/10 rounded-2xl p-6 shadow-md backdrop-blur-md dark:bg-zinc-900/80'>
 					{/* Article content */}
 					<article className='prose prose-neutral dark:prose-invert max-w-none'>
 						<TipTapRenderer

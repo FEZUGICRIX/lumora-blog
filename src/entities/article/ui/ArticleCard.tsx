@@ -10,7 +10,14 @@ import { formatNumber, generateKey } from '@/shared/lib'
 import { ImageDarkOverlay } from '@/shared/ui/custom'
 import { CommentIcon, ViewIcon } from '@/shared/ui/icon'
 
-export const ArticleCard = ({ article, isNew }: ArticleCardProps) => {
+import { ArticleActions } from './ArticleActions'
+
+export const ArticleCard = ({
+	article,
+	permissions,
+	onDelete,
+	isNew,
+}: ArticleCardProps) => {
 	const {
 		title,
 		slug,
@@ -44,6 +51,21 @@ export const ArticleCard = ({ article, isNew }: ArticleCardProps) => {
 					<span className='absolute top-3 left-3 z-4 rounded-full bg-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow'>
 						Новое
 					</span>
+				)}
+
+				{permissions?.canManage && onDelete && (
+					<div className='absolute top-2 right-2 z-10 shadow'>
+						<ArticleActions
+							variant='compact'
+							articleSlug={article.slug}
+							onDelete={(e: React.MouseEvent) => {
+								e.preventDefault()
+								e.stopPropagation()
+
+								onDelete(slug)
+							}}
+						/>
+					</div>
 				)}
 			</Link>
 

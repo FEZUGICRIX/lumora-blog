@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { useDeleteArticle } from '@/features/article/delete-article'
 import { ArticleFilters, type SortOption } from '@/features/article/filters'
 
 import {
@@ -11,8 +12,12 @@ import {
 } from '@/entities/article'
 import { useGetArticles } from '@/entities/article/api'
 import type { CategoryMinimal } from '@/entities/category/model'
+import { useGetProfile } from '@/entities/user/api'
 
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
+import {
+	ArticleSortBy,
+	UserRole,
+} from '@/shared/api/graphql/__generated__/documents'
 import { GridLayout } from '@/shared/ui/custom'
 
 import { ArticleError } from './ArticleError'
@@ -27,6 +32,8 @@ export const ArticleList = ({
 	initialArticles,
 	withFilters = false,
 }: ArticleListProps) => {
+	const { user } = useGetProfile()
+	const { deleteArticle } = useDeleteArticle()
 	const [categories, setCategories] = useState<CategoryMinimal[]>([])
 	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
@@ -113,6 +120,11 @@ export const ArticleList = ({
 						<ArticleCard
 							key={article.id}
 							article={article}
+							onDelete={deleteArticle}
+							permissions={{
+								canManage:
+									user?.id == article.author.id || user?.role == UserRole.Admin,
+							}}
 							isNew={isNewArticle(article.createdAt)}
 						/>
 					))}

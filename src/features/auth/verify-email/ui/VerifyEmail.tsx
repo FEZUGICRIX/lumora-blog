@@ -17,7 +17,7 @@ export const VerifyEmail = () => {
 
 	useEffect(() => {
 		if (token) verifyEmail(token)
-	}, [token])
+	}, [token, verifyEmail])
 
 	return (
 		<AuthWrapper title='Подтверждение почты'>

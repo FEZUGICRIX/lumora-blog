@@ -26,8 +26,14 @@ export type RawArticle = Article
 ---------------------------------------- */
 
 // Общие UI-пропсы для статьи (используются и в карточке, и на странице)
+export interface ArticlePermissions {
+	canManage: boolean
+}
+
 export interface ArticleUIProps {
 	isNew?: boolean
+	permissions?: ArticlePermissions
+	onDelete?: (slug: string) => void
 }
 
 // Пропсы для карточки статьи

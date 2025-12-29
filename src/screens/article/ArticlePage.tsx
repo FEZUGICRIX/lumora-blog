@@ -2,8 +2,10 @@
 
 import { Edit, Eye, MessageSquareText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import { useDeleteArticle } from '@/features/article/delete-article'
+import { useTrackArticleView } from '@/features/article/track-article-view'
 import { TipTapRenderer } from '@/features/editor/ui'
 import { useToggleReaction } from '@/features/reactions/toggle-reaction'
 
@@ -30,8 +32,8 @@ import { Badge } from '@/shared/ui/ui-kit'
 export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const { user, isAuthenticated } = useGetProfile()
 	const { toggleReaction } = useToggleReaction()
+	const { trackArticleView } = useTrackArticleView()
 	const { deleteArticle } = useDeleteArticle()
-
 	const router = useRouter()
 
 	const {
@@ -57,6 +59,18 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const isAuthor = user?.id === author?.id
 	const isAdmin = user?.role === UserRole.Admin
 	const canEdit = isAuthor
+
+	useEffect(() => {
+		// Отслеживаем просмотр статьи:
+		// Чтобы не учитывать случайные клики и минимизировать фейковые просмотры,
+		// отправляем запрос на увеличение счетчика просмотров только после того,
+		// как пользователь пробыл на странице хотя бы 10 секунд.
+		const timer = setTimeout(() => {
+			trackArticleView(id)
+		}, 10000)
+
+		return () => clearTimeout(timer)
+	}, [id, trackArticleView])
 
 	return (
 		<div>

@@ -164,13 +164,13 @@ export function ArticleEditForm({
 							<FormLabel>Теги</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='тег1, тег2, тег3 (через запятую)'
+									placeholder='тег1, тег2, тег3 (через пробел)'
 									value={field.value}
 									onChange={field.onChange}
 									disabled={isSubmitting}
 								/>
 							</FormControl>
-							<FormDescription>Теги (через запятую)</FormDescription>
+							<FormDescription>Теги (через пробел)</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}

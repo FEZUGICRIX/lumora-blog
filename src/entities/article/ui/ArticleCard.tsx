@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import type { ArticleCardProps } from '@/entities/article/model/article.types'
 import { AuthorCard } from '@/entities/user/ui'
 
@@ -38,11 +36,10 @@ export const ArticleCard = ({
 				href={routes.blog.post(slug)}
 				className='relative min-h-48 w-full overflow-hidden rounded-t-xl'
 			>
-				<Image
-					src={coverImage ?? BackgroundImage}
+				<img
+					src={coverImage ?? BackgroundImage.src}
 					alt={title}
-					className='object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
-					fill
+					className='h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:translate-y-1 group-hover:scale-105'
 				/>
 
 				<ImageDarkOverlay />

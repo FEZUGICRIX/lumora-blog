@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumora
 
-## Getting Started
+Modern full-stack blogging platform built with Next.js 15, featuring a rich text editor, real-time reactions, internationalization, and a scalable Feature-Sliced Design architecture.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?style=flat-square&logo=graphql)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Key Features
+
+- **Rich Text Editor** — TipTap-based WYSIWYG editor with image uploads, code blocks, and custom extensions
+- **Real-time Reactions** — Emoji reactions on articles and comments with optimistic updates
+- **Internationalization** — Full i18n support (EN/RU) with next-intl, including SSR
+- **Authentication** — OAuth (Google, GitHub) + credentials with 2FA support and ReCAPTCHA
+- **SEO Optimized** — Hybrid SSR/SSG rendering, dynamic metadata, semantic HTML
+- **Dark Mode** — System-aware theme switching with smooth transitions
+- **Responsive Design** — Mobile-first approach with glassmorphism UI components
+
+## 🏗 Architecture
+
+Project follows **Feature-Sliced Design (FSD)** methodology for scalable and maintainable codebase:
+
+```
+src/
+├── app/              # Next.js App Router (routing, layouts)
+├── screens/          # Page-level components (compositions)
+├── widgets/          # Complex UI blocks (Header, Footer, Comments)
+├── features/         # User interactions (auth, editor, reactions)
+├── entities/         # Business entities (article, user, category)
+└── shared/           # Reusable utilities, UI kit, configs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Layer Dependencies
+```
+app → screens → widgets → features → entities → shared
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Each layer can only import from layers below it, ensuring unidirectional data flow and clear boundaries.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+### Frontend
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 15** | React framework with App Router, Turbopack |
+| **React 19** | UI library with Server Components |
+| **TypeScript 5** | Type safety and DX |
+| **Tailwind CSS 4** | Utility-first styling |
+| **TipTap** | Headless rich text editor |
+| **Framer Motion / GSAP** | Animations |
+| **React Hook Form + Zod** | Form handling and validation |
+| **TanStack Query** | Server state management |
 
-To learn more about Next.js, take a look at the following resources:
+### API & Data
+| Technology | Purpose |
+|------------|---------|
+| **GraphQL** | API query language |
+| **graphql-request** | Lightweight GraphQL client |
+| **GraphQL Codegen** | Type-safe operations generation |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### DX & Tooling
+| Technology | Purpose |
+|------------|---------|
+| **ESLint + Prettier** | Code quality |
+| **Turbopack** | Fast development builds |
+| **next-intl** | Internationalization |
+| **next-themes** | Theme management |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Getting Started
 
-## Deploy on Vercel
+### Prerequisites
+- Node.js 20+
+- pnpm (recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Clone repository
+git clone https://github.com/yourusername/lumora.git
+cd lumora
+
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Generate GraphQL types
+pnpm codegen
+
+# Start development server
+pnpm dev
+```
+
+### Environment Variables
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:4000/graphql
+NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY=your_recaptcha_key
+```
+
+## 📁 Project Structure Highlights
+
+### Entities Layer
+Business domain models with API integration:
+- `article/` — Article CRUD, types, UI components (ArticleCard, ArticleHero)
+- `user/` — User profiles, authentication state
+- `category/` — Content categorization
+- `reaction/` — Emoji reactions system
+
+### Features Layer
+User-facing functionality:
+- `auth/` — Login, register, OAuth, 2FA, password recovery
+- `editor/` — TipTap configuration, custom nodes, toolbar
+- `article/` — Filters, search, CRUD operations
+- `locale-switcher/` — Language switching
+
+### Widgets Layer
+Composite UI blocks:
+- `header/` — Navigation, auth buttons, mobile menu
+- `footer/` — Links, social, crypto donations
+- `comment/` — Comment form, list, reactions
+- `article-edit-form/` — Full article editor with validation
+
+## 🎨 UI/UX Decisions
+
+- **Glassmorphism** — Frosted glass effects for cards and overlays
+- **Micro-interactions** — Hover states, loading skeletons, optimistic updates
+- **Accessibility** — Semantic HTML, ARIA labels, keyboard navigation
+- **Performance** — Image optimization, code splitting, prefetching
+
+## 📝 Code Quality
+
+- Strict TypeScript configuration
+- ESLint with Next.js and TanStack Query plugins
+- Prettier with Tailwind CSS class sorting
+- Consistent naming conventions (kebab-case files, PascalCase components)
+- Barrel exports for clean imports
+
+## 🔮 Roadmap
+
+- [ ] Full-text search with Algolia/Meilisearch
+- [ ] Notifications system
+- [ ] Article bookmarks
+- [ ] User following
+- [ ] Analytics dashboard
+- [ ] PWA support
+
+## 📄 License
+
+---
+
+Built with ❤️ using modern web technologies

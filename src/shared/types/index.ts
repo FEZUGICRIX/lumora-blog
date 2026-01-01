@@ -1,4 +1,2 @@
-export type ToastMessage = {
-	message: string
-	type?: 'success' | 'error'
-}
+export * from './toast.types'
+export * from './next.types'

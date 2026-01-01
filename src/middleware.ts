@@ -1,7 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { routing } from '@/shared/config/i18n'
+import { routing } from '@/shared/config/i18n/routing'
 import { getPathnameWithoutLocale } from '@/shared/lib'
 
 const PUBLIC_ROUTES = [

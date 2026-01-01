@@ -3,12 +3,20 @@ import { getTranslations } from 'next-intl/server'
 
 import { PasswordRecoveryPage } from '@/screens/auth/password-recovery'
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations('Meta.Auth.PasswordRecovery')
+import type { LocalizedPageProps } from '@/shared/types'
+
+export async function generateMetadata({
+	params,
+}: LocalizedPageProps): Promise<Metadata> {
+	const { locale } = await params
+	const t = await getTranslations({
+		locale,
+		namespace: 'features.auth.passwordRecovery.metadata',
+	})
 
 	return {
 		title: t('title'),
-		description: t('subtitle'),
+		description: t('description'),
 	}
 }
 

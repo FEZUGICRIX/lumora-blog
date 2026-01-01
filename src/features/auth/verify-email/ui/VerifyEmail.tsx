@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -10,6 +11,7 @@ import { Spinner } from '@/shared/ui/ui-kit'
 import { useVerifyEmail } from '../api'
 
 export const VerifyEmail = () => {
+	const t = useTranslations('features.auth.verifyEmail')
 	const searchParams = useSearchParams()
 	const token = searchParams.get('token')
 
@@ -20,7 +22,7 @@ export const VerifyEmail = () => {
 	}, [token, verifyEmail])
 
 	return (
-		<AuthWrapper title='Подтверждение почты'>
+		<AuthWrapper title={t('title')}>
 			<div className='flex justify-center'>
 				<Spinner />
 			</div>

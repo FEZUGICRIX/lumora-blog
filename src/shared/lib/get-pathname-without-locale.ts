@@ -1,4 +1,5 @@
-import { type Locale, routing } from '@/shared/config/i18n'
+import { type Locale } from '@/shared/config/i18n/i18n.types'
+import { routing } from '@/shared/config/i18n/routing'
 
 /**
  * Извлекает чистый pathname, удаляя префикс локали.

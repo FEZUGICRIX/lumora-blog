@@ -1,0 +1,28 @@
+{
+  "features": {
+    "auth": {
+      "newPassword": {
+        "title": "New Password",
+        "description": "Create a new password for your account",
+        "form": {
+          "password": "New Password",
+          "submit": "Continue",
+          "placeholders": {
+            "password": "******"
+          }
+        },
+        "links": {
+          "login": "Sign In to Account"
+        },
+        "errors": {
+          "recaptcha": "Please complete ReCAPTCHA",
+          "passwordMinLength": "Password must be at least 8 characters"
+        },
+        "metadata": {
+          "title": "New Password",
+          "description": "Create a new password for your account"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useLocale, useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import { useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -11,6 +11,7 @@ import { AuthWrapper } from '@/entities/auth/ui'
 
 import { env } from '@/shared/config/env'
 import { routes } from '@/shared/config/routes'
+import { mapZodErrorsToForm } from '@/shared/lib/zod'
 import {
 	Button,
 	Form,
@@ -26,11 +27,12 @@ import { useNewPassword } from '../api'
 import { NewPasswordSchema, type TypeNewPasswordSchema } from '../schema'
 
 export const NewPasswordForm = () => {
+	const t = useTranslations('features.auth.newPassword')
 	const { theme } = useTheme()
+	const locale = useLocale()
 	const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null)
 
 	const form = useForm<TypeNewPasswordSchema>({
-		resolver: zodResolver(NewPasswordSchema),
 		defaultValues: {
 			password: '',
 		},
@@ -38,19 +40,35 @@ export const NewPasswordForm = () => {
 
 	const { newPassword, isLoadingNew } = useNewPassword()
 
-	const onSubmit = (data: TypeNewPasswordSchema) => {
+	const onSubmit = (values: TypeNewPasswordSchema) => {
+		// Clear previous errors
+		form.clearErrors()
+
+		// Validate with Zod
+		const result = NewPasswordSchema.safeParse(values)
+
+		if (!result.success) {
+			// Set translated errors
+			mapZodErrorsToForm({
+				error: result.error,
+				form,
+				t,
+			})
+			return
+		}
+
 		if (recaptchaValue) {
-			newPassword({ data, recaptcha: recaptchaValue })
+			newPassword({ data: values, recaptcha: recaptchaValue })
 		} else {
-			toast.error('Пожалуйста, завершите ReCAPTCHA')
+			toast.error(t('errors.recaptcha'))
 		}
 	}
 
 	return (
 		<AuthWrapper
-			title='Новый пароль'
-			description='Придумайте новый пароль для вашего аккаунта '
-			backButtonLabel='Войти в аккаунт'
+			title={t('title')}
+			description={t('description')}
+			backButtonLabel={t('links.login')}
 			backButtonHref={routes.auth.login}
 		>
 			<Form {...form}>
@@ -63,11 +81,11 @@ export const NewPasswordForm = () => {
 						name='password'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Новый пароль</FormLabel>
+								<FormLabel>{t('form.password')}</FormLabel>
 
 								<FormControl>
 									<Input
-										placeholder='******'
+										placeholder={t('form.placeholders.password')}
 										type='password'
 										disabled={isLoadingNew}
 										{...field}
@@ -81,13 +99,14 @@ export const NewPasswordForm = () => {
 					<div className='flex justify-center'>
 						<ReCAPTCHA
 							onChange={setRecaptchaValue}
+							hl={locale}
 							theme={theme == 'light' ? 'light' : 'dark'}
 							sitekey={env.googleRecaptchaSiteKey}
 						/>
 					</div>
 
 					<Button type='submit' disabled={isLoadingNew}>
-						Продолжить
+						{t('form.submit')}
 					</Button>
 				</form>
 			</Form>

@@ -17,10 +17,6 @@
         "errors": {
           "recaptcha": "Please complete ReCAPTCHA",
           "invalidEmail": "Invalid email"
-        },
-        "metadata": {
-          "title": "Password Reset",
-          "description": "Reset your password to regain access to your account"
         }
       }
     }

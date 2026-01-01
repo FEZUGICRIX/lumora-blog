@@ -1,12 +1,13 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 import { useGetProfile } from '@/entities/user/api'
 
 import { getDirtyValues } from '@/shared/lib/form-utils'
+import { mapZodErrorsToForm } from '@/shared/lib/zod'
 
 import { ProfileEditHeader, ProfileEditSchema, useUpdateUser } from '../'
 import type { TypeProfileEditSchema } from '../'
@@ -19,11 +20,10 @@ interface IProfileEditFormProps {
 export const ProfileEditForm = ({ children }: IProfileEditFormProps) => {
 	const { user, isLoadingUser } = useGetProfile()
 	const { update, isLoadingUpdate } = useUpdateUser()
+	const t = useTranslations('entities.user.edit')
 
 	const formMethods = useForm<TypeProfileEditSchema>({
-		resolver: zodResolver(ProfileEditSchema),
 		defaultValues: {},
-
 		mode: 'onBlur',
 	})
 
@@ -46,8 +46,20 @@ export const ProfileEditForm = ({ children }: IProfileEditFormProps) => {
 		}
 	}, [user, formMethods])
 
-	// 2. Единый сабмит-хэндлер
-	const onSubmit = () => {
+	// 2. Единый сабмит-хэндлер с валидацией
+	const onSubmit = (values: TypeProfileEditSchema) => {
+		const result = ProfileEditSchema.safeParse(values)
+
+		if (!result.success) {
+			// Set translated errors
+			mapZodErrorsToForm({
+				error: result.error,
+				form: formMethods,
+				t,
+			})
+			return
+		}
+
 		const dirtyValues = getDirtyValues(formMethods)
 		update(dirtyValues)
 	}

@@ -17,11 +17,11 @@ type Params = Promise<{
 export async function generateMetadata({
 	params,
 }: {
-	params: Params
+	params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
-	const { slug } = await params
+	const { locale, slug } = await params
 	const article = await getArticleBySlugService({ slug })
-	return generateArticleMetadata(article)
+	return await generateArticleMetadata(article, locale)
 }
 
 export default async function Editor({ params }: { params: Params }) {

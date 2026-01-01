@@ -1,6 +1,7 @@
 'use client'
 
 import { Link as LinkIcon, MapPin } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
 import { Input, Textarea } from '@/shared/ui/ui-kit'
@@ -11,18 +12,20 @@ export const PublicProfileForm = () => {
 		register,
 		formState: { errors },
 	} = useFormContext()
+	const t = useTranslations('entities.user.edit.publicProfile')
+	const tCommon = useTranslations('common.placeholders')
 
 	return (
 		<div className='border-border/50 bg-card/30 rounded-2xl border p-6'>
-			<h2 className='mb-6 text-lg font-semibold'>Публичный профиль</h2>
+			<h2 className='mb-6 text-lg font-semibold'>{t('title')}</h2>
 
 			{/* Name & Username row */}
 			<div className='mb-5 grid gap-4 md:grid-cols-2'>
 				<div>
 					<label className='mb-1.5 block text-sm font-medium'>
-						Отображаемое имя
+						{t('displayName')}
 					</label>
-					<Input {...register('displayName')} placeholder='Alex Kalinin' />
+					<Input {...register('displayName')} placeholder={tCommon('displayName')} />
 					{/* 3. Отображение ошибки (строго типизированная ошибка) */}
 					{errors.displayName && (
 						<p className='mt-1 text-sm text-red-500'>
@@ -32,10 +35,12 @@ export const PublicProfileForm = () => {
 				</div>
 
 				<div>
-					<label className='mb-1.5 block text-sm font-medium'>Username</label>
+					<label className='mb-1.5 block text-sm font-medium'>
+						{t('username')}
+					</label>
 					<Input
 						id='username'
-						placeholder='@username'
+						placeholder={tCommon('username')}
 						{...register('username')}
 					/>
 					{errors.username && (
@@ -48,13 +53,11 @@ export const PublicProfileForm = () => {
 
 			{/* Bio */}
 			<div className='mb-5'>
-				<label className='mb-1.5 block text-sm font-medium'>Bio</label>
-				<p className='text-muted-foreground mb-2 text-xs'>
-					Можете использовать @упоминания для ссылок на других пользователей
-				</p>
+				<label className='mb-1.5 block text-sm font-medium'>{t('bio')}</label>
+				<p className='text-muted-foreground mb-2 text-xs'>{t('bioHint')}</p>
 				<Textarea
 					id='bio'
-					placeholder='Расскажите о себе...'
+					placeholder={t('bioPlaceholder')}
 					className='min-h-24 resize-none'
 					{...register('bio')}
 				/>
@@ -68,11 +71,13 @@ export const PublicProfileForm = () => {
 			{/* Location & Website row */}
 			<div className='grid gap-4 md:grid-cols-2'>
 				<div>
-					<label className='mb-1.5 block text-sm font-medium'>Локация</label>
+					<label className='mb-1.5 block text-sm font-medium'>
+						{t('location')}
+					</label>
 					<div className='relative'>
 						<Input
 							id='location'
-							placeholder='Saint Petersburg, Russia'
+							placeholder={tCommon('location')}
 							className='pr-9'
 							{...register('location')}
 						/>
@@ -85,11 +90,13 @@ export const PublicProfileForm = () => {
 					)}
 				</div>
 				<div>
-					<label className='mb-1.5 block text-sm font-medium'>Сайт</label>
+					<label className='mb-1.5 block text-sm font-medium'>
+						{t('website')}
+					</label>
 					<div className='relative'>
 						<Input
 							id='websiteUrl'
-							placeholder='example.com'
+							placeholder={tCommon('website')}
 							className='pr-9'
 							{...register('websiteUrl')}
 						/>

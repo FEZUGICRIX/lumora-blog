@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { Divider } from '@/shared/ui/custom'
@@ -10,6 +11,7 @@ import { useGetOAuthConnectUrl } from '../../../features/auth/oauth-connect'
 import type { OAuthProvider } from '../types'
 
 export const AuthSocial = () => {
+	const t = useTranslations('entities.auth.social')
 	const router = useRouter()
 
 	const { mutateAsync } = useGetOAuthConnectUrl()
@@ -27,16 +29,16 @@ export const AuthSocial = () => {
 			<div className='grid w-full grid-cols-2 gap-3'>
 				<Button onClick={() => onClick('google')} className='w-full'>
 					<GoogleIcon />
-					Google
+					{t('google')}
 				</Button>
 
 				<Button onClick={() => onClick('github')} disabled className='w-full'>
 					<GithubIcon className='rounded-4xl text-white dark:text-black' />
-					GitHub
+					{t('github')}
 				</Button>
 			</div>
 
-			<Divider label='Или' />
+			<Divider label={t('divider')} />
 		</div>
 	)
 }

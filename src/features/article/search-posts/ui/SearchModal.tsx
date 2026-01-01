@@ -1,6 +1,7 @@
 'use client'
 
 import { AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { useMemo, useState } from 'react'
 
 import { useGetArticles } from '@/entities/article/api'
@@ -16,6 +17,7 @@ import { SearchModalSkeleton } from './skeletons/SearchModalSkeleton'
 
 // TODO: Реализовать запрос статей через RTK Query с правильной типизацией
 export const SearchModal = () => {
+	const t = useTranslations('entities.article.search')
 	const [query, setQuery] = useState('')
 	const debouncedQuery = useDebounce(query, 200)
 
@@ -39,7 +41,7 @@ export const SearchModal = () => {
 				<SearchIcon className='absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2' />
 				<Input
 					onChange={e => setQuery(e.target.value)}
-					placeholder='Поиск статьи...'
+					placeholder={t('placeholder')}
 					type='search'
 					className='glass-dark h-11 rounded-xl pl-10 shadow-sm backdrop-blur-md'
 				/>
@@ -50,7 +52,7 @@ export const SearchModal = () => {
 					<AnimatedHeight key='search-results'>
 						<div className='space-y-4'>
 							<p className='dark:text-muted-foreground text-sm text-gray-800'>
-								Найдено: {results.length}
+								{t('found')}: {results.length}
 							</p>
 							<div className='max-h-[70vh] space-y-4 overflow-y-auto pr-1'>
 								{/* TODO: Реализовать запрос статей через RTK Query с правильной типизацией */}
@@ -73,7 +75,7 @@ export const SearchModal = () => {
 				) : (
 					<AnimatedHeight key='no-results'>
 						<h3 className='text-muted-foreground text-center text-xl'>
-							Ничего не найдено
+							{t('noResults')}
 						</h3>
 					</AnimatedHeight>
 				)}

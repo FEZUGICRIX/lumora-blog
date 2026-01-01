@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { CategoryFilter, type SortOption } from '@/features/article/filters'
 import { SortSelect } from '@/features/article/filters'
 
@@ -18,6 +20,7 @@ export const ArticleFilters = ({
 	onSortChange,
 	onCategoriesChange,
 }: ArticleFiltersProps) => {
+	const t = useTranslations('entities.article')
 	const { resetFilters, isDefault } = useResetFilters(
 		onCategoriesChange,
 		onSortChange,
@@ -33,7 +36,7 @@ export const ArticleFilters = ({
 
 			<div className='mt-4 flex w-full justify-center md:justify-end'>
 				<Button onClick={resetFilters} disabled={isDefault}>
-					Reset filters ↺
+					{t('filters.resetFilters')}
 				</Button>
 			</div>
 		</div>

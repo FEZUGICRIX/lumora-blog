@@ -11,7 +11,7 @@ export async function generateMetadata({
 	const { locale } = await params
 	const t = await getTranslations({
 		locale,
-		namespace: 'features.auth.verifyEmail.metadata',
+		namespace: 'screens.auth.verifyEmail.metadata',
 	})
 
 	return {

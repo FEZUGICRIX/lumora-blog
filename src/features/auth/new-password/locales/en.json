@@ -17,10 +17,6 @@
         "errors": {
           "recaptcha": "Please complete ReCAPTCHA",
           "passwordMinLength": "Password must be at least 8 characters"
-        },
-        "metadata": {
-          "title": "New Password",
-          "description": "Create a new password for your account"
         }
       }
     }

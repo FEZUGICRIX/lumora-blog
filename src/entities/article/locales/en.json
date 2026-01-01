@@ -1,0 +1,35 @@
+{
+  "entities": {
+    "article": {
+      "actions": {
+        "edit": "Edit",
+        "share": "Share",
+        "copyLink": "Copy link",
+        "copied": "Copied!",
+        "delete": "Delete article"
+      },
+      "meta": {
+        "new": "New",
+        "readingTime": "min read"
+      },
+      "share": {
+        "title": "Article"
+      },
+      "filters": {
+        "resetFilters": "Reset filters ↺",
+        "sort": {
+          "newest": "Newest",
+          "popular": "Popular",
+          "discussed": "Most Discussed"
+        }
+      },
+      "search": {
+        "placeholder": "Search articles...",
+        "found": "Found",
+        "noResults": "Nothing found",
+        "tooltip": "Search Posts",
+        "modalTitle": "Find Article"
+      }
+    }
+  }
+}

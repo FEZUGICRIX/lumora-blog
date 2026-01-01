@@ -17,10 +17,6 @@
 				"errors": {
 					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
 					"invalidEmail": "Некорректный email"
-				},
-				"metadata": {
-					"title": "Сброс пароля",
-					"description": "Сбросьте пароль, чтобы восстановить доступ к аккаунту"
 				}
 			}
 		}

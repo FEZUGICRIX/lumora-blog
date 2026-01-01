@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { ProfilePage } from '@/screens/profile'
@@ -16,11 +17,15 @@ interface ProfilePageParams {
 export async function generateMetadata({
 	params,
 }: ProfilePageParams): Promise<Metadata> {
-	const { username } = await params
+	const { username, locale } = await params
+	const t = await getTranslations({
+		locale,
+		namespace: 'screens.profile.metadata',
+	})
 
 	return {
-		title: `@${username}`,
-		description: `${username}'s profile`,
+		title: t('titleTemplate', { username }),
+		description: t('descriptionTemplate', { username }),
 	}
 }
 

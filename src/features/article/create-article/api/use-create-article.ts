@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { type CreateArticleInput } from '@/shared/api/graphql/__generated__/documents'
@@ -10,6 +11,7 @@ import { createArticleService } from './create-article.service'
 
 export const useCreateArticle = () => {
 	const router = useRouter()
+	const t = useTranslations('common.toasts')
 
 	const { mutate: createArticle, isPending: isLoadingCreateArticle } =
 		useMutation({
@@ -18,7 +20,7 @@ export const useCreateArticle = () => {
 				createArticleService({ input: articleData }),
 
 			onSuccess: ({ slug }) => {
-				toast.success('Статья успешно создана!')
+				toast.success(t('articleCreated'))
 				router.push(routes.blog.post(slug))
 			},
 

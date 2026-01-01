@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { UserSettingsButton } from '@/entities/user/ui'
 import { UserAvatar } from '@/entities/user/ui'
 import { UserRoleBadge } from '@/entities/user/ui'
@@ -35,6 +37,7 @@ export const ProfileHeader = ({
 	onFollow,
 }: ProfileHeaderProps) => {
 	const formattedDate = useFormattedDate(user.createdAt)
+	const t = useTranslations('widgets.profile')
 
 	return (
 		<div className='relative'>
@@ -76,7 +79,7 @@ export const ProfileHeader = ({
 										variant='outline'
 										className='rounded-full px-4 text-sm md:px-5'
 									>
-										<Link href={routes.profileEdit}>Редактировать</Link>
+										<Link href={routes.profileEdit}>{t('edit')}</Link>
 									</Button>
 
 									<UserSettingsButton user={user} />
@@ -87,7 +90,7 @@ export const ProfileHeader = ({
 									className='rounded-full px-4 text-sm md:px-5'
 									onClick={onFollow}
 								>
-									{isFollowing ? 'Отписаться' : 'Подписаться'}
+									{isFollowing ? t('unfollow') : t('follow')}
 								</Button>
 							)}
 						</div>

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { AuthButtons } from '@/entities/auth/ui'
 import { UserButton } from '@/entities/user/ui'
 
@@ -20,6 +22,8 @@ interface SidebarMenuProps {
 }
 
 export const SidebarMenu = ({ user, isAuthenticated }: SidebarMenuProps) => {
+	const t = useTranslations('common')
+
 	return (
 		<div className='lg:hidden'>
 			<CustomSheet
@@ -52,7 +56,7 @@ export const SidebarMenu = ({ user, isAuthenticated }: SidebarMenuProps) => {
 					</div>
 
 					<div className='mt-auto p-4'>
-						<Divider label='Social Links' />
+						<Divider label={t('socialLinks')} />
 						<div className='flex justify-center'>
 							<SocialLinks />
 						</div>

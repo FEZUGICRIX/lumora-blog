@@ -1,0 +1,40 @@
+{
+	"widgets": {
+		"articleEditForm": {
+			"title": "Заголовок",
+			"titlePlaceholder": "Введите заголовок статьи",
+			"titleDescription": "Название вашей статьи (обязательное поле)",
+			"description": "Описание",
+			"descriptionPlaceholder": "Краткое описание статьи",
+			"descriptionDescription": "Краткое описание для превью (обязательное поле)",
+			"category": "Категория",
+			"categoryDescription": "Выберите категорию для статьи",
+			"content": "Содержание",
+			"contentDescription": "Основное содержание статьи в формате Rich Text",
+			"tags": "Теги",
+			"tagsPlaceholder": "тег1, тег2, тег3 (через пробел)",
+			"tagsDescription": "Теги (через пробел)",
+			"coverImage": "URL обложки",
+			"coverImagePlaceholder": "https://example.com/image.jpg",
+			"coverImageDescription": "Ссылка на изображение для обложки статьи",
+			"saving": "Сохранение...",
+			"saveChanges": "Сохранить изменения",
+			"createArticle": "Создать статью",
+			"error": "Ошибка",
+			"errors": {
+				"titleRequired": "Заголовок обязателен для заполнения",
+				"titleTooLong": "Заголовок не должен превышать 85 символов",
+				"descriptionRequired": "Описание обязательно для заполнения",
+				"descriptionTooLong": "Описание не должно превышать 300 символов",
+				"contentInvalidFormat": "Контент должен быть в формате Tiptap",
+				"contentEmpty": "Содержание статьи не может быть пустым",
+				"tagsRequired": "Теги обязательны для заполнения",
+				"tagsMinimum": "Добавьте хотя бы один тег",
+				"tagsMaximum": "Не более 10 тегов",
+				"tagTooLong": "Каждый тег не должен превышать 20 символов",
+				"categoryInvalidId": "Неверный ID категории",
+				"categoryRequired": "Категория обязательна для заполнения"
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"widgets": {
+		"footer": {
+			"description": "Платформа для разработчиков. Делимся знаниями, создаём сообщество.",
+			"product": "Продукт",
+			"supportProject": "Поддержать проект",
+			"projectAuthor": "Автор проекта",
+			"allRightsReserved": "Все права защищены.",
+			"poweredBy": "Powered by fezugicrix"
+		}
+	}
+}

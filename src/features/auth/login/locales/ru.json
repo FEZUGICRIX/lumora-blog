@@ -23,10 +23,6 @@
 					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
 					"invalidEmail": "Некорректный email",
 					"passwordMinLength": "Пароль должен быть минимум 8 символов"
-				},
-				"metadata": {
-					"title": "Войти",
-					"description": "Войдите в свой аккаунт для доступа ко всем функциям"
 				}
 			}
 		}

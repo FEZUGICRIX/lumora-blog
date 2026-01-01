@@ -10,6 +10,29 @@ const slices = [
 	'features/auth/new-password',
 	'features/auth/password-recovery',
 	'features/auth/verify-email',
+
+	'entities/article',
+	'entities/auth',
+	'entities/user',
+	'entities/category',
+
+	'widgets/article-edit-form',
+	'widgets/article-list',
+	'widgets/comment',
+	'widgets/footer',
+	'widgets/profile',
+
+	'screens/home',
+	'screens/not-found',
+	'screens/editor',
+	'screens/article',
+	'screens/profile',
+	'screens/settings/profile',
+	'screens/auth/login',
+	'screens/auth/register',
+	'screens/auth/new-password',
+	'screens/auth/password-recovery',
+	'screens/auth/verify-email',
 ]
 
 export default getRequestConfig(async ({ requestLocale }) => {

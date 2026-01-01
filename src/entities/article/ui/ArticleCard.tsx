@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import type { ArticleCardProps } from '@/entities/article/model/article.types'
 import { AuthorCard } from '@/entities/user/ui'
 
@@ -16,6 +18,7 @@ export const ArticleCard = ({
 	onDelete,
 	isNew,
 }: ArticleCardProps) => {
+	const t = useTranslations('entities.article')
 	const {
 		title,
 		slug,
@@ -46,7 +49,7 @@ export const ArticleCard = ({
 
 				{isNew && (
 					<span className='absolute top-3 left-3 z-4 rounded-full bg-pink-600 px-2 py-0.5 text-xs font-semibold text-white shadow'>
-						Новое
+						{t('meta.new')}
 					</span>
 				)}
 
@@ -77,7 +80,7 @@ export const ArticleCard = ({
 								{category.name}
 							</span>
 						)}
-						<span className='px-1'>•</span> {readingTime} мин чтения
+						<span className='px-1'>•</span> {readingTime} {t('meta.readingTime')}
 					</div>
 
 					<h3 className='text-xl font-bold'>{title}</h3>

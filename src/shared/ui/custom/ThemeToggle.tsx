@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { TooltipWithText } from './TooltipWithText'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -8,6 +9,7 @@ import { useTheme } from 'next-themes'
 export const ThemeToggle = () => {
 	const { theme, setTheme } = useTheme()
 	const [mounted, setMounted] = useState(false)
+	const tCommon = useTranslations('common')
 
 	useEffect(() => {
 		setMounted(true)
@@ -20,7 +22,7 @@ export const ThemeToggle = () => {
 			className='glass-icon'
 			onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
 		>
-			<TooltipWithText text='Switch Theme'>
+			<TooltipWithText text={tCommon('switchTheme')}>
 				{theme === 'dark' ? (
 					<Sun className='h-5 w-5 dark:text-white' />
 				) : (

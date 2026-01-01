@@ -1,5 +1,6 @@
 import { CornerUpLeft } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import {
 	CommentEditButton,
@@ -55,6 +56,7 @@ export const CommentCard = ({
 	} = comment
 	const [isEditing, setIsEditing] = useState(false)
 	const formattedDate = useFormattedDate(createdAt)
+	const t = useTranslations('widgets.comment')
 
 	return (
 		<CommentItem
@@ -90,7 +92,7 @@ export const CommentCard = ({
 
 					<span>{formattedDate}</span>
 					{updatedAt && updatedAt !== createdAt && (
-						<span className='ml-1 text-[11px] text-zinc-400'>(edited)</span>
+						<span className='ml-1 text-[11px] text-zinc-400'>{t('edited')}</span>
 					)}
 				</div>
 			}
@@ -124,7 +126,7 @@ export const CommentCard = ({
 								disabled
 							>
 								<CornerUpLeft className='h-4 w-4' />
-								Reply
+								{t('reply')}
 							</button>
 
 							{isAuthor && (

@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "settings": {
+      "profile": {
+        "metadata": {
+          "title": "Edit Profile",
+          "description": "Configure your public profile"
+        }
+      }
+    }
+  }
+}

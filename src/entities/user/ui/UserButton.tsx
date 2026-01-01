@@ -1,6 +1,7 @@
 'use client'
 
 import { Edit2, LogOut, PenLine, User } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { useLogout } from '@/features/auth/logout'
@@ -25,6 +26,7 @@ interface UserButtonProps {
 }
 
 export const UserButton = ({ user }: UserButtonProps) => {
+	const t = useTranslations('entities.user.menu')
 	const { logout, isLoadingLogout } = useLogout()
 	const router = useRouter()
 
@@ -42,7 +44,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
 					disabled={isLoadingLogout}
 				>
 					<User className='mr-2 size-4' />
-					Профиль
+					{t('profile')}
 				</DropdownMenuItem>
 
 				<DropdownMenuItem
@@ -50,7 +52,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
 					disabled={isLoadingLogout}
 				>
 					<Edit2 className='mr-2 size-4' />
-					Редактировать профиль
+					{t('editProfile')}
 				</DropdownMenuItem>
 
 				<DropdownMenuItem
@@ -58,7 +60,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
 					disabled={isLoadingLogout}
 				>
 					<PenLine className='mr-2 size-4' />
-					Создать статью
+					{t('createArticle')}
 				</DropdownMenuItem>
 
 				<DropdownMenuItem
@@ -67,7 +69,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
 					className='text-red-600 focus:text-red-600'
 				>
 					<LogOut className='mr-2 size-4' />
-					Выйти
+					{t('logout')}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

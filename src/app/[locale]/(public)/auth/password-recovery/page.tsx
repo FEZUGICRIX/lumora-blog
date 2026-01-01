@@ -11,7 +11,7 @@ export async function generateMetadata({
 	const { locale } = await params
 	const t = await getTranslations({
 		locale,
-		namespace: 'features.auth.passwordRecovery.metadata',
+		namespace: 'screens.auth.passwordRecovery.metadata',
 	})
 
 	return {

@@ -3,6 +3,7 @@
 import { Edit, Eye, MessageSquareText } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { useDeleteArticle } from '@/features/article/delete-article'
 import { useTrackArticleView } from '@/features/article/track-article-view'
@@ -35,6 +36,7 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 	const { trackArticleView } = useTrackArticleView()
 	const { deleteArticle } = useDeleteArticle()
 	const router = useRouter()
+	const t = useTranslations('screens.article')
 
 	const {
 		id,
@@ -101,13 +103,13 @@ export const ArticlePage = ({ article }: ArticlePageProps) => {
 							<div>
 								<p className='text-sm font-medium'>
 									{isAdmin ? (
-										<span>Вы являетесь администратором</span>
+										<span>{t('adminMessage')}</span>
 									) : (
-										<span>Вы автор этой статьи</span>
+										<span>{t('authorMessage')}</span>
 									)}
 								</p>
 								<p className='text-muted-foreground text-xs'>
-									Вы можете редактировать или удалить её
+									{t('canEditDescription')}
 								</p>
 							</div>
 						</div>

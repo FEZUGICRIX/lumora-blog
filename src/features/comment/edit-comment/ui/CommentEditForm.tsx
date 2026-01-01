@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button, Textarea } from '@/shared/ui/ui-kit'
 
@@ -14,6 +15,7 @@ export const CommentEditForm = ({
 	onSubmit,
 }: CommentEditFormProps) => {
 	const [value, setValue] = useState(initialValue)
+	const t = useTranslations('entities.category.comment')
 
 	const isDisabled = value.trim().length === 0 || value.trim() === initialValue
 
@@ -23,7 +25,7 @@ export const CommentEditForm = ({
 				autoFocus
 				value={value}
 				onChange={e => setValue(e.target.value)}
-				placeholder='Edit your comment...'
+				placeholder={t('placeholder')}
 				onKeyDown={e => {
 					if (e.key === 'Enter' && !e.shiftKey) {
 						e.preventDefault()
@@ -39,11 +41,11 @@ export const CommentEditForm = ({
 					disabled={isDisabled}
 					onClick={() => onSubmit(value.trim())}
 				>
-					Save
+					{t('save')}
 				</Button>
 
 				<Button size='sm' variant='ghost' onClick={onCancel}>
-					Cancel
+					{t('cancel')}
 				</Button>
 			</div>
 		</form>

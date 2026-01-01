@@ -1,0 +1,28 @@
+{
+	"features": {
+		"auth": {
+			"newPassword": {
+				"title": "Новый пароль",
+				"description": "Придумайте новый пароль для вашего аккаунта",
+				"form": {
+					"password": "Новый пароль",
+					"submit": "Продолжить",
+					"placeholders": {
+						"password": "******"
+					}
+				},
+				"links": {
+					"login": "Войти в аккаунт"
+				},
+				"errors": {
+					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
+					"passwordMinLength": "Пароль должен быть минимум 8 символов"
+				},
+				"metadata": {
+					"title": "Новый пароль",
+					"description": "Создайте новый пароль для вашего аккаунта"
+				}
+			}
+		}
+	}
+}

@@ -3,12 +3,20 @@ import { getTranslations } from 'next-intl/server'
 
 import { NewPasswordPage } from '@/screens/auth/new-password'
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations('Meta.Auth.NewPassword')
+import type { LocalizedPageProps } from '@/shared/types'
+
+export async function generateMetadata({
+	params,
+}: LocalizedPageProps): Promise<Metadata> {
+	const { locale } = await params
+	const t = await getTranslations({
+		locale,
+		namespace: 'features.auth.newPassword.metadata',
+	})
 
 	return {
 		title: t('title'),
-		description: t('subtitle'),
+		description: t('description'),
 	}
 }
 

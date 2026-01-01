@@ -1,0 +1,40 @@
+{
+	"features": {
+		"auth": {
+			"register": {
+				"title": "Registration",
+				"description": "To create an account, enter your email and password",
+				"form": {
+					"displayName": "Display Name",
+					"username": "Username",
+					"email": "Email",
+					"password": "Password",
+					"confirmPassword": "Repeat Password",
+					"submit": "Create account",
+					"placeholders": {
+						"displayName": "Type your display name",
+						"username": "@username",
+						"email": "Type your email",
+						"password": "Type your password"
+					}
+				},
+				"links": {
+					"login": "Already have an account? Sign In"
+				},
+				"errors": {
+					"recaptcha": "Please complete ReCAPTCHA",
+					"invalidUsername": "Invalid username",
+					"displayNameRequired": "Enter display name",
+					"invalidEmail": "Invalid email",
+					"passwordMinLength": "Password must be at least 8 characters",
+					"passwordRepeatMinLength": "Password confirmation must be at least 8 characters",
+					"passwordsNotMatch": "Passwords do not match"
+				},
+				"metadata": {
+					"title": "Create Account",
+					"description": "Create a new account to join our community"
+				}
+			}
+		}
+	}
+}

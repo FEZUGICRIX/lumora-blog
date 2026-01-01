@@ -1,6 +1,6 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useLocale, useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import { useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -11,6 +11,7 @@ import { AuthWrapper } from '@/entities/auth/ui'
 
 import { env } from '@/shared/config/env'
 import { routes } from '@/shared/config/routes'
+import { mapZodErrorsToForm } from '@/shared/lib/zod'
 import {
 	Button,
 	Form,
@@ -26,11 +27,11 @@ import { useRegister } from '../api'
 import { RegisterSchema, type TypeRegisterSchema } from '../schema'
 
 export const RegisterForm = () => {
+	const t = useTranslations('features.auth.register')
 	const { theme } = useTheme()
+	const locale = useLocale()
 	const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null)
-
 	const form = useForm<TypeRegisterSchema>({
-		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			displayName: '',
 			username: '',
@@ -42,19 +43,35 @@ export const RegisterForm = () => {
 
 	const { register, isLoadingRegister } = useRegister()
 
-	const onSubmit = (data: TypeRegisterSchema) => {
+	const onSubmit = (values: TypeRegisterSchema) => {
+		// Clear previous errors
+		form.clearErrors()
+
+		// Validate with Zod
+		const result = RegisterSchema.safeParse(values)
+
+		if (!result.success) {
+			// Set translated errors
+			mapZodErrorsToForm({
+				error: result.error,
+				form,
+				t,
+			})
+			return
+		}
+
 		if (recaptchaValue) {
-			register({ data, recaptcha: recaptchaValue })
+			register({ data: values, recaptcha: recaptchaValue })
 		} else {
-			toast.error('Пожалуйста, завершите ReCAPTCHA')
+			toast.error(t('errors.recaptcha'))
 		}
 	}
 
 	return (
 		<AuthWrapper
-			title='Регистрация'
-			description='Чтобы войти в аккаунт сначала введите email и пароль'
-			backButtonLabel='Уже есть аккаунт? Войти'
+			title={t('title')}
+			description={t('description')}
+			backButtonLabel={t('links.login')}
 			backButtonHref={routes.auth.login}
 			isShowSocial
 		>
@@ -68,10 +85,10 @@ export const RegisterForm = () => {
 						name='displayName'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Name</FormLabel>
+								<FormLabel>{t('form.displayName')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Type your display name'
+										placeholder={t('form.placeholders.displayName')}
 										disabled={isLoadingRegister}
 										{...field}
 									/>
@@ -86,10 +103,10 @@ export const RegisterForm = () => {
 						name='username'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Username</FormLabel>
+								<FormLabel>{t('form.username')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='@username'
+										placeholder={t('form.placeholders.username')}
 										disabled={isLoadingRegister}
 										{...field}
 									/>
@@ -104,10 +121,10 @@ export const RegisterForm = () => {
 						name='email'
 						render={({ field }) => (
 							<FormItem className='col-span-1 md:col-span-2'>
-								<FormLabel>Email</FormLabel>
+								<FormLabel>{t('form.email')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Type your email'
+										placeholder={t('form.placeholders.email')}
 										type='email'
 										disabled={isLoadingRegister}
 										{...field}
@@ -123,10 +140,10 @@ export const RegisterForm = () => {
 						name='password'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Password</FormLabel>
+								<FormLabel>{t('form.password')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Type your password'
+										placeholder={t('form.placeholders.password')}
 										type='password'
 										disabled={isLoadingRegister}
 										{...field}
@@ -142,10 +159,10 @@ export const RegisterForm = () => {
 						name='passwordRepeat'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Repeat Password</FormLabel>
+								<FormLabel>{t('form.confirmPassword')}</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Type your password'
+										placeholder={t('form.placeholders.password')}
 										type='password'
 										disabled={isLoadingRegister}
 										{...field}
@@ -159,6 +176,7 @@ export const RegisterForm = () => {
 					<div className='col-span-1 flex justify-center md:col-span-2'>
 						<ReCAPTCHA
 							onChange={setRecaptchaValue}
+							hl={locale}
 							theme={theme == 'light' ? 'light' : 'dark'}
 							sitekey={env.googleRecaptchaSiteKey}
 						/>
@@ -169,7 +187,7 @@ export const RegisterForm = () => {
 						disabled={isLoadingRegister}
 						className='col-span-1 md:col-span-2'
 					>
-						Create account
+						{t('form.submit')}
 					</Button>
 				</form>
 			</Form>

@@ -1,0 +1,28 @@
+{
+	"features": {
+		"auth": {
+			"passwordRecovery": {
+				"title": "Сброс пароля",
+				"description": "Для сброса пароля введите свою почту",
+				"form": {
+					"email": "Email",
+					"submit": "Сбросить",
+					"placeholders": {
+						"email": "Введите ваш email"
+					}
+				},
+				"links": {
+					"login": "Войти в аккаунт"
+				},
+				"errors": {
+					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
+					"invalidEmail": "Некорректный email"
+				},
+				"metadata": {
+					"title": "Сброс пароля",
+					"description": "Сбросьте пароль, чтобы восстановить доступ к аккаунту"
+				}
+			}
+		}
+	}
+}

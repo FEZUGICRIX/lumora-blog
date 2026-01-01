@@ -1,6 +1,7 @@
 'use client'
 
 import { Camera } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import React, { useRef, useState } from 'react'
 // 💡 Добавляем useState
 import { useFormContext } from 'react-hook-form'
@@ -14,6 +15,8 @@ import { Input, Spinner } from '@/shared/ui/ui-kit'
 export const ProfileImagesSection = () => {
 	const { register, watch, formState, setValue } = useFormContext()
 	const { uploadFile } = useUploadFile()
+	const t = useTranslations('entities.user.edit.images')
+	const tCommon = useTranslations('common.placeholders')
 
 	// 1. Локальное состояние для отслеживания загрузки
 	const [isUploadingCover, setIsUploadingCover] = useState(false)
@@ -121,11 +124,11 @@ export const ProfileImagesSection = () => {
 
 	return (
 		<div className='border-border/50 bg-card/30 rounded-2xl border p-6'>
-			<h2 className='mb-6 text-lg font-semibold'>Изображения профиля</h2>
+			<h2 className='mb-6 text-lg font-semibold'>{t('title')}</h2>
 
 			{/* Cover Image */}
 			<div className='mb-6'>
-				<label className='mb-2 block text-sm font-medium'>Обложка</label>
+				<label className='mb-2 block text-sm font-medium'>{t('cover')}</label>
 
 				{/* 1. Блок, по которому происходит клик */}
 				<div
@@ -162,11 +165,11 @@ export const ProfileImagesSection = () => {
 
 				<div>
 					<label className='text-muted-foreground mb-1.5 block text-xs'>
-						URL обложки
+						{t('coverUrl')}
 					</label>
 					<Input
 						id='coverUrlInput'
-						placeholder='https://example.com/cover.jpg'
+						placeholder={tCommon('coverUrl')}
 						{...register('coverUrl')}
 						disabled={isUploadingCover} // Блокируем ручной ввод
 					/>
@@ -232,13 +235,13 @@ export const ProfileImagesSection = () => {
 				/>
 
 				<div className='flex-1'>
-					<label className='mb-1 block text-sm font-medium'>URL аватара</label>
+					<label className='mb-1 block text-sm font-medium'>{t('avatarUrl')}</label>
 					<p className='text-muted-foreground mb-2 text-xs'>
-						Рекомендуем изображение минимум 400x400px
+						{t('avatarRecommendation')}
 					</p>
 					<Input
 						{...register('avatarUrl')}
-						placeholder='https://example.com/avatar.jpg'
+						placeholder={tCommon('avatarUrl')}
 						disabled={isUploadingAvatar} // 💡 Блокируем ручной ввод
 					/>
 

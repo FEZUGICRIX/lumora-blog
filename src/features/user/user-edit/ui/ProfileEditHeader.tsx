@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowLeft, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Link } from '@/shared/config/i18n'
 import { routes } from '@/shared/config/routes'
@@ -17,6 +18,8 @@ export const ProfileEditHeader = ({
 	isButtonCancelDisabled,
 	isButtonSaveDisabled,
 }: ProfileEditHeaderProps) => {
+	const t = useTranslations('entities.user.edit')
+
 	return (
 		<div className='flex items-center justify-between'>
 			<div className='flex items-center gap-3'>
@@ -26,7 +29,7 @@ export const ProfileEditHeader = ({
 				>
 					<ArrowLeft className='size-5' />
 				</Link>
-				<h1 className='text-xl font-semibold'>Редактирование профиля</h1>
+				<h1 className='text-xl font-semibold'>{t('title')}</h1>
 			</div>
 
 			<div className='flex items-center gap-2'>
@@ -35,7 +38,7 @@ export const ProfileEditHeader = ({
 						href={routes.profile(username)}
 						className='hover:bg-accent flex size-9 items-center justify-center rounded-full transition-colors'
 					>
-						Отмена
+						{t('cancel')}
 					</Link>
 				</Button>
 				<Button
@@ -44,7 +47,7 @@ export const ProfileEditHeader = ({
 					className='gap-1.5'
 				>
 					<Check className='size-4' />
-					Сохранить
+					{t('save')}
 				</Button>
 			</div>
 		</div>

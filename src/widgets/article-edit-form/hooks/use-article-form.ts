@@ -1,15 +1,15 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 import { useCreateArticle } from '@/features/article/create-article'
 import { useUpdateArticle } from '@/features/article/update-article'
 
-import { articleFormSchema } from '@/entities/article'
-
 import type { CreateArticleInput } from '@/shared/api/graphql/__generated__/documents'
+import { mapZodErrorsToForm } from '@/shared/lib/zod'
 
+import { articleFormSchema } from '../models'
 import {
 	type ArticleFormValues,
 	type UseArticleFormProps,
@@ -18,9 +18,9 @@ import {
 export const useArticleForm = ({ article, user }: UseArticleFormProps) => {
 	const { createArticle, isLoadingCreateArticle } = useCreateArticle()
 	const { updateArticle, isLoadingUpdateArticle } = useUpdateArticle()
+	const t = useTranslations('widgets.articleEditForm')
 
 	const form = useForm<ArticleFormValues>({
-		resolver: zodResolver(articleFormSchema),
 		defaultValues: {
 			title: article?.title || '',
 			description: article?.description || '',
@@ -42,7 +42,19 @@ export const useArticleForm = ({ article, user }: UseArticleFormProps) => {
 				throw new Error('User not authenticated.')
 			}
 
-			const validatedData = articleFormSchema.parse(data)
+			const result = articleFormSchema.safeParse(data)
+
+			if (!result.success) {
+				// Set translated errors
+				mapZodErrorsToForm({
+					error: result.error,
+					form,
+					t,
+				})
+				return
+			}
+
+			const validatedData = result.data
 
 			const tagsArray = data.tags // TODO: на бэк передавать строку и там уже превращать в массив
 				.split(' ')

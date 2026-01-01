@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "user": {
+      "profile": {
+        "joinedDate": "Registration date",
+        "joined": "Joined"
+      },
+      "menu": {
+        "profile": "Profile",
+        "editProfile": "Edit profile",
+        "createArticle": "Create article",
+        "logout": "Logout"
+      },
+      "roles": {
+        "ADMIN": "ADMIN",
+        "USER": "USER"
+      },
+      "edit": {
+        "title": "Edit Profile",
+        "cancel": "Cancel",
+        "save": "Save",
+        "images": {
+          "title": "Profile Images",
+          "cover": "Cover",
+          "coverUrl": "Cover URL",
+          "avatar": "Avatar",
+          "avatarUrl": "Avatar URL",
+          "avatarRecommendation": "We recommend an image of at least 400x400px"
+        },
+        "publicProfile": {
+          "title": "Public Profile",
+          "displayName": "Display Name",
+          "username": "Username",
+          "bio": "Bio",
+          "bioHint": "You can use @mentions to link to other users",
+          "bioPlaceholder": "Tell us about yourself...",
+          "location": "Location",
+          "website": "Website"
+        },
+        "security": {
+          "title": "Security Settings 🛡️",
+          "twoFactor": "Two-factor authentication",
+          "twoFactorDescription": "Enable two-factor authentication for your account (2FA)"
+        },
+        "errors": {
+          "displayNameRequired": "Please enter display name",
+          "usernameInvalid": "Username must be 3-20 characters (A-z, 0-9, _)",
+          "invalidUrl": "URL must be valid (e.g., https://lumora.dev)"
+        }
+      }
+    }
+  }
+}

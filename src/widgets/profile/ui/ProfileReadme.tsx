@@ -3,6 +3,7 @@
 import type { JSONContent } from '@tiptap/react'
 import { FileText, Pencil, Save, X } from 'lucide-react'
 import { useCallback, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Editor, TipTapRenderer } from '@/features/editor/ui'
 import { useUpdateUser } from '@/features/user/user-edit'
@@ -23,6 +24,7 @@ export const ProfileReadme = ({
 	const { update, isLoadingUpdate } = useUpdateUser()
 	const [draftContent, setDraftContent] = useState(contentJson)
 	const [isEditing, setIsEditing] = useState(false)
+	const t = useTranslations('widgets.profile.readme')
 
 	// 1. Обработка Сохранения
 	const handleSave = useCallback(() => {
@@ -64,7 +66,7 @@ export const ProfileReadme = ({
 										disabled={isLoadingUpdate}
 										className='md:h-10 md:px-4 md:py-2 md:text-sm'
 									>
-										<X className='mr-2 size-4' /> Отмена
+										<X className='mr-2 size-4' /> {t('cancel')}
 									</Button>
 									<Button
 										onClick={handleSave}
@@ -72,7 +74,7 @@ export const ProfileReadme = ({
 										disabled={isLoadingUpdate}
 										className='md:h-10 md:px-4 md:py-2 md:text-sm'
 									>
-										<Save className='mr-2 size-4' /> Сохранить
+										<Save className='mr-2 size-4' /> {t('save')}
 									</Button>
 								</>
 							) : (
@@ -83,7 +85,7 @@ export const ProfileReadme = ({
 										setIsEditing(true)
 									}}
 								>
-									<Pencil className='mr-2 size-4' /> Изменить
+									<Pencil className='mr-2 size-4' /> {t('edit')}
 								</Button>
 							)}
 						</div>

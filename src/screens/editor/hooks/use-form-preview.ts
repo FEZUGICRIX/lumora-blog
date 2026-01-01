@@ -1,4 +1,5 @@
 import type { UseFormReturn } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 import type { FullArticle } from '@/entities/article'
 import type { CategoryMinimal } from '@/entities/category'
@@ -11,20 +12,22 @@ export const useFormPreview = (
 	categories?: CategoryMinimal[] | null,
 	isNew: boolean = false,
 ) => {
+	const t = useTranslations('screens.editor.preview')
+
 	const title = form.watch('title')
 	const description = form.watch('description')
 	const coverImage = form.watch('coverImage')
 	const categoryId = form.watch('categoryId')
 
 	const demoTitle =
-		title || (isNew ? 'Создать новую статью' : article?.title) || 'Без названия'
+		title || (isNew ? t('createNewTitle') : article?.title) || t('untitled')
 
 	const demoDescription =
 		description ||
 		(isNew
-			? 'Ниже заполните поля и нажмите сохранить'
+			? t('fillFieldsDescription')
 			: article?.description) ||
-		'Описание отсутствует'
+		t('noDescription')
 
 	const demoCoverImage = coverImage || null
 

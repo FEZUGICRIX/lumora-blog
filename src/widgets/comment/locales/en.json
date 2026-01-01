@@ -1,0 +1,12 @@
+{
+  "widgets": {
+    "comment": {
+      "reply": "Reply",
+      "edited": "(edited)",
+      "comments": "Comments",
+      "joinDiscussion": "Join the discussion…",
+      "signInToJoin": "Sign in to join the discussion",
+      "sendComment": "Send comment"
+    }
+  }
+}

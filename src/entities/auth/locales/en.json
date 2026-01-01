@@ -1,0 +1,15 @@
+{
+  "entities": {
+    "auth": {
+      "buttons": {
+        "login": "Sign In",
+        "register": "Register"
+      },
+      "social": {
+        "google": "Google",
+        "github": "GitHub",
+        "divider": "Or"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "auth": {
+      "passwordRecovery": {
+        "metadata": {
+          "title": "Сброс пароля",
+          "description": "Сбросьте пароль, чтобы восстановить доступ к аккаунту"
+        }
+      }
+    }
+  }
+}

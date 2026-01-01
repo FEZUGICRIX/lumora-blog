@@ -11,8 +11,16 @@ import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations('Meta.HomePage')
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	const t = await getTranslations({
+		locale,
+		namespace: 'screens.home.metadata',
+	})
 
 	return {
 		title: t('title'),

@@ -29,10 +29,6 @@
 					"passwordMinLength": "Password must be at least 8 characters",
 					"passwordRepeatMinLength": "Password confirmation must be at least 8 characters",
 					"passwordsNotMatch": "Passwords do not match"
-				},
-				"metadata": {
-					"title": "Create Account",
-					"description": "Create a new account to join our community"
 				}
 			}
 		}

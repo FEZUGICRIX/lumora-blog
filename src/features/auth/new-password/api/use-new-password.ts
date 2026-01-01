@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { routes } from '@/shared/config/routes'
@@ -13,6 +14,7 @@ import { newPasswordService } from './new-password.service'
 export const useNewPassword = () => {
 	const searchParams = useSearchParams()
 	const router = useRouter()
+	const t = useTranslations('common.toasts')
 
 	const token = searchParams.get('token')
 
@@ -30,8 +32,8 @@ export const useNewPassword = () => {
 		},
 
 		onSuccess() {
-			toast.success('Пароль успешно изменен', {
-				description: 'Теперь вы можете войти в свой аккаунт',
+			toast.success(t('passwordChanged'), {
+				description: t('passwordChangedDescription'),
 			})
 
 			router.push(routes.auth.login)

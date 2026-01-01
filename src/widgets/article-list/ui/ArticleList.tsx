@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { useDeleteArticle } from '@/features/article/delete-article'
 import { ArticleFilters, type SortOption } from '@/features/article/filters'
@@ -34,6 +35,7 @@ export const ArticleList = ({
 }: ArticleListProps) => {
 	const { user } = useGetProfile()
 	const { deleteArticle } = useDeleteArticle()
+	const t = useTranslations('widgets.articleList')
 	const [categories, setCategories] = useState<CategoryMinimal[]>([])
 	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
@@ -94,7 +96,7 @@ export const ArticleList = ({
 	if (articlesToRender?.length === 0) {
 		return (
 			<div className='container m-auto px-4'>
-				<p className='text-muted-foreground text-center'>Нет статей</p>
+				<p className='text-muted-foreground text-center'>{t('noArticles')}</p>
 			</div>
 		)
 	}

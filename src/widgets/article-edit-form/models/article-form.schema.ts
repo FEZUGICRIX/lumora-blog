@@ -7,18 +7,18 @@ import { ZodOptionalUrl } from '@/shared/lib/zod'
 export const articleFormSchema = z.object({
 	title: z
 		.string()
-		.min(1, 'Заголовок обязателен для заполнения')
-		.max(85, 'Заголовок не должен превышать 85 символов')
+		.min(1, 'titleRequired')
+		.max(85, 'titleTooLong')
 		.trim(),
 	description: z
 		.string()
-		.min(1, 'Описание обязательно для заполнения')
-		.max(300, 'Описание не должно превышать 300 символов')
+		.min(1, 'descriptionRequired')
+		.max(300, 'descriptionTooLong')
 		.trim(),
 	content: z
 		.record(z.any(), z.unknown())
 		.refine((data): data is TiptapContent => data?.type === 'doc', {
-			message: 'Контент должен быть в формате Tiptap',
+			message: 'contentInvalidFormat',
 		})
 		.refine(
 			data => {
@@ -32,12 +32,12 @@ export const articleFormSchema = z.object({
 				)
 			},
 			{
-				message: 'Содержание статьи не может быть пустым',
+				message: 'contentEmpty',
 			},
 		),
 	tags: z
 		.string()
-		.min(1, 'Теги обязательны для заполнения')
+		.min(1, 'tagsRequired')
 		.refine(
 			value => {
 				const tags = value
@@ -47,7 +47,7 @@ export const articleFormSchema = z.object({
 				return tags.length > 0 // хотя бы один тег
 			},
 			{
-				message: 'Добавьте хотя бы один тег',
+				message: 'tagsMinimum',
 			},
 		)
 		.refine(
@@ -59,7 +59,7 @@ export const articleFormSchema = z.object({
 				return tags.length <= 10 // не более 10 тегов
 			},
 			{
-				message: 'Не более 10 тегов',
+				message: 'tagsMaximum',
 			},
 		)
 		.refine(
@@ -71,13 +71,13 @@ export const articleFormSchema = z.object({
 				return tags.every(tag => tag.length <= 20) // каждый тег не более 20 символов
 			},
 			{
-				message: 'Каждый тег не должен превышать 20 символов',
+				message: 'tagTooLong',
 			},
 		),
 	coverImage: ZodOptionalUrl.nullable(),
 	categoryId: z
-		.uuid('Неверный ID категории')
-		.min(1, 'Категория обязательна для заполнения'),
+		.uuid('categoryInvalidId')
+		.min(1, 'categoryRequired'),
 })
 
 export type ArticleFormData = z.infer<typeof articleFormSchema>

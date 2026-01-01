@@ -1,0 +1,53 @@
+{
+	"entities": {
+		"user": {
+			"profile": {
+				"joinedDate": "Дата регистрации",
+				"joined": "Присоединился"
+			},
+			"menu": {
+				"profile": "Профиль",
+				"editProfile": "Редактировать профиль",
+				"createArticle": "Создать статью",
+				"logout": "Выйти"
+			},
+			"roles": {
+				"ADMIN": "АДМИН",
+				"USER": "ПОЛЬЗОВАТЕЛЬ"
+			},
+			"edit": {
+				"title": "Редактирование профиля",
+				"cancel": "Отмена",
+				"save": "Сохранить",
+				"images": {
+					"title": "Изображения профиля",
+					"cover": "Обложка",
+					"coverUrl": "URL обложки",
+					"avatar": "Аватар",
+					"avatarUrl": "URL аватара",
+					"avatarRecommendation": "Рекомендуем изображение минимум 400x400px"
+				},
+				"publicProfile": {
+					"title": "Публичный профиль",
+					"displayName": "Отображаемое имя",
+					"username": "Username",
+					"bio": "Bio",
+					"bioHint": "Можете использовать @упоминания для ссылок на других пользователей",
+					"bioPlaceholder": "Расскажите о себе...",
+					"location": "Локация",
+					"website": "Сайт"
+				},
+				"security": {
+					"title": "Настройки безопасности 🛡️",
+					"twoFactor": "Двухфакторная аутентификация",
+					"twoFactorDescription": "Включите двухфакторную аутентификацию для вашего аккаунта (2FA)"
+				},
+				"errors": {
+					"displayNameRequired": "Введите отображаемое имя",
+					"usernameInvalid": "Имя пользователя должно быть 3-20 символов (A-z, 0-9, _)",
+					"invalidUrl": "URL-адрес должен быть валидным (например, https://lumora.dev)"
+				}
+			}
+		}
+	}
+}

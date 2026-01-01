@@ -1,6 +1,7 @@
 'use client'
 
 import { Calendar, Link as LinkIcon, MapPin } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface ProfileMetaProps {
 	location?: string | null
@@ -13,6 +14,8 @@ export const ProfileMeta = ({
 	websiteUrl,
 	joinedDate,
 }: ProfileMetaProps) => {
+	const t = useTranslations('widgets.profile')
+
 	return (
 		<div className='text-muted-foreground flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs md:justify-start md:gap-x-4 md:text-sm'>
 			{location && (
@@ -23,7 +26,7 @@ export const ProfileMeta = ({
 			)}
 			<div className='flex items-center gap-1.5'>
 				<Calendar className='size-3 md:size-3.5' />
-				<span>Joined {joinedDate}</span>
+				<span>{t('joined')} {joinedDate}</span>
 			</div>
 			{websiteUrl && (
 				<a

@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 import { CustomSelect } from '@/shared/ui/custom'
 
-import { sortOptions } from '../model/constants'
+import { useSortOptions } from '../model/constants'
 import type { SortOption } from '../model/types'
 
 interface SortSelectProps {
@@ -17,6 +17,7 @@ interface SortSelectProps {
 export function SortSelect({ sort, onSortChange }: SortSelectProps) {
 	const router = useRouter()
 	const searchParams = useSearchParams()
+	const sortOptions = useSortOptions()
 
 	// Получаем текущее значение из URL или используем значение по умолчанию
 	const urlSort = searchParams.get('sort') as SortOption | null

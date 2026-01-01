@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Switch } from '@/shared/ui/ui-kit'
@@ -9,19 +10,20 @@ export const ProfileSecuritySettings = () => {
 		control,
 		formState: { errors },
 	} = useFormContext()
+	const t = useTranslations('entities.user.edit.security')
 
 	return (
 		<div className='border-border/50 bg-card/30 rounded-2xl border p-6'>
-			<h2 className='mb-6 text-lg font-semibold'>Настройки безопасности 🛡️</h2>
+			<h2 className='mb-6 text-lg font-semibold'>{t('title')}</h2>
 
 			<div className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm'>
 				<div>
 					<div className='space-y-0.5'>
 						<label className='mb-1.5 block text-sm font-medium'>
-							Двухфакторная аутентификация
+							{t('twoFactor')}
 						</label>
 						<div className='text-muted-foreground text-xs'>
-							Включите двухфакторную аутентификацию для вашего аккаунта (2FA)
+							{t('twoFactorDescription')}
 						</div>
 					</div>
 				</div>

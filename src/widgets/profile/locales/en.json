@@ -1,0 +1,21 @@
+{
+  "widgets": {
+    "profile": {
+      "edit": "Edit",
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "joined": "Joined",
+      "readme": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit"
+      },
+      "stats": {
+        "views": "Views",
+        "likes": "Likes",
+        "followers": "Followers",
+        "following": "Following"
+      }
+    }
+  }
+}

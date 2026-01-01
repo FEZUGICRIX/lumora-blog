@@ -1,6 +1,7 @@
 'use client'
 
 import { Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import type { FullArticle } from '@/entities/article'
 import { isNewArticle } from '@/entities/article'
@@ -27,6 +28,7 @@ export const ArticleHero = ({
 	createdAt,
 	hasImage,
 }: ArticleHeroProps) => {
+	const t = useTranslations('entities.article')
 	const isNew = isNewArticle(createdAt)
 
 	const mixBlendDifferenceStyle = !hasImage && 'mix-blend-difference'
@@ -38,7 +40,7 @@ export const ArticleHero = ({
 			<div className='max-w-6xl space-y-2'>
 				{/* Meta row: isNew badge, category, reading time */}
 				<div className='flex flex-wrap items-center gap-3'>
-					{isNew && <Badge className='bg-pink-600 text-white'>Новое</Badge>}
+					{isNew && <Badge className='bg-pink-600 text-white'>{t('meta.new')}</Badge>}
 
 					{category?.name && (
 						<Badge
@@ -54,7 +56,7 @@ export const ArticleHero = ({
 							className={`flex items-center gap-1.5 text-sm text-white/80 ${mixBlendDifferenceStyle}`}
 						>
 							<Clock className='size-3.5' />
-							<span>{readingTime} мин чтения</span>
+							<span>{readingTime} {t('meta.readingTime')}</span>
 						</div>
 					)}
 				</div>

@@ -6,6 +6,7 @@ import {
 	useFormContext,
 	type UseFormReturn,
 } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 
 import { Editor } from '@/features/editor/ui'
@@ -55,6 +56,7 @@ export function ArticleEditForm({
 	isEdit,
 }: ArticleEditFormProps) {
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const t = useTranslations('widgets.articleEditForm')
 
 	const handleFormSubmit = async (data: ArticleFormValues) => {
 		setIsSubmitting(true)
@@ -62,7 +64,7 @@ export function ArticleEditForm({
 			await onSubmit(data)
 		} catch (error) {
 			const appError = handleRTKError(error)
-			toast.error('Ошибка', {
+			toast.error(t('error'), {
 				description: appError.message,
 				duration: 5000,
 			})
@@ -83,10 +85,10 @@ export function ArticleEditForm({
 					name='title'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Заголовок *</FormLabel>
+							<FormLabel>{t('title')} *</FormLabel>
 							<FormControl>
 								<InputWithCounter
-									placeholder='Введите заголовок статьи'
+									placeholder={t('titlePlaceholder')}
 									maxLength={TITLE_MAX_LENGTH}
 									value={field.value}
 									onChange={field.onChange}
@@ -94,7 +96,7 @@ export function ArticleEditForm({
 								/>
 							</FormControl>
 							<FormDescription>
-								Название вашей статьи (обязательное поле)
+								{t('titleDescription')}
 							</FormDescription>
 							<FormMessage />
 						</FormItem>
@@ -106,10 +108,10 @@ export function ArticleEditForm({
 					name='description'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Описание *</FormLabel>
+							<FormLabel>{t('description')} *</FormLabel>
 							<FormControl>
 								<InputWithCounter
-									placeholder='Краткое описание статьи'
+									placeholder={t('descriptionPlaceholder')}
 									maxLength={DESCRIPTION_MAX_LENGTH}
 									value={field.value}
 									onChange={field.onChange}
@@ -117,7 +119,7 @@ export function ArticleEditForm({
 								/>
 							</FormControl>
 							<FormDescription>
-								Краткое описание для превью (обязательное поле)
+								{t('descriptionDescription')}
 							</FormDescription>
 							<FormMessage />
 						</FormItem>
@@ -129,11 +131,11 @@ export function ArticleEditForm({
 					name='categoryId'
 					render={() => (
 						<FormItem>
-							<FormLabel>Категория *</FormLabel>
+							<FormLabel>{t('category')} *</FormLabel>
 							<FormControl>
 								<ControlledCategorySelect name='categoryId' />
 							</FormControl>
-							<FormDescription>Выберите категорию для статьи</FormDescription>
+							<FormDescription>{t('categoryDescription')}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -144,12 +146,12 @@ export function ArticleEditForm({
 					name='content'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Содержание *</FormLabel>
+							<FormLabel>{t('content')} *</FormLabel>
 							<FormControl>
 								<Editor content={field.value} onChange={field.onChange} />
 							</FormControl>
 							<FormDescription>
-								Основное содержание статьи в формате Rich Text
+								{t('contentDescription')}
 							</FormDescription>
 							<FormMessage />
 						</FormItem>
@@ -161,16 +163,16 @@ export function ArticleEditForm({
 					name='tags'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Теги</FormLabel>
+							<FormLabel>{t('tags')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='тег1, тег2, тег3 (через пробел)'
+									placeholder={t('tagsPlaceholder')}
 									value={field.value}
 									onChange={field.onChange}
 									disabled={isSubmitting}
 								/>
 							</FormControl>
-							<FormDescription>Теги (через пробел)</FormDescription>
+							<FormDescription>{t('tagsDescription')}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -181,17 +183,17 @@ export function ArticleEditForm({
 					name='coverImage'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>URL обложки</FormLabel>
+							<FormLabel>{t('coverImage')}</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='https://example.com/image.jpg'
+									placeholder={t('coverImagePlaceholder')}
 									disabled={isSubmitting}
 									{...field}
 									value={field.value || ''}
 								/>
 							</FormControl>
 							<FormDescription>
-								Ссылка на изображение для обложки статьи
+								{t('coverImageDescription')}
 							</FormDescription>
 							<FormMessage />
 						</FormItem>
@@ -205,10 +207,10 @@ export function ArticleEditForm({
 						className='flex-1'
 					>
 						{isSubmitting
-							? 'Сохранение...'
+							? t('saving')
 							: isEdit
-								? 'Сохранить изменения'
-								: 'Создать статью'}
+								? t('saveChanges')
+								: t('createArticle')}
 					</Button>
 				</div>
 			</form>

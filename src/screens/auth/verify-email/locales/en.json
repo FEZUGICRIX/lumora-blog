@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "auth": {
+      "verifyEmail": {
+        "metadata": {
+          "title": "Email Verification",
+          "description": "Verify your email address to complete registration"
+        }
+      }
+    }
+  }
+}

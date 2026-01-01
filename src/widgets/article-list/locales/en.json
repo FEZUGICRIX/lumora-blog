@@ -1,0 +1,10 @@
+{
+  "widgets": {
+    "articleList": {
+      "noArticles": "No articles",
+      "loadError": "Failed to load articles",
+      "loadErrorDescription": "Try refreshing the page or try again later.",
+      "retry": "Retry"
+    }
+  }
+}

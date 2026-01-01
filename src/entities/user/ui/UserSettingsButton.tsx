@@ -1,4 +1,5 @@
 import { LucideLogOut, MoreHorizontal } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { useLogout } from '@/features/auth/logout'
 
@@ -16,6 +17,7 @@ interface UserSettingsButtonProps {
 }
 
 export const UserSettingsButton = ({ user }: UserSettingsButtonProps) => {
+	const t = useTranslations('entities.user.menu')
 	const { logout, isLoadingLogout } = useLogout()
 
 	if (!user) return null
@@ -29,7 +31,7 @@ export const UserSettingsButton = ({ user }: UserSettingsButtonProps) => {
 			<DropdownMenuContent className='w-40' align='end'>
 				<DropdownMenuItem onClick={() => logout()} disabled={isLoadingLogout}>
 					<LucideLogOut className='mr-2 size-4' />
-					Выйти
+					{t('logout')}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

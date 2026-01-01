@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 
 import { CustomSelect } from '@/shared/ui/custom'
@@ -15,6 +16,7 @@ export const CategorySelect = ({
 	onValueChange,
 	value,
 }: CategorySelectProps) => {
+	const t = useTranslations('entities.category.errors')
 	const { categories, isLoadingCategories } = useGetCategories()
 
 	const categoryOptions: SelectOption[] = categories.map(category => ({
@@ -36,7 +38,7 @@ export const CategorySelect = ({
 	if (!categories) {
 		return (
 			<div className='text-muted-foreground text-sm'>
-				Нет удалось загрузить категории
+				{t('loadFailed')}
 			</div>
 		)
 	}
@@ -44,7 +46,7 @@ export const CategorySelect = ({
 	if (categoryOptions.length === 0) {
 		return (
 			<div className='text-muted-foreground text-sm'>
-				Нет доступных категорий
+				{t('noCategories')}
 			</div>
 		)
 	}

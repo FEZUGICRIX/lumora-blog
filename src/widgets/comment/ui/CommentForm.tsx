@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { UserAvatar } from '@/entities/user/ui'
 
@@ -26,6 +27,7 @@ export const CommentForm = ({
 	commentsCount,
 }: CommentFormProps) => {
 	const [comment, setComment] = useState('')
+	const t = useTranslations('widgets.comment')
 
 	const isValid = comment.trim().length > 0
 
@@ -50,7 +52,7 @@ export const CommentForm = ({
 			onSubmit={handleFormSubmit}
 			className='mx-auto w-full space-y-4 dark:text-white'
 		>
-			<h3 className='text-xl font-semibold'>{commentsCount} Comments</h3>
+			<h3 className='text-xl font-semibold'>{commentsCount} {t('comments')}</h3>
 
 			<div className='flex items-center gap-4'>
 				{user && (
@@ -68,8 +70,8 @@ export const CommentForm = ({
 						name='comment'
 						placeholder={
 							isAuthenticated
-								? 'Join the discussion…'
-								: 'Sign in to join the discussion'
+								? t('joinDiscussion')
+								: t('signInToJoin')
 						}
 						value={comment}
 						onChange={e => setComment(e.target.value)}
@@ -87,7 +89,7 @@ export const CommentForm = ({
 
 			<div className='flex justify-end'>
 				<Button type='submit' disabled={!isAuthenticated || !isValid}>
-					Send comment
+					{t('sendComment')}
 				</Button>
 			</div>
 		</form>

@@ -1,0 +1,17 @@
+{
+  "entities": {
+    "category": {
+      "errors": {
+        "loadFailed": "Failed to load categories",
+        "noCategories": "No available categories"
+      },
+      "comment": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "placeholder": "Edit your comment...",
+        "save": "Save",
+        "cancel": "Cancel"
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@ interface HomePageProps {
 }
 
 export const HomePage = ({ articles }: HomePageProps) => {
-	const t = useTranslations('HomePage')
+	const t = useTranslations('screens.home')
 
 	return (
 		<div>

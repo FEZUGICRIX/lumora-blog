@@ -1,6 +1,7 @@
 'use client'
 
 import { LogIn, UserPlus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import { Link } from '@/shared/config/i18n'
 import { routes } from '@/shared/config/routes'
@@ -17,19 +18,21 @@ export const AuthButtons = ({
 	showIcons = true,
 	size = 'sm',
 }: AuthButtonsProps) => {
+	const t = useTranslations('entities.auth.buttons')
+
 	return (
 		<div className={className && className}>
 			<div className='flex items-center gap-2'>
 				<Button variant='ghost' size={size} asChild>
 					<Link href={routes.auth.login} className='gap-1.5'>
 						{showIcons && <LogIn className='size-4' />}
-						Войти
+						{t('login')}
 					</Link>
 				</Button>
 				<Button size={size} asChild>
 					<Link href={routes.auth.register} className='gap-1.5'>
 						{showIcons && <UserPlus className='size-4' />}
-						Регистрация
+						{t('register')}
 					</Link>
 				</Button>
 			</div>

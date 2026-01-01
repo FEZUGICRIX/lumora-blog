@@ -1,6 +1,7 @@
 'use client'
 
 import { Check, Copy, Edit, MoreHorizontal, Share2, Trash2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { Link } from '@/shared/config/i18n'
@@ -27,6 +28,7 @@ export const ArticleActions = ({
 	variant = 'full',
 	className,
 }: ArticleActionsProps) => {
+	const t = useTranslations('entities.article')
 	const [copied, setCopied] = useState(false)
 
 	const handleCopyLink = (e: React.MouseEvent) => {
@@ -46,7 +48,7 @@ export const ArticleActions = ({
 		const url = `${window.location.origin}/blog/${articleSlug}`
 		if (navigator.share) {
 			await navigator.share({
-				title: 'Статья',
+				title: t('share.title'),
 				url,
 			})
 		} else {
@@ -62,7 +64,7 @@ export const ArticleActions = ({
 					<Button variant='outline' size='sm' asChild className='gap-1.5'>
 						<Link href={routes.editor.editArticle(articleSlug)}>
 							<Edit className='size-4' />
-							<span className='hidden sm:inline'>Редактировать</span>
+							<span className='hidden sm:inline'>{t('actions.edit')}</span>
 						</Link>
 					</Button>
 				)}
@@ -79,14 +81,14 @@ export const ArticleActions = ({
 							<DropdownMenuItem asChild className='gap-2'>
 								<Link href={`/editor/${articleSlug}`}>
 									<Edit className='size-4' />
-									Редактировать
+									{t('actions.edit')}
 								</Link>
 							</DropdownMenuItem>
 						)}
 
 						<DropdownMenuItem onClick={handleShare} className='gap-2'>
 							<Share2 className='size-4' />
-							Поделиться
+							{t('actions.share')}
 						</DropdownMenuItem>
 						<DropdownMenuItem onClick={handleCopyLink} className='gap-2'>
 							{copied ? (
@@ -94,7 +96,7 @@ export const ArticleActions = ({
 							) : (
 								<Copy className='size-4' />
 							)}
-							{copied ? 'Скопировано!' : 'Копировать ссылку'}
+							{copied ? t('actions.copied') : t('actions.copyLink')}
 						</DropdownMenuItem>
 
 						<DropdownMenuSeparator />
@@ -104,7 +106,7 @@ export const ArticleActions = ({
 							className='text-destructive focus:text-destructive gap-2'
 						>
 							<Trash2 className='size-4' />
-							Удалить статью
+							{t('actions.delete')}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

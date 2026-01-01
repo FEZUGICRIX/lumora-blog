@@ -38,7 +38,6 @@ export const AuthWrapper = ({
 				</CardTitle>
 				{description && (
 					<CardDescription>
-						{' '}
 						<div className='text-center'>{description}</div>
 					</CardDescription>
 				)}

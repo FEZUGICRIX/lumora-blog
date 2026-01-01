@@ -23,10 +23,6 @@
           "recaptcha": "Please complete ReCAPTCHA",
           "invalidEmail": "Invalid email",
           "passwordMinLength": "Password must be at least 8 characters"
-        },
-        "metadata": {
-          "title": "Sign In",
-          "description": "Sign in to your account to access all features"
         }
       }
     }

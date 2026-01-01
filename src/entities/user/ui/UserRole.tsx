@@ -1,7 +1,7 @@
 import type { UserRole } from '@/shared/api/graphql/__generated__/documents'
 import { cn } from '@/shared/lib/shadcn/utils'
 
-import { ROLE_CONFIGS } from '../model/role.config'
+import { useRoleConfig } from '../model/role.config'
 
 interface UserRoleBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 	role: UserRole
@@ -14,8 +14,10 @@ export function UserRoleBadge({
 	className,
 	...props
 }: UserRoleBadgeProps) {
+	const getRoleConfig = useRoleConfig()
+
 	// Получаем конфигурацию для заданной роли
-	const config = ROLE_CONFIGS[role]
+	const config = getRoleConfig(role)
 
 	// Если конфигурация не найдена, не отображаем бейдж
 	if (!config) {

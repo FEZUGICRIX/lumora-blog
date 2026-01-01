@@ -1,0 +1,13 @@
+{
+  "screens": {
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "We couldn't find what you were looking for",
+      "returnHome": "Return Home",
+      "metadata": {
+        "title": "404 - Not Found | Lumora",
+        "description": "The page you are looking for does not exist."
+      }
+    }
+  }
+}

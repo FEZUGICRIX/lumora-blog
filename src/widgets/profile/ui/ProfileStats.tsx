@@ -1,6 +1,7 @@
 'use client'
 
 import { Eye, Heart, Users, UserPlus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface ProfileStatsProps {
 	stats: {
@@ -12,26 +13,28 @@ interface ProfileStatsProps {
 }
 
 export const ProfileStats = ({ stats }: ProfileStatsProps) => {
+	const t = useTranslations('widgets.profile.stats')
+
 	return (
 		<div className="flex flex-wrap md:justify-start justify-center gap-2 md:gap-3">
 			<StatCard
 				icon={<Eye className="size-3.5 text-muted-foreground" />}
-				label="Просмотров"
+				label={t('views')}
 				value={stats.views}
 			/>
 			<StatCard
 				icon={<Heart className="size-3.5 text-muted-foreground" />}
-				label="Лайков"
+				label={t('likes')}
 				value={stats.likes}
 			/>
 			<StatCard
 				icon={<Users className="size-3.5 text-muted-foreground" />}
-				label="Подписчиков"
+				label={t('followers')}
 				value={stats.followers}
 			/>
 			<StatCard
 				icon={<UserPlus className="size-3.5 text-muted-foreground" />}
-				label="Подписок"
+				label={t('following')}
 				value={stats.following}
 			/>
 		</div>

@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import { ArticleHero, type FullArticle } from '@/entities/article'
 import { useGetCategories } from '@/entities/category/api'
 import { useGetProfile } from '@/entities/user/api'
@@ -18,6 +20,7 @@ export const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 	const { coverImage, author } = article ?? {}
 	const { user } = useGetProfile()
 	const { categories } = useGetCategories()
+	const t = useTranslations('screens.editor')
 
 	const { form, onSubmit, isEdit } = useArticleForm({
 		article,
@@ -52,7 +55,7 @@ export const EditorPage = ({ article, isNew = false }: EditorPageProps) => {
 
 			<div className='container mx-auto my-4'>
 				<h1 className='mb-4 text-center text-2xl font-bold'>
-					{isNew ? 'Новая статья' : 'Редактировать статью'}
+					{isNew ? t('newArticle') : t('editArticle')}
 				</h1>
 			</div>
 

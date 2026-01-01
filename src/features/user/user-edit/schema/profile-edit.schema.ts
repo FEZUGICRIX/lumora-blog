@@ -1,24 +1,24 @@
 import { z } from 'zod'
 
-import { ZodOptionalString, ZodOptionalUrl } from '@/shared/lib/zod'
+import { ZodOptionalString, createZodOptionalUrl } from '@/shared/lib/zod'
 
 export const ProfileEditSchema = z.object({
-	displayName: z.string().min(1, { message: 'Введите отображаемое имя' }),
+	displayName: z.string().min(1, { message: 'displayNameRequired' }),
 	username: z
 		.string()
 		.regex(
 			/^[a-zA-Z0-9_]{3,20}$/,
-			'Имя пользователя должно быть 3-20 символов (A-z, 0-9, _)',
+			'usernameInvalid',
 		),
 
 	bio: ZodOptionalString,
 	location: ZodOptionalString,
-	websiteUrl: ZodOptionalUrl,
+	websiteUrl: createZodOptionalUrl('invalidUrl'),
 
 	isTwoFactorEnabled: z.boolean(),
 
-	coverUrl: ZodOptionalUrl,
-	avatarUrl: ZodOptionalUrl,
+	coverUrl: createZodOptionalUrl('invalidUrl'),
+	avatarUrl: createZodOptionalUrl('invalidUrl'),
 })
 
 export type TypeProfileEditSchema = z.infer<typeof ProfileEditSchema>

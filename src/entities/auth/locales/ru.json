@@ -1,0 +1,15 @@
+{
+	"entities": {
+		"auth": {
+			"buttons": {
+				"login": "Войти",
+				"register": "Регистрация"
+			},
+			"social": {
+				"google": "Google",
+				"github": "GitHub",
+				"divider": "Или"
+			}
+		}
+	}
+}

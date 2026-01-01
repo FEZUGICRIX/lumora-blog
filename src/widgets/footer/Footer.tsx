@@ -2,6 +2,7 @@
 
 import { Check, Copy, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { SOCIAL_LINKS } from '@/shared/constants'
 import { CRYPTO_WALLETS } from '@/shared/constants/crypto-wallets'
@@ -10,6 +11,7 @@ import { Logo, NavLinks, SocialLinks } from '@/shared/ui/custom'
 export const Footer = () => {
 	const currentYear = new Date().getFullYear()
 	const [copiedAddress, setCopiedAddress] = useState<null | string>(null)
+	const t = useTranslations('widgets.footer')
 
 	const copyToClipboard = (address: string) => {
 		navigator.clipboard.writeText(address)
@@ -26,7 +28,7 @@ export const Footer = () => {
 					<div className='flex flex-col items-center justify-start sm:items-start lg:col-span-2'>
 						<Logo />
 						<p className='text-muted-foreground mt-4 max-w-full text-center text-sm sm:max-w-xs sm:text-left'>
-							Платформа для разработчиков. Делимся знаниями, создаём сообщество.
+							{t('description')}
 						</p>
 						{/* Social links */}
 						<div className='mt-2'>
@@ -36,7 +38,7 @@ export const Footer = () => {
 
 					{/* Links sections */}
 					<div>
-						<h3 className='text-md mb-4 font-semibold'>Продукт</h3>
+						<h3 className='text-md mb-4 font-semibold'>{t('product')}</h3>
 						<ul className='space-y-3'>
 							<NavLinks
 								direction='col'
@@ -47,7 +49,7 @@ export const Footer = () => {
 
 					{/* Support section */}
 					<div>
-						<h3 className='text-md mb-4 font-semibold'>Поддержать проект</h3>
+						<h3 className='text-md mb-4 font-semibold'>{t('supportProject')}</h3>
 						<div className='space-y-3'>
 							{CRYPTO_WALLETS.map(wallet => (
 								<button
@@ -97,7 +99,7 @@ export const Footer = () => {
 								className='text-muted-foreground hover:text-foreground mt-2 inline-flex items-center gap-2 text-sm transition-colors dark:hover:text-white'
 							>
 								<ExternalLink className='size-3.5' />
-								<span>Автор проекта</span>
+								<span>{t('projectAuthor')}</span>
 							</a>
 						</div>
 					</div>
@@ -106,10 +108,10 @@ export const Footer = () => {
 				{/* Bottom bar */}
 				<div className='border-border/50 mt-12 flex flex-col items-center justify-between gap-4 border-t py-6 md:flex-row'>
 					<p className='text-muted-foreground text-sm'>
-						© {currentYear} Lumora. Все права защищены.
+						© {currentYear} Lumora. {t('allRightsReserved')}
 					</p>
 					<p className='text-muted-foreground flex items-center gap-1.5 text-sm'>
-						Powered by fezugicrix
+						{t('poweredBy')}
 					</p>
 				</div>
 			</div>

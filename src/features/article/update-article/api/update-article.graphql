@@ -24,15 +24,5 @@ mutation UpdateArticle($input: UpdateArticleInput!) {
 			id
 			name
 		}
-		comments {
-			id
-			createdAt
-			updatedAt
-			author {
-				id
-				displayName
-				avatarUrl
-			}
-		}
 	}
 }

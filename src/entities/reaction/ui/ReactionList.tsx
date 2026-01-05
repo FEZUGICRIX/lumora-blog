@@ -7,7 +7,8 @@ import { cn } from '@/shared/lib/shadcn/utils'
 import { Button } from '@/shared/ui/ui-kit'
 
 import { REACTIONS_CONFIG } from '../model/reaction.config'
-import { ReactionIcon } from './ReactionIcon'
+
+// import { ReactionIcon } from './ReactionIcon'
 
 interface ReactionListProps {
 	reactions: Partial<Record<ReactionType, number>>
@@ -32,7 +33,7 @@ export const ReactionList = ({
 }: ReactionListProps) => {
 	return (
 		<div className={`flex flex-wrap gap-1.5 ${className} `}>
-			{REACTIONS_CONFIG.map(({ type, icon }) => {
+			{REACTIONS_CONFIG.map(({ type, emoji }) => {
 				const count = reactions[type] ?? 0
 				const isActive = Boolean(myReactions?.[type])
 
@@ -58,7 +59,9 @@ export const ReactionList = ({
 								'border-zinc-300 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800',
 						)}
 					>
-						<ReactionIcon icon={icon} />
+						{/* <ReactionIcon icon={icon} /> */}
+
+						<span className='text-xl'>{emoji}</span>
 
 						{count > 0 && (
 							<span className='min-w-[10px] text-[11px] font-medium dark:text-white'>

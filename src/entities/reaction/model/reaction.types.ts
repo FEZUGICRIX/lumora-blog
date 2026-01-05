@@ -8,6 +8,7 @@ export type ReactionConfigItem = {
 	type: ReactionType
 	label: string
 	icon: ReactionIconType
+	emoji?: string
 	color?: string // tailwind token
 	ariaLabel?: string
 	visible?: boolean // для скрытых/экспериментальных

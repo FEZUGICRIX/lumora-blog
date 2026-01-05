@@ -1,8 +1,8 @@
 'use client'
 
 import clsx from 'clsx'
-import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { usePathname } from 'next/navigation'
 import type { JSX } from 'react'
 
 import { Link } from '@/shared/config/i18n'

@@ -1,0 +1,47 @@
+{
+	"common": {
+		"test": "Test text",
+		"switchTheme": "Switch Theme",
+		"socialLinks": "Social Links",
+		"close": "Close",
+		"navigation": {
+			"home": "Home",
+			"writeArticle": "Write Article",
+			"aboutMe": "About Me",
+			"myProfile": "My Profile"
+		},
+		"validation": {
+			"invalidUrl": "URL must be valid (e.g., https://lumora.dev)"
+		},
+		"toasts": {
+			"profileUpdated": "Profile successfully updated",
+			"articleCreated": "Article successfully created!",
+			"articleUpdated": "Article successfully updated!",
+			"articleDeleted": "Article successfully deleted!",
+			"commentEdited": "Comment successfully edited!",
+			"commentDeleted": "Comment successfully deleted!",
+			"commentSent": "Comment successfully sent!",
+			"passwordChanged": "Password successfully changed",
+			"passwordChangedDescription": "You can now log into your account",
+			"checkEmail": "Check your email",
+			"checkEmailDescription": "A confirmation link has been sent to your email.",
+			"emailVerified": "Email successfully verified!",
+			"loggedOut": "You have successfully logged out",
+			"fileUploaded": "The file was uploaded successfully!"
+		},
+		"upload": {
+			"clickToUpload": "Click to upload",
+			"orDragAndDrop": "or drag and drop",
+			"maxFiles": "Maximum {limit} file{plural}, {maxSize}MB each.",
+			"pasteLink": "Paste a link..."
+		},
+		"placeholders": {
+			"displayName": "Alex Kalinin",
+			"username": "@username",
+			"location": "Saint Petersburg, Russia",
+			"website": "example.com",
+			"avatarUrl": "https://example.com/avatar.jpg",
+			"coverUrl": "https://example.com/cover.jpg"
+		}
+	}
+}

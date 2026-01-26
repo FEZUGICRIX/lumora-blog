@@ -1,0 +1,3 @@
+mutation TrackArticleView($articleId: String!) {
+	trackArticleView(articleId: $articleId)
+}

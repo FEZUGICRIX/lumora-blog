@@ -1,0 +1,36 @@
+{
+	"features": {
+		"auth": {
+			"register": {
+				"title": "Регистрация",
+				"description": "Чтобы войти в аккаунт сначала введите email и пароль",
+				"form": {
+					"displayName": "Отображаемое имя",
+					"username": "Имя пользователя",
+					"email": "Электронная почта",
+					"password": "Пароль",
+					"confirmPassword": "Повторите пароль",
+					"submit": "Создать аккаунт",
+					"placeholders": {
+						"displayName": "Введите отображаемое имя",
+						"username": "@имя_пользователя",
+						"email": "Введите ваш email",
+						"password": "Введите ваш пароль"
+					}
+				},
+				"links": {
+					"login": "Уже есть аккаунт? Войти"
+				},
+				"errors": {
+					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
+					"invalidUsername": "Некорректное имя пользователя",
+					"displayNameRequired": "Введите имя",
+					"invalidEmail": "Некорректный email",
+					"passwordMinLength": "Пароль должен быть минимум 8 символов",
+					"passwordRepeatMinLength": "Пароль подтверждения должен быть минимум 8 символов",
+					"passwordsNotMatch": "Пароли не совпадают"
+				}
+			}
+		}
+	}
+}

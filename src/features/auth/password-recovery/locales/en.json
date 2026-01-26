@@ -1,0 +1,24 @@
+{
+  "features": {
+    "auth": {
+      "passwordRecovery": {
+        "title": "Password Reset",
+        "description": "Enter your email to reset your password",
+        "form": {
+          "email": "Email",
+          "submit": "Reset",
+          "placeholders": {
+            "email": "Type your email"
+          }
+        },
+        "links": {
+          "login": "Sign In to Account"
+        },
+        "errors": {
+          "recaptcha": "Please complete ReCAPTCHA",
+          "invalidEmail": "Invalid email"
+        }
+      }
+    }
+  }
+}

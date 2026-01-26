@@ -1,14 +1,15 @@
 'use client'
 
-import { SearchModal } from '@/features/search-posts'
+import { useTranslations } from 'next-intl'
+
 import { LocaleSwitcher } from '@/features/locale-switcher'
+import { SearchModal } from '@/features/article/search-posts'
 import { useBoolean } from '@/shared/hooks'
-import { TooltipWithText } from '@/shared/ui/TooltipWithText'
-import { ThemeToggle } from '@/shared/ui/ThemeToggle'
+import { Modal, ThemeToggle, TooltipWithText } from '@/shared/ui/custom'
 import { SearchIcon } from '@/shared/ui/icon'
-import { Modal } from '@/shared/ui/Modal'
 
 export const ActionPanel = () => {
+	const t = useTranslations('entities.article.search')
 	const searchModal = useBoolean()
 
 	return (
@@ -16,16 +17,14 @@ export const ActionPanel = () => {
 			<LocaleSwitcher />
 
 			<div onClick={searchModal.setTrue} className='glass-icon'>
-				<TooltipWithText text='Search Posts'>
+				<TooltipWithText text={t('tooltip')}>
 					<SearchIcon />
 				</TooltipWithText>
 			</div>
 
 			<Modal
 				title={
-					<span className='text-foreground dark:text-white'>
-						Найти статью
-					</span>
+					<span className='text-foreground dark:text-white'>{t('modalTitle')}</span>
 				}
 				open={searchModal.value}
 				onOpenChange={searchModal.toggle}

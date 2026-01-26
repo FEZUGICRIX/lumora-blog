@@ -1,6 +1,6 @@
 'use client'
 
-import { Skeleton } from '@/shared/ui/ui-kit/skeleton'
+import { Skeleton } from '@/shared/ui/ui-kit'
 
 export const ArticleCardSkeleton = () => {
 	return (

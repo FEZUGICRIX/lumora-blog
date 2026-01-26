@@ -1,16 +1,28 @@
 'use client'
 
-import { useCallback, useEffect, useState, useRef } from 'react'
-import { ArticleCard, type ArticlePreview } from '@/entities/article'
-import { useGetArticlesQuery } from '@/entities/article/api'
-import { GridLayout } from '@/shared/ui/GridLayout'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
-import { ArticleFilters } from '@/features/filters'
-import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
-import { ArticleError } from './ArticleError'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
-import type { SortOption } from '@/features/filters'
-import type { CategoryMinimal } from '@/entities/category'
+import { useDeleteArticle } from '@/features/article/delete-article'
+import { ArticleFilters, type SortOption } from '@/features/article/filters'
+
+import {
+	ArticleCard,
+	type ArticlePreview,
+	isNewArticle,
+} from '@/entities/article'
+import { useGetArticles } from '@/entities/article/api'
+import type { CategoryMinimal } from '@/entities/category/model'
+import { useGetProfile } from '@/entities/user/api'
+
+import {
+	ArticleSortBy,
+	UserRole,
+} from '@/shared/api/graphql/__generated__/documents'
+import { GridLayout } from '@/shared/ui/custom'
+
+import { ArticleError } from './ArticleError'
+import { ArticleListSkeleton } from './skeletons/ArticleListSkeleton'
 
 interface ArticleListProps {
 	withFilters?: boolean
@@ -21,34 +33,40 @@ export const ArticleList = ({
 	initialArticles,
 	withFilters = false,
 }: ArticleListProps) => {
+	const { user } = useGetProfile()
+	const { deleteArticle } = useDeleteArticle()
+	const t = useTranslations('widgets.articleList')
 	const [categories, setCategories] = useState<CategoryMinimal[]>([])
 	const [sort, setSort] = useState<SortOption>(ArticleSortBy.CreatedAt)
 
 	// Для отслеживания первого рендера (SSR) → нужен только на самом старте
-	const isInitialRender = useRef(true)
+	const isInitialFetch = useRef(true)
 
-	const categorySlugs = categories.map((cat) => cat.slug)
+	const categorySlugs = categories.map(cat => cat.slug)
 
-	// --- RTK Query ---
+	const isDefaultInitialState =
+		categories.length === 0 && sort === ArticleSortBy.CreatedAt
+
+	const isReadyToFetch = !isInitialFetch.current || !isDefaultInitialState
+
 	const {
-		data: filteredArticles,
-		isFetching,
-		isError,
-	} = useGetArticlesQuery(
+		articles: filteredArticles,
+		isLoadingArticles,
+		isArticlesError,
+	} = useGetArticles(
 		{ categorySlugs, sortBy: sort },
 		{
 			// Пропускаем первый фетч только если нет фильтров и дефолтная сортировка
-			skip:
-				isInitialRender.current &&
-				categories.length === 0 &&
-				sort === ArticleSortBy.CreatedAt,
+			enabled: isReadyToFetch,
+			staleTime: 5 * 60 * 1000, // 5 минут
+			cacheTime: 10 * 60 * 1000, // 10 минут
 		},
 	)
 
 	// Как только происходит любой фетч (или пользователь меняет фильтры) → первый рендер больше не нужен
 	useEffect(() => {
-		if (isInitialRender.current) {
-			isInitialRender.current = false
+		if (isInitialFetch.current) {
+			isInitialFetch.current = false
 		}
 	}, [categories, sort])
 
@@ -67,7 +85,7 @@ export const ArticleList = ({
 	const articlesToRender = filteredArticles ?? initialArticles
 
 	// --- Ошибки и пустой список ---
-	if (isError || !initialArticles) {
+	if (isArticlesError || !initialArticles) {
 		return (
 			<div className='container m-auto px-4'>
 				<ArticleError />
@@ -78,7 +96,7 @@ export const ArticleList = ({
 	if (articlesToRender?.length === 0) {
 		return (
 			<div className='container m-auto px-4'>
-				<p className='text-muted-foreground text-center'>Нет статей</p>
+				<p className='text-muted-foreground text-center'>{t('noArticles')}</p>
 			</div>
 		)
 	}
@@ -94,14 +112,23 @@ export const ArticleList = ({
 				/>
 			)}
 
-			{isFetching ? (
+			{isLoadingArticles && !isInitialFetch ? (
 				<div className='container m-auto px-4'>
 					<ArticleListSkeleton />
 				</div>
 			) : (
 				<GridLayout>
 					{articlesToRender?.map((article: ArticlePreview) => (
-						<ArticleCard key={article.id} article={article} />
+						<ArticleCard
+							key={article.id}
+							article={article}
+							onDelete={deleteArticle}
+							permissions={{
+								canManage:
+									user?.id == article.author.id || user?.role == UserRole.Admin,
+							}}
+							isNew={isNewArticle(article.createdAt)}
+						/>
 					))}
 				</GridLayout>
 			)}

@@ -10,7 +10,23 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: 'https',
+				hostname: 'lh3.googleusercontent.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'cdn.jsdelivr.net',
+			},
+			{
+				protocol: 'https',
 				hostname: 'avatars.githubusercontent.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'd3jj28hjdifkqy.cloudfront.net',
+			},
+			{
+				protocol: 'https',
+				hostname: 'images.unsplash.com',
 			},
 			{
 				protocol: 'https',
@@ -38,9 +54,11 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	experimental: {
+		globalNotFound: true,
+	},
+	
 }
 
-const withNextIntl = createNextIntlPlugin(
-	'./src/shared/config/i18n/request.ts',
-)
+const withNextIntl = createNextIntlPlugin('./src/shared/config/i18n/request.ts')
 export default withNextIntl(nextConfig)

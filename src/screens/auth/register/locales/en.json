@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "auth": {
+      "register": {
+        "metadata": {
+          "title": "Create Account",
+          "description": "Create a new account to join our community"
+        }
+      }
+    }
+  }
+}

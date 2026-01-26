@@ -1,0 +1,28 @@
+mutation UpdateArticle($input: UpdateArticleInput!) {
+	updateArticle(updateArticleInput: $input) {
+		id
+		slug
+		title
+		description
+		contentJson
+		contentHtml
+		contentText
+		tags
+		coverImage
+		published
+		publishedAt
+		readingTime
+		views
+		createdAt
+		updatedAt
+		author {
+			id
+			displayName
+			avatarUrl
+		}
+		category {
+			id
+			name
+		}
+	}
+}

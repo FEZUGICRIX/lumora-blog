@@ -1,0 +1,47 @@
+import type {
+	Article,
+	GetArticleBySlugQuery,
+	GetArticlesQuery,
+} from '@/shared/api/graphql/__generated__/documents'
+
+// TODO: перевести комментарии на английский
+
+/* ----------------------------------------
+   TYPES FROM GRAPHQL QUERIES (API contract)
+---------------------------------------- */
+
+// Превью статьи из запроса getArticles (для списка статей, карточек, и т.п.)
+export type ArticlePreview = NonNullable<
+	GetArticlesQuery['getArticles'][number]
+>
+
+// Полная статья из запроса getArticleBySlug (для страницы статьи)
+export type FullArticle = NonNullable<GetArticleBySlugQuery['getArticleBySlug']>
+
+// Сырые типы из схемы GraphQL (используются реже, например в форме редактирования)
+export type RawArticle = Article
+
+/* ----------------------------------------
+   UI COMPONENT PROP TYPES
+---------------------------------------- */
+
+// Общие UI-пропсы для статьи (используются и в карточке, и на странице)
+export interface ArticlePermissions {
+	canManage: boolean
+}
+
+export interface ArticleUIProps {
+	isNew?: boolean
+	permissions?: ArticlePermissions
+	onDelete?: (slug: string) => void
+}
+
+// Пропсы для карточки статьи
+export interface ArticleCardProps extends ArticleUIProps {
+	article: ArticlePreview
+}
+
+// Пропсы для страницы статьи
+export interface ArticlePageProps extends ArticleUIProps {
+	article: FullArticle
+}

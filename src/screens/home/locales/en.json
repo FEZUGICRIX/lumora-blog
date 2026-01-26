@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "home": {
+      "title": "Welcome to Platform",
+      "subtitle": "Share knowledge, build community",
+      "metadata": {
+        "title": "Home",
+        "description": "Welcome to our platform - share knowledge and build community"
+      }
+    }
+  }
+}

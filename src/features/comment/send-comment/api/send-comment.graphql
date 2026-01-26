@@ -1,0 +1,10 @@
+mutation SendComment($content: String!, $articleId: String!) {
+	createComment(
+		createCommentInput: { content: $content, articleId: $articleId }
+	) {
+		id
+		content
+		createdAt
+		updatedAt
+	}
+}

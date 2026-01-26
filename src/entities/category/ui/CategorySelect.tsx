@@ -1,45 +1,52 @@
+import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
-import { useGetCategoriesQuery } from '../api'
-import { CustomSelect } from '@/shared/ui/CustomSelect'
-import { Skeleton } from '@/shared/ui/ui-kit/skeleton'
+
+import { CustomSelect } from '@/shared/ui/custom'
+import { Skeleton } from '@/shared/ui/ui-kit'
+
+import { useGetCategories } from '../api/hooks'
+import type { SelectOption } from '../model/category.types'
 
 interface CategorySelectProps {
 	value?: string | null
 	onValueChange: (value: string) => void
 }
 
-interface SelectOption {
-	label: string
-	value: string
-	id: string
-}
-
 export const CategorySelect = ({
 	onValueChange,
 	value,
 }: CategorySelectProps) => {
-	const { data: categories = [], isLoading } = useGetCategoriesQuery()
+	const t = useTranslations('entities.category.errors')
+	const { categories, isLoadingCategories } = useGetCategories()
 
-	const categoryOptions: SelectOption[] = categories.map((category) => ({
+	const categoryOptions: SelectOption[] = categories.map(category => ({
 		label: category.name,
 		value: category.id,
 		id: category.id,
 	}))
 
 	useEffect(() => {
-		if (!isLoading && !value && categoryOptions.length > 0) {
+		if (!isLoadingCategories && !value && categoryOptions.length > 0) {
 			onValueChange(categoryOptions[0].id)
 		}
-	}, [isLoading, value, categoryOptions, onValueChange])
+	}, [isLoadingCategories, value, categoryOptions, onValueChange])
 
-	if (isLoading) {
+	if (isLoadingCategories) {
 		return <Skeleton className='h-9 max-w-30' />
+	}
+
+	if (!categories) {
+		return (
+			<div className='text-muted-foreground text-sm'>
+				{t('loadFailed')}
+			</div>
+		)
 	}
 
 	if (categoryOptions.length === 0) {
 		return (
 			<div className='text-muted-foreground text-sm'>
-				Нет доступных категорий
+				{t('noCategories')}
 			</div>
 		)
 	}

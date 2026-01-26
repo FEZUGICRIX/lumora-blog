@@ -1,0 +1,9 @@
+{
+	"features": {
+		"auth": {
+			"verifyEmail": {
+				"title": "Подтверждение почты"
+			}
+		}
+	}
+}

@@ -1,0 +1,19 @@
+query GetProfile {
+	findProfile {
+		id
+		username
+		displayName
+		email
+		readmeContent
+		bio
+		location
+		websiteUrl
+		avatarUrl
+		coverUrl
+		role
+		method
+		emailVerified
+		isTwoFactorEnabled
+		createdAt
+	}
+}

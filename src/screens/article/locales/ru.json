@@ -1,0 +1,9 @@
+{
+	"screens": {
+		"article": {
+			"adminMessage": "Вы являетесь администратором",
+			"authorMessage": "Вы автор этой статьи",
+			"canEditDescription": "Вы можете редактировать или удалить её"
+		}
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"entities": {
+		"article": {
+			"actions": {
+				"edit": "Редактировать",
+				"share": "Поделиться",
+				"copyLink": "Копировать ссылку",
+				"copied": "Скопировано!",
+				"delete": "Удалить статью"
+			},
+			"meta": {
+				"new": "Новое",
+				"readingTime": "мин чтения"
+			},
+			"share": {
+				"title": "Статья"
+			},
+			"filters": {
+				"resetFilters": "Сбросить фильтры ↺",
+				"sort": {
+					"newest": "Новые",
+					"popular": "Популярные",
+					"discussed": "Обсуждаемые"
+				}
+			},
+			"search": {
+				"placeholder": "Поиск статьи...",
+				"found": "Найдено",
+				"noResults": "Ничего не найдено",
+				"tooltip": "Поиск статей",
+				"modalTitle": "Найти статью"
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+query CurrentAuthMinimal {
+	currentAuthMinimal {
+		id
+		username
+	}
+}

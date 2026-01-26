@@ -1,0 +1,47 @@
+{
+	"common": {
+		"test": "Тестовый текс",
+		"switchTheme": "Переключить тему",
+		"socialLinks": "Социальные сети",
+		"close": "Закрыть",
+		"navigation": {
+			"home": "Главная",
+			"writeArticle": "Написать статью",
+			"aboutMe": "Обо мне",
+			"myProfile": "Мой профиль"
+		},
+		"validation": {
+			"invalidUrl": "URL-адрес должен быть валидным (например, https://lumora.dev)"
+		},
+		"toasts": {
+			"profileUpdated": "Профиль успешно обновлен",
+			"articleCreated": "Статья успешно создана!",
+			"articleUpdated": "Вы успешно обновили статью!",
+			"articleDeleted": "Статья успешно удалена!",
+			"commentEdited": "Комментарий успешно изменен!",
+			"commentDeleted": "Комментарий успешно удален!",
+			"commentSent": "Комментарий успешно отправлен!",
+			"passwordChanged": "Пароль успешно изменен",
+			"passwordChangedDescription": "Теперь вы можете войти в свой аккаунт",
+			"checkEmail": "Проверьте почту",
+			"checkEmailDescription": "На вашу почту была отправлена ссылка для подтверждения.",
+			"emailVerified": "Почта успешно подтверждена!",
+			"loggedOut": "Вы успешно вышли из системы",
+			"fileUploaded": "Файл успешно загружен!"
+		},
+		"upload": {
+			"clickToUpload": "Нажмите для загрузки",
+			"orDragAndDrop": "или перетащите файл",
+			"maxFiles": "Максимум {limit} файл{plural}, {maxSize}МБ каждый.",
+			"pasteLink": "Вставьте ссылку..."
+		},
+		"placeholders": {
+			"displayName": "Алекс Калинин",
+			"username": "@имя_пользователя",
+			"location": "Санкт-Петербург, Россия",
+			"website": "example.com",
+			"avatarUrl": "https://example.com/avatar.jpg",
+			"coverUrl": "https://example.com/cover.jpg"
+		}
+	}
+}

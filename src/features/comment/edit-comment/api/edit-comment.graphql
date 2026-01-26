@@ -1,0 +1,8 @@
+mutation EditComment($id: ID!, $content: String) {
+	updateComment(updateCommentInput: { id: $id, content: $content }) {
+		id
+		content
+		createdAt
+		updatedAt
+	}
+}

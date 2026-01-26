@@ -1,0 +1,10 @@
+{
+  "screens": {
+    "profile": {
+      "metadata": {
+        "titleTemplate": "@{username}",
+        "descriptionTemplate": "Профиль пользователя {username}"
+      }
+    }
+  }
+}

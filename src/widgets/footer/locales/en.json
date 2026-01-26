@@ -1,0 +1,12 @@
+{
+  "widgets": {
+    "footer": {
+      "description": "Platform for developers. We share knowledge, create community.",
+      "product": "Product",
+      "supportProject": "Support Project",
+      "projectAuthor": "Project Author",
+      "allRightsReserved": "All rights reserved.",
+      "poweredBy": "Powered by fezugicrix"
+    }
+  }
+}

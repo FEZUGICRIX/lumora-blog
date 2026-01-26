@@ -1,15 +1,16 @@
 'use client'
 
-import { availableLocales } from '../model/constants'
-import { type Locale } from '../model/types'
-import { CustomSelect } from '@/shared/ui/CustomSelect'
 import { useLocale } from 'next-intl'
+
 import {
-	useRouter,
-	usePathname,
 	redirect,
+	usePathname,
+	useRouter,
 } from '@/shared/config/i18n/navigation'
-import { isLocale } from '../lib/is-locale'
+import { CustomSelect } from '@/shared/ui/custom'
+
+import { isLocale } from '../lib'
+import { availableLocales, type Locale } from '../model'
 
 export const LocaleSwitcher = () => {
 	const rawLocale = useLocale()

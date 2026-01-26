@@ -1,14 +1,26 @@
-import HomePage from '@/views/home/HomePage'
-import { fetchArticles } from '@/entities/article/api/server'
-import { getTranslations } from 'next-intl/server'
-import { ArticleSortBy } from '@/shared/api/graphql/__generated__/graphql'
 import type { Metadata } from 'next'
-import type { SortOption } from '@/features/filters'
+import { getTranslations } from 'next-intl/server'
+
+import { HomePage } from '@/screens/home'
+
+import type { SortOption } from '@/features/article/filters'
+
+import { fetchArticlesOrNull } from '@/entities/article/api/server-adapters/fetch-articles-or-null.adapter'
+
+import { ArticleSortBy } from '@/shared/api/graphql/__generated__/documents'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations('Meta.HomePage')
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+	const { locale } = await params
+	const t = await getTranslations({
+		locale,
+		namespace: 'screens.home.metadata',
+	})
 
 	return {
 		title: t('title'),
@@ -32,14 +44,12 @@ export default async function Home(props: {
 	let sortBy: SortOption | undefined = undefined
 	if (
 		searchParams.sort &&
-		Object.values(ArticleSortBy).includes(
-			searchParams.sort as ArticleSortBy,
-		)
+		Object.values(ArticleSortBy).includes(searchParams.sort as ArticleSortBy)
 	) {
 		sortBy = searchParams.sort as ArticleSortBy
 	}
 
-	const articles = await fetchArticles({
+	const articles = await fetchArticlesOrNull({
 		categorySlugs: searchParams.category,
 		sortBy, // Попадет либо валидный enum, либо undefined
 	})

@@ -1,22 +1,25 @@
-import 'dotenv/config'
-import { env } from '../../config/env'
 import type { CodegenConfig } from '@graphql-codegen/cli'
+import 'dotenv/config'
+
+import { env } from '../../config/env'
 
 const config: CodegenConfig = {
 	schema: env.apiUrl,
-
-	documents: ['src/**/*.{ts,tsx}'],
 	generates: {
-		'src/shared/api/graphql/__generated__/graphql.ts': {
-			plugins: [
-				'typescript',
-				'typescript-operations',
-				'typescript-rtk-query',
-			],
+		// Tanstack Query (typed-document-node)
+		'src/shared/api/graphql/__generated__/documents.ts': {
+			documents: ['src/**/*.graphql'],
+			plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
 			config: {
 				maybeValue: 'T | null',
-				importBaseApiFrom: '@/shared/api/base-api',
-				exportBaseApi: 'base-api',
+				useTypeImports: true,
+
+				scalars: {
+					// Указываем, что скаляр 'DateTime' должен быть типом 'Date' в TypeScript
+					DateTime: 'Date',
+					// Часто также полезно явно сопоставить 'ID' со 'string'
+					ID: 'string',
+				},
 			},
 		},
 	},

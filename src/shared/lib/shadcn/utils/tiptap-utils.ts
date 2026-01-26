@@ -1,7 +1,12 @@
-import { uploadFile } from '@/entities/upload'
 import type { Node as TiptapNode } from '@tiptap/pm/model'
 import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state'
 import type { Editor } from '@tiptap/react'
+
+import { uploadFileService } from '@/entities/upload/api/services/upload-file.service'
+
+import type { UploadFileMutationVariables } from '@/shared/api/graphql/__generated__/documents'
+
+import { toastErrorHandler } from '../../toast-error-handler'
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
@@ -76,8 +81,8 @@ export const parseShortcutKeys = (props: {
 
 	return shortcutKeys
 		.split(delimiter)
-		.map((key) => key.trim())
-		.map((key) => formatShortcutKey(key, isMac(), capitalize))
+		.map(key => key.trim())
+		.map(key => formatShortcutKey(key, isMac(), capitalize))
 }
 
 /**
@@ -145,9 +150,7 @@ export function focusNextNode(editor: Editor) {
  * @param value - The value to check
  * @returns boolean indicating if the value is a valid number
  */
-export function isValidPosition(
-	pos: number | null | undefined,
-): pos is number {
+export function isValidPosition(pos: number | null | undefined): pos is number {
 	return typeof pos === 'number' && pos >= 0
 }
 
@@ -167,8 +170,8 @@ export function isExtensionAvailable(
 		? extensionNames
 		: [extensionNames]
 
-	const found = names.some((name) =>
-		editor.extensionManager.extensions.some((ext) => ext.name === name),
+	const found = names.some(name =>
+		editor.extensionManager.extensions.some(ext => ext.name === name),
 	)
 
 	if (!found) {
@@ -299,14 +302,6 @@ export const handleImageUpload = async (
 		throw new Error('No file provided')
 	}
 
-	const url = await uploadFile(file)
-
-	if (!url) {
-		throw new Error('Upload failed, no URL returned')
-	}
-
-	console.log(url)
-
 	if (file.size > MAX_FILE_SIZE) {
 		throw new Error(
 			`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`,
@@ -319,11 +314,33 @@ export const handleImageUpload = async (
 		if (abortSignal?.aborted) {
 			throw new Error('Upload cancelled')
 		}
-		await new Promise((resolve) => setTimeout(resolve, 500))
+		await new Promise(resolve => setTimeout(resolve, 10))
 		onProgress?.({ progress })
 	}
 
-	return url
+	try {
+		// 3. Подготовка переменных
+		// ⚠️ Приведение типов неизбежно, так как File и FileUploadInput не идентичны
+		const variables: UploadFileMutationVariables = {
+			file: file,
+		}
+
+		const uploadResult = await uploadFileService(variables)
+
+		if (abortSignal?.aborted) {
+			throw new Error('Upload cancelled.')
+		}
+
+		if (!uploadResult) {
+			throw new Error('Upload failed: Server returned no URL.')
+		}
+
+		return uploadResult
+	} catch (error) {
+		// 6. Ручная обработка ошибок (так как useMutation.onError проигнорирован)
+		toastErrorHandler(error)
+		throw error // Пробрасываем ошибку для дальнейшей обработки в UI
+	}
 }
 
 type ProtocolOptions = {
@@ -366,7 +383,7 @@ export function isAllowedUri(
 	]
 
 	if (protocols) {
-		protocols.forEach((protocol) => {
+		protocols.forEach(protocol => {
 			const nextProtocol =
 				typeof protocol === 'string' ? protocol : protocol.scheme
 

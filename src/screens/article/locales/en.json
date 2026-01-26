@@ -1,0 +1,9 @@
+{
+  "screens": {
+    "article": {
+      "adminMessage": "You are an administrator",
+      "authorMessage": "You are the author of this article",
+      "canEditDescription": "You can edit or delete it"
+    }
+  }
+}

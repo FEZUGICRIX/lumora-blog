@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "auth": {
+      "newPassword": {
+        "metadata": {
+          "title": "Новый пароль",
+          "description": "Создайте новый пароль для вашего аккаунта"
+        }
+      }
+    }
+  }
+}

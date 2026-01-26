@@ -1,0 +1,48 @@
+query GetArticleBySlug($slug: String!) {
+	getArticleBySlug(slug: $slug) {
+		id
+		title
+		slug
+		description
+		contentJson
+		contentHtml
+		contentText
+		tags
+		coverImage
+		published
+		publishedAt
+		readingTime
+		views
+		reactions
+		myReactions
+		commentsCount
+		createdAt
+		updatedAt
+		author {
+			id
+			username
+			displayName
+			avatarUrl
+		}
+		category {
+			id
+			name
+			slug
+		}
+		comments {
+			id
+			content
+			reactions
+			myReactions
+			createdAt
+			updatedAt
+			author {
+				id
+				username
+				displayName
+				avatarUrl
+				role
+			}
+		}
+	}
+}

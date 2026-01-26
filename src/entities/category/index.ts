@@ -1,1 +1,1 @@
-export type { CategoryMinimal } from './model/category.types'
+export * from './model'

@@ -1,4 +1,5 @@
 import type { SVGProps } from 'react'
+
 import { cn } from '@/shared/lib/shadcn/utils'
 
 interface SearchIconProps extends SVGProps<SVGSVGElement> {
@@ -8,10 +9,7 @@ interface SearchIconProps extends SVGProps<SVGSVGElement> {
 export const SearchIcon = ({ className, ...props }: SearchIconProps) => (
 	<svg
 		{...props}
-		className={cn(
-			'h-[20px] w-[20px] text-zinc-900 dark:text-white',
-			className,
-		)}
+		className={cn('h-5 w-5 text-zinc-900 dark:text-white', className)}
 		viewBox='0 0 24 24'
 		fill='currentColor'
 		xmlns='http://www.w3.org/2000/svg'

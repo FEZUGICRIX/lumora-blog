@@ -1,0 +1,30 @@
+{
+	"features": {
+		"auth": {
+			"login": {
+				"title": "Войти",
+				"description": "Чтобы войти введите ваш email и пароль",
+				"form": {
+					"email": "Email",
+					"password": "Пароль",
+					"code": "Код",
+					"submit": "Войти в аккаунт",
+					"placeholders": {
+						"email": "Введите ваш email",
+						"password": "******",
+						"code": "123456"
+					}
+				},
+				"links": {
+					"register": "Еще нет аккаунта? Регистрация",
+					"forgotPassword": "Забыли пароль?"
+				},
+				"errors": {
+					"recaptcha": "Пожалуйста, завершите ReCAPTCHA",
+					"invalidEmail": "Некорректный email",
+					"passwordMinLength": "Пароль должен быть минимум 8 символов"
+				}
+			}
+		}
+	}
+}

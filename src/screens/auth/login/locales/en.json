@@ -1,0 +1,12 @@
+{
+  "screens": {
+    "auth": {
+      "login": {
+        "metadata": {
+          "title": "Sign In",
+          "description": "Sign in to your account to access all features"
+        }
+      }
+    }
+  }
+}

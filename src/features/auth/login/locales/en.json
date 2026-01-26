@@ -1,0 +1,30 @@
+{
+  "features": {
+    "auth": {
+      "login": {
+        "title": "Sign In",
+        "description": "To sign in, enter your email and password",
+        "form": {
+          "email": "Email",
+          "password": "Password",
+          "code": "Code",
+          "submit": "Login to account",
+          "placeholders": {
+            "email": "Type your email",
+            "password": "******",
+            "code": "123456"
+          }
+        },
+        "links": {
+          "register": "Don't have an account? Register",
+          "forgotPassword": "Forgot password?"
+        },
+        "errors": {
+          "recaptcha": "Please complete ReCAPTCHA",
+          "invalidEmail": "Invalid email",
+          "passwordMinLength": "Password must be at least 8 characters"
+        }
+      }
+    }
+  }
+}

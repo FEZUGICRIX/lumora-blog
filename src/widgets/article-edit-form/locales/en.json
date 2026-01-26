@@ -1,0 +1,40 @@
+{
+  "widgets": {
+    "articleEditForm": {
+      "title": "Title",
+      "titlePlaceholder": "Enter article title",
+      "titleDescription": "Your article title (required field)",
+      "description": "Description",
+      "descriptionPlaceholder": "Brief article description",
+      "descriptionDescription": "Brief description for preview (required field)",
+      "category": "Category",
+      "categoryDescription": "Select a category for the article",
+      "content": "Content",
+      "contentDescription": "Main article content in Rich Text format",
+      "tags": "Tags",
+      "tagsPlaceholder": "tag1, tag2, tag3 (space separated)",
+      "tagsDescription": "Tags (space separated)",
+      "coverImage": "Cover Image URL",
+      "coverImagePlaceholder": "https://example.com/image.jpg",
+      "coverImageDescription": "Link to cover image for the article",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "createArticle": "Create Article",
+      "error": "Error",
+      "errors": {
+        "titleRequired": "Title is required",
+        "titleTooLong": "Title must not exceed 85 characters",
+        "descriptionRequired": "Description is required",
+        "descriptionTooLong": "Description must not exceed 300 characters",
+        "contentInvalidFormat": "Content must be in Tiptap format",
+        "contentEmpty": "Article content cannot be empty",
+        "tagsRequired": "Tags are required",
+        "tagsMinimum": "Add at least one tag",
+        "tagsMaximum": "No more than 10 tags",
+        "tagTooLong": "Each tag must not exceed 20 characters",
+        "categoryInvalidId": "Invalid category ID",
+        "categoryRequired": "Category is required"
+      }
+    }
+  }
+}

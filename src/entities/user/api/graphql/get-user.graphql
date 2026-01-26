@@ -1,0 +1,15 @@
+query GetUserPublic($username: String!) {
+	user(username: $username) {
+		id
+		username
+		displayName
+		readmeContent
+		bio
+		location
+		websiteUrl
+		avatarUrl
+		coverUrl
+		role
+		createdAt
+	}
+}
